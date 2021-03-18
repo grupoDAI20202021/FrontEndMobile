@@ -3,8 +3,8 @@ import { useFonts, RedHatDisplay_400Regular } from '@expo-google-fonts/red-hat-d
 import AppLoading from 'expo-app-loading';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, TouchableHighlight } from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faArrowCircleRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faArrowCircleRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 
 export default function HomeWithoutLogin({ navigation }){
@@ -17,7 +17,7 @@ export default function HomeWithoutLogin({ navigation }){
     return (
       <View style={styles.container}>
         <StatusBar style="auto" />
-        <FontAwesomeIcon icon={faChevronLeft} style={styles.chevronLeft} size={15}/>
+        <FontAwesomeIcon icon={faChevronLeft} onPress={() => navigation.navigate('OpenScreen')} style={styles.chevronLeft} size={20}/>
         <Text style={styles.activitiesOfTheWeek}>Atividades desta semana</Text>
         <Image source={require("../../LOGOPNG.png")} style={styles.logoPng}/>
         <TouchableHighlight onPress={() => navigation.navigate('OpenScreen')} underlayColor={"rgba(15, 122, 190, 0.8)"} style={styles.buttonLogin}>
@@ -88,6 +88,9 @@ const styles = StyleSheet.create({
 
     chevronLeft:{
       position:'absolute',
-      top:'22.2%',
+      top:'14.2%',
+      left:'2%',
+      zIndex:1,
+      color:"#B0B0B0",
     }
   });

@@ -17,13 +17,14 @@ export default function HomeWithoutLogin({ navigation }){
                 <StatusBar style="auto" />
                 <Image source={require("../../LOGOPNG.png")} style={styles.logoPng}/>
                 <View style={styles.loginButtonsView}>
-                    <TouchableHighlight onPress={loginButton} underlayColor={"rgba(229, 229, 229, 0.8)"} style={styles.loginButton}>
+                    <TouchableHighlight onPress={() => navigation.navigate('BottomNavbar')} underlayColor={"rgba(229, 229, 229, 0.8)"} style={styles.loginButton}>
                         <Text style={styles.loginButtonText}>Inicar Sessão</Text>
                     </TouchableHighlight>
                     <TouchableHighlight onPress={() => navigation.navigate('HomeWithoutLogin')} underlayColor={"rgba(15, 122, 190, 0.8)"} style={styles.loginGuest}>
                         <Text style={styles.loginGuestText}>Entrar como{"\n"}  convidado</Text>
                     </TouchableHighlight>
                 </View>
+                <Image source={require("../../50a7213b5f1644e1060b042de0aaaf17.jpg")} style={styles.backGroundImageJPG}/>
             </View>
         );
     }
@@ -39,6 +40,15 @@ const styles = StyleSheet.create({
         backgroundColor: '#EDEEEE',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+
+    backGroundImageJPG:{
+        width:650,
+        height:524,
+        zIndex:-1,
+        opacity:0.1,
+        left:130,
+        bottom:"-9%",
     },
 
     logoPng:{
