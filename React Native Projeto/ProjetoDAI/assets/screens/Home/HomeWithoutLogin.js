@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faArrowCircleRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 
 
-export default function HomeWithoutLogin(){
+export default function HomeWithoutLogin({ navigation }){
   let [fontsLoaded] = useFonts({
     RedHatDisplay_400Regular,
   });
@@ -20,7 +20,7 @@ export default function HomeWithoutLogin(){
         <FontAwesomeIcon icon={faChevronLeft} style={styles.chevronLeft} size={15}/>
         <Text style={styles.activitiesOfTheWeek}>Atividades desta semana</Text>
         <Image source={require("../../LOGOPNG.png")} style={styles.logoPng}/>
-        <TouchableHighlight onPress={loginWithAccount} underlayColor={"rgba(15, 122, 190, 0.8)"} style={styles.buttonLogin}>
+        <TouchableHighlight onPress={() => navigation.navigate('OpenScreen')} underlayColor={"rgba(15, 122, 190, 0.8)"} style={styles.buttonLogin}>
           <View style={styles.buttonLoginWithAccountView}>
             <Text style={styles.textButtonLoginWithAccount}>Entrar com uma conta </Text>
             <FontAwesomeIcon icon={faArrowCircleRight} style={styles.arrowIconButtonLoginWithAccount} size={30}/>
@@ -32,11 +32,6 @@ export default function HomeWithoutLogin(){
 }
 
 
-
-
-const loginWithAccount = () =>{
-    console.log("Clicaste no botão")
-  }
 const styles = StyleSheet.create({
   container: {
       flex: 1,
