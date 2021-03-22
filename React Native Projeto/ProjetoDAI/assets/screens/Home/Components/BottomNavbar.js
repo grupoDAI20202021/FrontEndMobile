@@ -2,11 +2,12 @@ import React from 'react';
 import { StyleSheet, View, Image, TouchableHighlight, Text } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faBell, faComments, faLightbulb, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faComments, faLightbulb, faUser, faHome } from '@fortawesome/free-solid-svg-icons';
 import Notifications from "../Notifications";
 import Forum from "../Forum";
-import Suggestion from "../../Suggestion/Suggestion"
-import Profile from "../../Profile/Profile"
+import Suggestion from "../../Suggestion/Suggestion";
+import Profile from "../../Profile/Profile";
+import HomeMenu from "../../HomeMenu/HomeMenu";
 
 const Tab = createBottomTabNavigator();
 
@@ -35,6 +36,16 @@ export default function BottomNavbar() {
             tabBarLabel: () => {return null},
             tabBarIcon: ({ color, size }) => (
               <FontAwesomeIcon icon={faComments} color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="HomeMenu"
+          component={HomeMenu}
+          options={{
+            tabBarLabel: () => {return null},
+            tabBarIcon: ({ color, size }) => (
+              <FontAwesomeIcon icon={faHome} color={color} size={size} />
             ),
           }}
         />
