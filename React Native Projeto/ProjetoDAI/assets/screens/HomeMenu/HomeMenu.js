@@ -2,8 +2,10 @@ import React from 'react';
 import { useFonts, RedHatDisplay_400Regular } from '@expo-google-fonts/red-hat-display';
 import { StyleSheet, Text, View, Image, TouchableHighlight } from 'react-native';
 import AppLoading from 'expo-app-loading';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
 
-export default function HomeMenu(){
+export default function HomeMenu({ navigation }){
     let [fontsLoaded] = useFonts({
         RedHatDisplay_400Regular,
     });
@@ -13,8 +15,8 @@ export default function HomeMenu(){
         return(
             <View style={styles.container}>
                 <Image source={require("../../LOGOPNG.png")} style={styles.logoPng}/>
-                <TouchableHighlight onPress={loginButton} underlayColor={"rgba(15, 122, 190, 0.8)"} style={styles.notificationButton}>
-                    <Text>asdadas</Text>
+                <TouchableHighlight onPress={() => navigation.navigate('Notifications')} underlayColor={"rgba(15, 122, 190, 0.8)"} style={styles.notificationButton}>
+                    <FontAwesomeIcon icon={faBell} style={styles.bell} size={30}/>
                 </TouchableHighlight>
             </View>
         );
@@ -39,8 +41,11 @@ const styles = StyleSheet.create({
     },
 
     notificationButton:{
-        width:80,
-        height:80,
+        flex:1,
+        alignItems:'center',
+        justifyContent: 'center',
+        width:70,
+        height:70,
         backgroundColor: '#1A82C4',
         position:"absolute",
         bottom:"0.60%",
@@ -48,4 +53,8 @@ const styles = StyleSheet.create({
         zIndex:2,
         borderRadius:50,
     },
+
+    bell:{
+        color:"#fff",
+      }
 });
