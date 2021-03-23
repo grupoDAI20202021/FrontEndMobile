@@ -2,12 +2,13 @@ import React from 'react';
 import { StyleSheet, View, Image, TouchableHighlight, Text } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faBell, faComments, faLightbulb, faUser, faHome } from '@fortawesome/free-solid-svg-icons';
+import { faTrophy, faComments, faLightbulb, faUser, faHome } from '@fortawesome/free-solid-svg-icons';
 import Notifications from "../Notifications";
 import Forum from "../Forum";
 import Suggestion from "../../Suggestion/Suggestion";
 import Profile from "../../Profile/Profile";
 import HomeMenu from "../../HomeMenu/HomeMenu";
+import Rank from "../../Rank/Rank";
 
 const Tab = createBottomTabNavigator();
 
@@ -20,22 +21,22 @@ export default function BottomNavbar() {
         }}
       >
         <Tab.Screen
-          name="Notifications"
-          component={Notifications}
-          options={{
-            tabBarLabel: () => {return null},
-            tabBarIcon: ({ color, size }) => (
-              <FontAwesomeIcon icon={faBell} color={color} size={size} />
-            ),
-          }}
-        />
-        <Tab.Screen
           name="Forum"
           component={Forum}
           options={{
             tabBarLabel: () => {return null},
             tabBarIcon: ({ color, size }) => (
               <FontAwesomeIcon icon={faComments} color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Rank"
+          component={Rank}
+          options={{
+            tabBarLabel: () => {return null},
+            tabBarIcon: ({ color, size }) => (
+              <FontAwesomeIcon icon={faTrophy} color={color} size={size} />
             ),
           }}
         />
