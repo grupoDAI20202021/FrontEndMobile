@@ -7,7 +7,7 @@ import Notifications from "../Notifications";
 import Forum from "../Forum";
 import Suggestion from "../../Suggestion/Suggestion";
 import Profile from "../../Profile/Profile";
-import HomeMenu from "../../HomeMenu/HomeMenu";
+import HomeMenuStack from "../../HomeMenu/HomeMenuStack";
 import Rank from "../../Rank/Rank";
 
 const Tab = createBottomTabNavigator();
@@ -15,7 +15,7 @@ const Tab = createBottomTabNavigator();
 export default function BottomNavbar() {
     return (
       <Tab.Navigator
-        initialRouteName="HomeMenu"
+        initialRouteName="HomeMenuStack"
         tabBarOptions={{
           activeTintColor: '#1A82C4',
         }}
@@ -41,8 +41,8 @@ export default function BottomNavbar() {
           }}
         />
         <Tab.Screen
-          name="HomeMenu"
-          component={HomeMenu}
+          name="HomeMenuStack"
+          component={HomeMenuStack}
           options={{
             tabBarLabel: () => {return null},
             tabBarIcon: ({ color, size }) => (

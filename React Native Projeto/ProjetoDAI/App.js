@@ -21,7 +21,6 @@ export default function App() {
         <Stack.Screen name="BottomNavbar" component={BottomNavbar} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
         <Stack.Screen name="Login" component={Login} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
         <Stack.Screen name="SignUp" component={SignUp} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
-        <Stack.Screen name="Notifications" component={Notifications} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
