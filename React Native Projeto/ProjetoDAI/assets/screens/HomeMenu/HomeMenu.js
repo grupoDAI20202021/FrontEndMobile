@@ -3,7 +3,7 @@ import { useFonts, RedHatDisplay_400Regular } from '@expo-google-fonts/red-hat-d
 import { StyleSheet, Text, View, Image, TouchableHighlight } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faBell } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faUser } from '@fortawesome/free-solid-svg-icons';
 
 export default function HomeMenu({ navigation }){
     let [fontsLoaded] = useFonts({
@@ -14,10 +14,21 @@ export default function HomeMenu({ navigation }){
     } else {
         return(
             <View style={styles.container}>
-                <Image source={require("../../LOGOPNG.png")} style={styles.logoPng}/>
-                <TouchableHighlight onPress={() => navigation.navigate('Notifications')} underlayColor={"rgba(15, 122, 190, 0.8)"} style={styles.notificationButton}>
-                    <FontAwesomeIcon icon={faBell} style={styles.bell} size={30}/>
-                </TouchableHighlight>
+                <View style={styles.topOfTheScreen}>
+                    <TouchableHighlight onPress={() => navigation.navigate('Profile')} underlayColor={"rgba(15, 122, 190, 0.8)"} style={styles.profileButton}>
+                        <FontAwesomeIcon icon={faUser} style={styles.profileIcon} size={20}/>
+                    </TouchableHighlight>
+                    <Image source={require("../../LOGOPNG.png")} style={styles.logoPng}/>
+                    <TouchableHighlight onPress={() => navigation.navigate('Notifications')} underlayColor={"rgba(15, 122, 190, 0.8)"} style={styles.notificationButton}>
+                        <FontAwesomeIcon icon={faBell} style={styles.bell} size={20}/>
+                    </TouchableHighlight>
+                </View>
+                <View style={styles.activitiesScreen}>
+                    <Text style={styles.activitiesText}>Atividades</Text>
+                    <View style={styles.favoriteActivities}>
+                        <Text>Ver todas</Text>
+                    </View>
+                </View>
             </View>
         );
     }
@@ -31,30 +42,81 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
+        flexDirection: "column",
+        overflow: "scroll",
+    },
+
+    topOfTheScreen:{
+        flex: 1,
+        maxWidth:414,
+        width:"100%",
+        height:100,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: "row",
+    },
+
+    activitiesScreen:{
+        flex: 3,
+        maxWidth:414,
+        width:"100%",
+        height:100,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: "row",
+    },
+
+    favoriteActivities:{
+        position:"absolute",
+        top:600,
     },
 
     logoPng:{
-        width:300,
-        height:150,
-        position:"absolute",
-        top:"4.80%",
+        width:220,
+        height:110,
+        marginTop:10,
     },
 
     notificationButton:{
         flex:1,
         alignItems:'center',
         justifyContent: 'center',
-        width:70,
-        height:70,
-        backgroundColor: '#1A82C4',
+        width:60,
+        height:60,
+        backgroundColor: 'transparent',
         position:"absolute",
-        bottom:"0.60%",
-        right:"2.50%",
+        right:"3.30%",
         zIndex:2,
-        borderRadius:50,
     },
 
     bell:{
-        color:"#fff",
-      }
+        color:"#515151",
+    },
+
+    profileButton:{
+        flex:1,
+        alignItems:'center',
+        justifyContent: 'center',
+        width:60,
+        height:60,
+        backgroundColor: 'transparent',
+        position:"absolute",
+        left:"3.30%",
+        zIndex:2,
+    },
+
+    profileIcon:{
+        color:"#515151",
+    },
+
+    activitiesText:{
+        position:"absolute",
+        top:"0%",
+        color:"#1A82C4",
+        fontFamily:'RedHatDisplay_400Regular',
+        fontWeight:"bold",
+        fontSize:38,
+    },
 });
