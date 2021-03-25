@@ -19,7 +19,9 @@ export default function Notifications({navigation}) {
                     <Text style={styles.notificationText}>Notificações</Text>
                 </View>
                 <View style={styles.notificationScreen}>
-                    <Text>asdadasda</Text>
+                    <View style={styles.notificationStyle}>
+                        <Text>A feira do livro começa já daqui a 2 horas!</Text>
+                    </View>
                 </View>
             </View>
         )
@@ -68,5 +70,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-start',
         marginTop:20,
+    },
+
+    notificationStyle:{
+        marginTop:20,
+        maxWidth:400,
+        width:"90%",
+        height:80,
+        backgroundColor:"#fff",
+        borderRadius: 50,
+        flexDirection: 'row', 
+        alignItems: 'center',
+        justifyContent: 'flex-start',
     },
 });
