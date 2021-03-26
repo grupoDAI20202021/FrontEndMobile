@@ -2,13 +2,14 @@ import React from 'react';
 import { StyleSheet, View, Image, TouchableHighlight, Text } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faTrophy, faComments, faLightbulb, faUser, faHome } from '@fortawesome/free-solid-svg-icons';
+import { faTrophy, faComments, faLightbulb, faStar, faHome } from '@fortawesome/free-solid-svg-icons';
 import Notifications from "../Notifications";
 import Forum from "../Forum";
 import Suggestion from "../../Suggestion/Suggestion";
 import Profile from "../../Profile/Profile";
 import HomeMenuStack from "../../HomeMenu/HomeMenuStack";
 import Rank from "../../Rank/Rank";
+import EvaluateActivities from "../../EvaluateActivities/EvaluateActivities";
 
 const Tab = createBottomTabNavigator();
 
@@ -18,6 +19,7 @@ export default function BottomNavbar() {
         initialRouteName="HomeMenuStack"
         tabBarOptions={{
           activeTintColor: '#1A82C4',
+          inactiveTintColor: '#E2E2E2',
         }}
       >
         <Tab.Screen
@@ -51,22 +53,22 @@ export default function BottomNavbar() {
           }}
         />
         <Tab.Screen
+          name="EvaluateActivities"
+          component={EvaluateActivities}
+          options={{
+            tabBarLabel: () => {return null},
+            tabBarIcon: ({ color, size }) => (
+              <FontAwesomeIcon icon={faStar} color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
           name="Suggestion"
           component={Suggestion}
           options={{
             tabBarLabel: () => {return null},
             tabBarIcon: ({ color, size }) => (
               <FontAwesomeIcon icon={faLightbulb} color={color} size={size} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Profile"
-          component={Profile}
-          options={{
-            tabBarLabel: () => {return null},
-            tabBarIcon: ({ color, size }) => (
-              <FontAwesomeIcon icon={faUser} color={color} size={size} />
             ),
           }}
         />
