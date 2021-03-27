@@ -1,9 +1,10 @@
-import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import React, {useState} from 'react';
+import { Text, View, StyleSheet, TextInput, SafeAreaView, ScrollView , TouchableOpacity} from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { useFonts, RedHatDisplay_400Regular } from '@expo-google-fonts/red-hat-display';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faMicrophone} from '@fortawesome/free-solid-svg-icons';
+import Grading from './Components/Grading';
 
 export default function Notifications() {
     let [fontsLoaded] = useFonts({
@@ -18,19 +19,34 @@ export default function Notifications() {
                     <FontAwesomeIcon icon={faChevronLeft} onPress={() => navigation.navigate('HomeMenu')} style={styles.chevronLeft}/>
                     <Text style={styles.notificationText}>Enviar Sugestões</Text>
                 </View>
-                <View style={styles.notificationScreen}>
-                    
+                <View style={styles.notificationScreenScrollContainer}>
+                    <ScrollView style={styles.notificationScreenScroll}>
+                        <View style={styles.notificationScreen}>
+                            <Text style={styles.howYouClassifyText}>Como classificas a tua experiência até agora?</Text>
+                            <Grading/>
+                            <Text style={styles.helpUsGettingBetter}>Ajuda-nos a melhorar</Text>
+                            <Text style={styles.sendUsYourSuggestions}>Envia-nos as tuas sugestões!</Text>
+                            <SafeAreaView style={styles.safeAreaViewOfText}>
+                                <TextInput multiline={true} numberOfLines={15} maxLength={255} style={styles.suggestionBox}></TextInput>
+                            </SafeAreaView>
+                            <TouchableOpacity style={styles.microphoneView} activeOpacity={0.6}>
+                                <FontAwesomeIcon icon={faMicrophone} style={styles.microphoneIcon} size={50}/>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.sendButton} activeOpacity={0.6}>
+                                <Text style={styles.sendButtonText}>Enviar</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </ScrollView>
                 </View>
             </View>
         )
     }
 }
 
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor:"#FCFCFC",
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -39,7 +55,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width:"100%",
         height:100,
-        backgroundColor: '#fff',
+        backgroundColor: '#FCFCFC',
         flexDirection: 'row', 
         alignItems: 'center',
         justifyContent: 'center',
@@ -50,6 +66,7 @@ const styles = StyleSheet.create({
         bottom:"0%",
         fontSize:36,
         color:"#1A82C4",
+        fontFamily:'RedHatDisplay_400Regular',
     },
 
     chevronLeft:{
@@ -59,13 +76,98 @@ const styles = StyleSheet.create({
         color:"#B0B0B0",
     },
 
-    notificationScreen:{
+    notificationScreenScrollContainer:{
         flex: 5,
         width:"100%",
-        backgroundColor:"#aaa",
         flexDirection: 'column', 
         alignItems: 'center',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         marginTop:20,
+    },
+
+    notificationScreenScroll:{
+        flex: 5,
+        width:"100%",
+    },
+
+    notificationScreen:{
+        width:"100%",
+        flexDirection: 'column', 
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    howYouClassifyText:{
+        color:"#1A82C4",
+        fontSize:18,
+        fontFamily:'RedHatDisplay_400Regular',
+    },
+
+    gradeView:{
+        flexDirection: 'row', 
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    helpUsGettingBetter:{
+        fontFamily:"RedHatDisplay_400Regular",
+        fontSize:22,
+        color:"#1A82C4",
+        marginTop:10,
+    },
+
+    sendUsYourSuggestions:{
+        fontFamily:"RedHatDisplay_400Regular",
+        fontSize:22,
+        color:"#C7CED5",
+    },
+
+    safeAreaViewOfText:{
+        width:"87.2%",
+        height:300,
+        borderRadius:10,
+        borderColor:"#EBEBEB",
+        borderWidth: 1,
+        alignItems:'center',
+    },
+
+    suggestionBox:{
+        fontFamily:"RedHatDisplay_400Regular",
+        justifyContent: "flex-start",
+        textAlignVertical: 'top',
+        width:"90%",
+        height:290,
+        margin:5,
+        
+    },
+
+    microphoneView:{
+        backgroundColor:"#1A82C4",
+        width: 75,
+        height: 75,
+        borderRadius:50,
+        alignItems:'center',
+        justifyContent:"center",
+        margin:10,
+    },
+
+    microphoneIcon:{
+        color:"#fff",
+    },
+
+    sendButton:{
+        width:227,
+        height:57,
+        backgroundColor:"#1A82C4",
+        alignItems:'center',
+        justifyContent:"center",
+        margin:10,
+        borderRadius:50,
+    },
+
+    sendButtonText:{
+        fontFamily:"RedHatDisplay_400Regular",
+        fontSize:32,
+        color:"#fff",
     },
 });

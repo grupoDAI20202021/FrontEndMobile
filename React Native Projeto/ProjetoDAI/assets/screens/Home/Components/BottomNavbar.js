@@ -3,10 +3,8 @@ import { StyleSheet, View, Image, TouchableHighlight, Text } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faTrophy, faComments, faLightbulb, faStar, faHome } from '@fortawesome/free-solid-svg-icons';
-import Notifications from "../Notifications";
 import Forum from "../Forum";
 import Suggestion from "../../Suggestion/Suggestion";
-import Profile from "../../Profile/Profile";
 import HomeMenuStack from "../../HomeMenu/HomeMenuStack";
 import Rank from "../../Rank/Rank";
 import EvaluateActivities from "../../EvaluateActivities/EvaluateActivities";
