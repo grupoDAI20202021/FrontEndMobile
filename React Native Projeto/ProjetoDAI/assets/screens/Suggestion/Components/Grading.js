@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Button, Text, View, StyleSheet, TouchableHighlight } from "react-native";
+import { Button, Text, View, StyleSheet, TouchableHighlight, SafeAreaView, TextInput, TouchableOpacity } from "react-native";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faChevronLeft, faFrown, faSmile, faMeh } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faFrown, faSmile, faMeh, faMicrophone } from '@fortawesome/free-solid-svg-icons';
 
 
 {/*export default class App extends Component {
@@ -34,6 +34,8 @@ export default function Grading() {
     const [faSmileEnabled, setfaSmileEnabled] = useState(false);
     const [faMehEnabled, setfaMehEnabled] = useState(false);
     const [faFrownEnabled, setfaFrownEnabled] = useState(false);
+    const [suggestionText, setSuggestionText] = useState(null);
+
     const handlefaSmilePressed = () => {
         setfaSmileEnabled(true);
         setfaMehEnabled(false);
@@ -52,12 +54,32 @@ export default function Grading() {
         setfaFrownEnabled(true);
         console.log(faSmileEnabled);
     };
+    const handleSuggestionText = (text) => {
+        setSuggestionText(text);
+    }
+    const submit = () => {
+        console.log(suggestionText);
+    }
 
     return (
-        <View style={styles.gradeView}>
-            <FontAwesomeIcon icon={faFrown} onPress={handlefaFrownPressed} style={faFrownEnabled ? styles.sadFaceIconClicked : styles.sadFaceIcon} size={60}/>
-            <FontAwesomeIcon icon={faMeh} onPress={handlefaMehPressed} style={faMehEnabled ? styles.mehFaceIconClicked : styles.mehFaceIcon} size={60}/>
-            <FontAwesomeIcon icon={faSmile} onPress={handlefaSmilePressed} style={faSmileEnabled ? styles.smileFaceIconClicked : styles.smileFaceIcon} size={60}/>
+        <View style={styles.notificationScreen}>
+            <Text style={styles.howYouClassifyText}>Como classificas a tua experiência até agora?</Text>
+            <View style={styles.gradeView}>
+                <FontAwesomeIcon icon={faFrown} onPress={handlefaFrownPressed} style={faFrownEnabled ? styles.sadFaceIconClicked : styles.sadFaceIcon} size={60}/>
+                <FontAwesomeIcon icon={faMeh} onPress={handlefaMehPressed} style={faMehEnabled ? styles.mehFaceIconClicked : styles.mehFaceIcon} size={60}/>
+                <FontAwesomeIcon icon={faSmile} onPress={handlefaSmilePressed} style={faSmileEnabled ? styles.smileFaceIconClicked : styles.smileFaceIcon} size={60}/>
+            </View>
+            <Text style={styles.helpUsGettingBetter}>Ajuda-nos a melhorar</Text>
+            <Text style={styles.sendUsYourSuggestions}>Envia-nos as tuas sugestões!</Text>
+            <SafeAreaView style={styles.safeAreaViewOfText}>
+                <TextInput multiline={true} numberOfLines={15} maxLength={255} style={styles.suggestionBox} onChangeText={handleSuggestionText}></TextInput>
+            </SafeAreaView>
+            <TouchableOpacity style={styles.microphoneView} activeOpacity={0.6}>
+                <FontAwesomeIcon icon={faMicrophone} style={styles.microphoneIcon} size={50}/>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.sendButton} activeOpacity={0.6}>
+                <Text style={styles.sendButtonText} onPress={submit}>Enviar</Text>
+            </TouchableOpacity>
         </View>
     );
 }
@@ -143,5 +165,91 @@ const styles = StyleSheet.create({
     sadFaceIconClicked:{
         margin:5,
         color:"#1A82C4",
+    },
+
+    notificationScreenScroll:{
+        flex: 5,
+        width:"100%",
+    },
+
+    notificationScreen:{
+        width:"100%",
+        flexDirection: 'column', 
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    howYouClassifyText:{
+        color:"#1A82C4",
+        fontSize:18,
+        fontFamily:'RedHatDisplay_400Regular',
+    },
+
+    gradeView:{
+        flexDirection: 'row', 
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    helpUsGettingBetter:{
+        fontFamily:"RedHatDisplay_400Regular",
+        fontSize:22,
+        color:"#1A82C4",
+        marginTop:10,
+    },
+
+    sendUsYourSuggestions:{
+        fontFamily:"RedHatDisplay_400Regular",
+        fontSize:22,
+        color:"#C7CED5",
+    },
+
+    safeAreaViewOfText:{
+        width:"87.2%",
+        height:300,
+        borderRadius:10,
+        borderColor:"#EBEBEB",
+        borderWidth: 1,
+        alignItems:'center',
+    },
+
+    suggestionBox:{
+        fontFamily:"RedHatDisplay_400Regular",
+        justifyContent: "flex-start",
+        textAlignVertical: 'top',
+        width:"90%",
+        height:290,
+        margin:5,
+        fontSize:18,
+    },
+
+    microphoneView:{
+        backgroundColor:"#1A82C4",
+        width: 75,
+        height: 75,
+        borderRadius:50,
+        alignItems:'center',
+        justifyContent:"center",
+        margin:10,
+    },
+
+    microphoneIcon:{
+        color:"#fff",
+    },
+
+    sendButton:{
+        width:227,
+        height:57,
+        backgroundColor:"#1A82C4",
+        alignItems:'center',
+        justifyContent:"center",
+        margin:10,
+        borderRadius:50,
+    },
+
+    sendButtonText:{
+        fontFamily:"RedHatDisplay_400Regular",
+        fontSize:32,
+        color:"#fff",
     },
 });

@@ -37,7 +37,7 @@ export default function SignUp ({ navigation }){
                 <TextInput style={styles.townHallBox}></TextInput>
                 <Text style={styles.ageText}>Idade</Text>
                 <TextInput style={styles.ageBox}></TextInput>
-                <TouchableHighlight style={styles.continueButton}>
+                <TouchableHighlight style={styles.continueButton} onPress={() => navigation.navigate('SignUp2')}>
                     <View style={styles.continueButtonView}>
                         <Text style={styles.textContinueButton}>Continuar</Text>
                     </View>

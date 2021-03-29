@@ -21,21 +21,7 @@ export default function Notifications() {
                 </View>
                 <View style={styles.notificationScreenScrollContainer}>
                     <ScrollView style={styles.notificationScreenScroll}>
-                        <View style={styles.notificationScreen}>
-                            <Text style={styles.howYouClassifyText}>Como classificas a tua experiência até agora?</Text>
-                            <Grading/>
-                            <Text style={styles.helpUsGettingBetter}>Ajuda-nos a melhorar</Text>
-                            <Text style={styles.sendUsYourSuggestions}>Envia-nos as tuas sugestões!</Text>
-                            <SafeAreaView style={styles.safeAreaViewOfText}>
-                                <TextInput multiline={true} numberOfLines={15} maxLength={255} style={styles.suggestionBox}></TextInput>
-                            </SafeAreaView>
-                            <TouchableOpacity style={styles.microphoneView} activeOpacity={0.6}>
-                                <FontAwesomeIcon icon={faMicrophone} style={styles.microphoneIcon} size={50}/>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.sendButton} activeOpacity={0.6}>
-                                <Text style={styles.sendButtonText}>Enviar</Text>
-                            </TouchableOpacity>
-                        </View>
+                        <Grading/>
                     </ScrollView>
                 </View>
             </View>
@@ -138,7 +124,7 @@ const styles = StyleSheet.create({
         width:"90%",
         height:290,
         margin:5,
-        
+        fontSize:18,
     },
 
     microphoneView:{
