@@ -1,11 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useFonts, RedHatDisplay_400Regular } from '@expo-google-fonts/red-hat-display';
-import { StyleSheet, Text, View, ScrollView, Image, TouchableHighlight } from 'react-native';
+import { Animated, StyleSheet, Text, View, ScrollView, Image, TouchableHighlight } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faBell, faUser } from '@fortawesome/free-solid-svg-icons';
 
 export default function HomeMenu({ navigation }){
+    const scrollY= new Animated.Value(0);
+    let scrollYValue = scrollY._value;
+    const [scrolled, setScrolled] = useState(false);
+
     let [fontsLoaded] = useFonts({
         RedHatDisplay_400Regular,
     });
@@ -14,7 +18,7 @@ export default function HomeMenu({ navigation }){
     } else {
         return(
             <View style={styles.container}>
-                <View style={styles.topOfTheScreen}>
+                <View style={scrolled ? styles.topOfTheScreenScrolled : styles.topOfTheScreen}>
                     <TouchableHighlight onPress={() => navigation.navigate('Profile')} underlayColor={"rgba(15, 122, 190, 0.8)"} style={styles.profileButton}>
                         <FontAwesomeIcon icon={faUser} style={styles.profileIcon} size={20}/>
                     </TouchableHighlight>
@@ -24,7 +28,7 @@ export default function HomeMenu({ navigation }){
                     </TouchableHighlight>
                 </View>
                 <View style={styles.activitiesScreen}>
-                    <ScrollView style={styles.activitiesScreenScroll}>
+                    <Animated.ScrollView style={styles.activitiesScreenScroll} scrollEventThrottle={1} onScroll={(e)=>{scrollY.setValue(e.nativeEvent.contentOffset.y); scrollYValue = scrollY._value; scrollYValue > 0 ? setScrolled(true) : setScrolled(false);}}>
                         <View style={styles.activitiesScreenScrollView}>
                             <Text style={styles.activitiesText}>Atividades</Text>
                             <View style={styles.favoriteActivities}>
@@ -36,6 +40,7 @@ export default function HomeMenu({ navigation }){
                                 </View>
                                 <Text style={styles.sportActivitiesSportText}>Desporto</Text>
                                 <Text style={styles.sportActivitiesHowManyText}>8 atividades esta semana</Text>
+                                <Image source={require("../../sports.png")} style={styles.sportsPng}></Image>
                             </View>
                             <View style={styles.literatureActivities}>
                                 <View style={styles.literatureActivitiesSearch}>
@@ -43,6 +48,7 @@ export default function HomeMenu({ navigation }){
                                 </View>
                                 <Text style={styles.literatureActivitiesSportText}>Literatura</Text>
                                 <Text style={styles.literatureActivitiesHowManyText}>7 atividades esta semana</Text>
+                                <Image source={require("../../literature.png")} style={styles.literaturePng}></Image>
                             </View>
                             <View style={styles.videoGamesActivities}>
                                 <View style={styles.videoGamesActivitiesSearch}>
@@ -50,6 +56,7 @@ export default function HomeMenu({ navigation }){
                                 </View>
                                 <Text style={styles.videoGamesActivitiesSportText}>Video Jogos</Text>
                                 <Text style={styles.videoGamesActivitiesHowManyText}>11 atividades esta semana</Text>
+                                <Image source={require("../../videogames.png")} style={styles.videogamesPng}></Image>
                             </View>
                             <View style={styles.musicActivities}>
                                 <View style={styles.musicActivitiesSearch}>
@@ -57,9 +64,18 @@ export default function HomeMenu({ navigation }){
                                 </View>
                                 <Text style={styles.musicActivitiesSportText}>Música</Text>
                                 <Text style={styles.musicActivitiesHowManyText}>3 atividades esta semana</Text>
+                                <Image source={require("../../music.png")} style={styles.musicPng}></Image>
+                            </View>
+                            <View style={styles.cinemaActivities}>
+                                <View style={styles.cinemaActivitiesSearch}>
+                                    <Text style={styles.cinemaActivitiesSearchText}>Procurar</Text>
+                                </View>
+                                <Text style={styles.cinemaActivitiesSportText}>Cinema</Text>
+                                <Text style={styles.cinemaActivitiesHowManyText}>100 atividades esta semana</Text>
+                                <Image source={require("../../cinema.png")} style={styles.cinemaPng}></Image>
                             </View>
                         </View>
-                    </ScrollView>
+                    </Animated.ScrollView>
                 </View>
             </View>
         );
@@ -85,6 +101,22 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: "row",
+    },
+
+    topOfTheScreenScrolled:{
+        flex: 1,
+        maxWidth:414,
+        width:"100%",
+        backgroundColor: '#FCFCFC',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: "column",
+        zIndex:2,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity:  0.4,
+        shadowRadius: 3,
+        elevation: 5,
     },
 
     logoPng:{
@@ -126,9 +158,8 @@ const styles = StyleSheet.create({
     },
 
     activitiesScreen:{
-        flex: 3,
+        flex: 3.4,
         maxWidth:414,
-        marginTop:-25,
         width:"100%",
         backgroundColor: '#FCFCFC',
         alignItems: 'center',
@@ -217,6 +248,13 @@ const styles = StyleSheet.create({
         position:"absolute",
         left:"8.9%",
     },
+    sportsPng:{
+        width:60,
+        height:60,
+        position:"absolute",
+        top:"12%",
+        right:"4.9%",
+    },
 
     //Literature
     literatureActivities:{
@@ -265,6 +303,13 @@ const styles = StyleSheet.create({
         fontSize:18,
         position:"absolute",
         left:"8.9%",
+    },
+    literaturePng:{
+        width:60,
+        height:60,
+        position:"absolute",
+        top:"12%",
+        right:"4.9%",
     },
 
     //Video Games
@@ -315,6 +360,13 @@ const styles = StyleSheet.create({
         position:"absolute",
         left:"8.9%",
     },
+    videogamesPng:{
+        width:60,
+        height:60,
+        position:"absolute",
+        top:"12%",
+        right:"4.9%",
+    },
 
     //Music
     musicActivities:{
@@ -363,5 +415,68 @@ const styles = StyleSheet.create({
         fontSize:18,
         position:"absolute",
         left:"8.9%",
+    },
+    musicPng:{
+        width:60,
+        height:60,
+        position:"absolute",
+        top:"12%",
+        right:"4.9%",
+    },
+
+    //Cinema
+    cinemaActivities:{
+        marginTop:15,
+        maxWidth:370,
+        width:"90%",
+        height:180,
+        backgroundColor:"#FAFAFA",
+        shadowColor: "#000",
+        shadowOffset: {
+	        width: 0,
+	        height: 1,
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 1.00,
+        elevation: 1,
+        alignItems:'center',
+        justifyContent:'center',
+        borderRadius:15,
+    },
+    cinemaActivitiesSearch:{
+        backgroundColor:"#F0F0F0",
+        width:"36.2%",
+        position:"absolute",
+        bottom:"12%",
+        borderRadius:50,
+    },
+    cinemaActivitiesSearchText:{
+        textAlign:'center',
+        fontSize:18,
+        fontFamily:"RedHatDisplay_400Regular",
+        color:"#6A4C93",
+    },
+    cinemaActivitiesSportText:{
+        textAlign:'center',
+        fontSize:34,
+        fontFamily:"RedHatDisplay_400Regular",
+        fontWeight:"bold",
+        color:"#6A4C93",
+        position:"absolute",
+        top:"12%",
+        left:"8.9%",
+    },
+    cinemaActivitiesHowManyText:{
+        color:"#CDCDCD",
+        fontSize:18,
+        position:"absolute",
+        left:"8.9%",
+    },
+    cinemaPng:{
+        width:60,
+        height:60,
+        position:"absolute",
+        top:"12%",
+        right:"4.9%",
     },
 });

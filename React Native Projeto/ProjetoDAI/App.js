@@ -8,8 +8,9 @@ import OpenScreen from "./assets/screens/Home/OpenScreen";
 import BottomNavbar from "./assets/screens/Home/Components/BottomNavbar";
 import Login from "./assets/screens/Home/Login";
 import SignUp from "./assets/screens/Home/SignUp";
-import Notifications from "./assets/screens/Home/Notifications";
 import SignUp2 from "./assets/screens/Home/SignUp2";
+import SignUp3 from "./assets/screens/Home/SignUp3";
+import SignUp4 from "./assets/screens/Home/SignUp4";
 
 const Stack = createStackNavigator();
 
@@ -23,6 +24,8 @@ export default function App() {
         <Stack.Screen name="Login" component={Login} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
         <Stack.Screen name="SignUp" component={SignUp} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
         <Stack.Screen name="SignUp2" component={SignUp2} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
+        <Stack.Screen name="SignUp3" component={SignUp3} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
+        <Stack.Screen name="SignUp4" component={SignUp4} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

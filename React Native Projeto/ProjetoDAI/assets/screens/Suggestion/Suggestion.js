@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Text, View, StyleSheet, TextInput, SafeAreaView, ScrollView , TouchableOpacity} from 'react-native';
+import { Animated, Text, View, StyleSheet, TextInput, SafeAreaView, ScrollView , TouchableOpacity} from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { useFonts, RedHatDisplay_400Regular } from '@expo-google-fonts/red-hat-display';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -7,6 +7,14 @@ import { faChevronLeft, faMicrophone} from '@fortawesome/free-solid-svg-icons';
 import Grading from './Components/Grading';
 
 export default function Notifications() {
+    const scrollY= new Animated.Value(0);
+    let scrollYValue = scrollY._value;
+    const [scrolled, setScrolled] = useState(false);
+    {/*const handleScrolled = () => {
+        scrollYValue > 0 ? setScrolled(true) : setScrolled(false);
+        console.log(scrolled);
+    };*/}
+
     let [fontsLoaded] = useFonts({
         RedHatDisplay_400Regular,
     });
@@ -15,14 +23,14 @@ export default function Notifications() {
     } else {
         return(
             <View style={styles.container}>
-                <View style={styles.topNavbar}>
+                <View style={scrolled ? styles.topNavbarScrolled : styles.topNavbar}>
                     <FontAwesomeIcon icon={faChevronLeft} onPress={() => navigation.navigate('HomeMenu')} style={styles.chevronLeft}/>
                     <Text style={styles.notificationText}>Enviar Sugestões</Text>
                 </View>
                 <View style={styles.notificationScreenScrollContainer}>
-                    <ScrollView style={styles.notificationScreenScroll}>
+                    <Animated.ScrollView style={styles.notificationScreenScroll} scrollEventThrottle={1} onScroll={(e)=>{scrollY.setValue(e.nativeEvent.contentOffset.y); scrollYValue = scrollY._value; scrollYValue > 0 ? setScrolled(true) : setScrolled(false);}}>
                         <Grading/>
-                    </ScrollView>
+                    </Animated.ScrollView>
                 </View>
             </View>
         )
@@ -40,16 +48,31 @@ const styles = StyleSheet.create({
     topNavbar: {
         flex: 1,
         width:"100%",
-        height:100,
         backgroundColor: '#FCFCFC',
         flexDirection: 'row', 
         alignItems: 'center',
         justifyContent: 'center',
+        zIndex:2,
+    },
+
+    topNavbarScrolled:{
+        flex: 1,
+        width:"100%",
+        backgroundColor: '#FCFCFC',
+        flexDirection: 'row', 
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex:2,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity:  0.4,
+        shadowRadius: 3,
+        elevation: 5,
     },
     
     notificationText:{
         position:'absolute',
-        bottom:"0%",
+        bottom:"10%",
         fontSize:36,
         color:"#1A82C4",
         fontFamily:'RedHatDisplay_400Regular',
@@ -57,7 +80,7 @@ const styles = StyleSheet.create({
 
     chevronLeft:{
         position:'absolute',
-        bottom:17,
+        bottom:"24%",
         left:'4.83%',
         color:"#B0B0B0",
     },
@@ -68,7 +91,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column', 
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop:20,
     },
 
     notificationScreenScroll:{

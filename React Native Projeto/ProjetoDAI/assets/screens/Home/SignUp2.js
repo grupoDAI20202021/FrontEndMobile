@@ -24,32 +24,32 @@ export default function SignUp2 ({ navigation }){
                     </TouchableHighlight>
                 </View>
                 <View style={styles.avatarsContainer}>
-                    <TouchableHighlight style={styles.avatar1} onPressIn ={() => this.setState({borderColor: '#DDDDDD'})}>
+                    <TouchableHighlight style={styles.avatar1}>
                         <Image source={require("../../avatar1.png")} style={styles.avatar1png}/>
                     </TouchableHighlight>
-                    <TouchableHighlight style={styles.avatar2} onPressIn ={() => this.setState({borderColor: '#DDDDDD'})}>
+                    <TouchableHighlight style={styles.avatar2}>
                         <Image source={require("../../avatar2.png")} style={styles.avatar2png}/>
                     </TouchableHighlight>
-                    <TouchableHighlight style={styles.avatar3} onPressIn ={() => this.setState({borderColor: '#DDDDDD'})}>
+                    <TouchableHighlight style={styles.avatar3}>
                         <Image source={require("../../avatar3.png")} style={styles.avatar3png}/>
                     </TouchableHighlight>
-                    <TouchableHighlight style={styles.avatar4} onPressIn ={() => this.setState({borderColor: '#DDDDDD'})}>
+                    <TouchableHighlight style={styles.avatar4}>
                         <Image source={require("../../avatar4.png")} style={styles.avatar4png}/>
                     </TouchableHighlight>
-                    <TouchableHighlight style={styles.avatar5} onPressIn ={() => this.setState({borderColor: '#DDDDDD'})}>
+                    <TouchableHighlight style={styles.avatar5}>
                         <Image source={require("../../avatar5.png")} style={styles.avatar5png}/>
                     </TouchableHighlight>
-                    <TouchableHighlight style={styles.avatar6} onPressIn ={() => this.setState({borderColor: '#DDDDDD'})}>
+                    <TouchableHighlight style={styles.avatar6}>
                         <Image source={require("../../avatar6.png")} style={styles.avatar6png}/>
                     </TouchableHighlight>
-                    <TouchableHighlight style={styles.avatar7} onPressIn ={() => this.setState({borderColor: '#DDDDDD'})}>
+                    <TouchableHighlight style={styles.avatar7}>
                         <Image source={require("../../avatar7.png")} style={styles.avatar7png}/>
                     </TouchableHighlight>
-                    <TouchableHighlight style={styles.avatar8} onPress ={() => this.setState({borderColor: '#DDDDDD'})}>
+                    <TouchableHighlight style={styles.avatar8}>
                         <Image source={require("../../avatar8.png")} style={styles.avatar8png}/>
                     </TouchableHighlight>
                 </View>
-                <TouchableHighlight style={styles.continueButton}>
+                <TouchableHighlight style={styles.continueButton} onPress={() => navigation.navigate('SignUp3')}>
                     <View style={styles.continueButtonView}>
                         <Text style={styles.textContinueButton}>Continuar</Text>
                     </View>
@@ -107,144 +107,128 @@ const styles = StyleSheet.create({
     avatar1:{
         position: 'absolute',
         top: '0%',
-        left: '15%',
-        width: 120,
-        height: 120,
+        left: '16%',
+        width: 100,
+        height: 100,
         borderRadius: 90,
-        borderWidth: 5,
-        borderColor: '#FCFCFC',
     },
 
     avatar1png:{
         position: 'absolute',
-        width: 120,
-        height: 120,
+        width: 100,
+        height: 100,
         borderRadius: 90,
     },
 
     avatar2:{
         position: 'absolute',
         top: '0%',
-        left: '55%',
-        width: 120,
-        height: 120,
+        left: '56%',
+        width: 100,
+        height: 100,
         borderRadius: 90,
-        borderWidth: 5,
-        borderColor: '#FCFCFC',
     },
 
     avatar2png:{
         position: 'absolute',
-        width: 120,
-        height: 120,
+        width: 100,
+        height: 100,
         borderRadius: 90,
     },
 
     avatar3:{
         position: 'absolute',
         top: '25%',
-        left: '15%',
-        width: 120,
-        height: 120,
+        left: '16%',
+        width: 100,
+        height: 100,
         borderRadius: 90,
-        borderWidth: 5,
-        borderColor: '#FCFCFC',
     },
 
     avatar3png:{
         position: 'absolute',
-        width: 120,
-        height: 120,
+        width: 100,
+        height: 100,
         borderRadius: 90,
     },
 
     avatar4:{
         position: 'absolute',
         top: '25%',
-        left: '55%',
-        width: 120,
-        height: 120,
+        left: '56%',
+        width: 100,
+        height: 100,
         borderRadius: 90,
-        borderWidth: 5,
-        borderColor: '#FCFCFC',
     },
 
     avatar4png:{
         position: 'absolute',
-        width: 120,
-        height: 120,
+        width: 100,
+        height: 100,
         borderRadius: 90,
     },
 
     avatar5:{
         position: 'absolute',
         top: '50%',
-        left: '15%',
-        width: 120,
-        height: 120,
+        left: '16%',
+        width: 100,
+        height: 100,
         borderRadius: 90,
-        borderWidth: 5,
-        borderColor: '#FCFCFC',
     },
 
     avatar5png:{
         position: 'absolute',
-        width: 120,
-        height: 120,
+        width: 100,
+        height: 100,
         borderRadius: 90,
     },
 
     avatar6:{
         position: 'absolute',
         top: '50%',
-        left: '55%',
-        width: 120,
-        height: 120,
+        left: '56%',
+        width: 100,
+        height: 100,
         borderRadius: 90,
-        borderWidth: 5,
-        borderColor: '#FCFCFC',
     },
 
     avatar6png:{
         position: 'absolute',
-        width: 120,
-        height: 120,
+        width: 100,
+        height: 100,
         borderRadius: 90,
     },
 
     avatar7:{
         position: 'absolute',
         top: '75%',
-        left: '15%',
-        width: 120,
-        height: 120,
+        left: '16%',
+        width: 100,
+        height: 100,
         borderRadius: 90,
-        borderWidth: 5,
-        borderColor: '#FCFCFC',
     },
 
     avatar7png:{
         position: 'absolute',
-        width: 120,
-        height: 120,
+        width: 100,
+        height: 100,
         borderRadius: 90,
     },
 
     avatar8:{
         position: 'absolute',
         top: '75%',
-        left: '55%',
-        width: 120,
-        height: 120,
+        left: '56%',
+        width: 100,
+        height: 100,
         borderRadius: 90,
-        borderWidth: 5,
-        borderColor: '#FCFCFC',
     },
 
     avatar8png:{
         position: 'absolute',
-        width: 120,
-        height: 120,
+        width: 100,
+        height: 100,
         borderRadius: 90,
     },
 
