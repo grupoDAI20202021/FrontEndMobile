@@ -34,32 +34,59 @@ export default function Grading() {
     const [faSmileEnabled, setfaSmileEnabled] = useState(false);
     const [faMehEnabled, setfaMehEnabled] = useState(false);
     const [faFrownEnabled, setfaFrownEnabled] = useState(false);
+    const [experienceValue, setExpirienceValue] = useState(null);
     const [suggestionText, setSuggestionText] = useState(null);
 
     const handlefaSmilePressed = () => {
         setfaSmileEnabled(true);
         setfaMehEnabled(false);
         setfaFrownEnabled(false);
-        console.log(faSmileEnabled);
+        setExpirienceValue(3);
     };
     const handlefaMehPressed = () => {
         setfaSmileEnabled(false);
         setfaMehEnabled(true);
         setfaFrownEnabled(false);
-        console.log(faSmileEnabled);
+        setExpirienceValue(2);
     };
     const handlefaFrownPressed = () => {
         setfaSmileEnabled(false);
         setfaMehEnabled(false);
         setfaFrownEnabled(true);
-        console.log(faSmileEnabled);
+        setExpirienceValue(1);
     };
     const handleSuggestionText = (text) => {
         setSuggestionText(text);
     }
-    const submit = () => {
-        console.log(suggestionText);
+
+    //Fetch
+    const submit = async () => {
+        if(!faSmileEnabled && !faMehEnabled && !faFrownEnabled){
+            console.log("ERROR");
+            console.log(faSmileEnabled);
+            console.log(faMehEnabled);
+            console.log(faFrownEnabled);
+        }else{
+            console.log(faSmileEnabled);
+            console.log(faMehEnabled);
+            console.log(faFrownEnabled);
+            const response = await fetch("http://192.168.1.74:8080/api/sugestions", {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    experience: experienceValue,
+                    content: suggestionText,
+                    idChild: 7 /////////////////////MUDAR PRO ID DO CHILD LOGADO////////////////////////////
+                })
+            });
+            const response_1 = await response.json();
+            return response_1;
+        }
     }
+
 
     return (
         <View style={styles.notificationScreen}>
@@ -80,6 +107,7 @@ export default function Grading() {
             <TouchableOpacity style={styles.sendButton} activeOpacity={0.6}>
                 <Text style={styles.sendButtonText} onPress={submit}>Enviar</Text>
             </TouchableOpacity>
+            <View style={styles.erroMessage}></View>
         </View>
     );
 }
@@ -252,4 +280,11 @@ const styles = StyleSheet.create({
         fontSize:32,
         color:"#fff",
     },
+
+    erroMessage:{
+        width:200,
+        height:200,
+        backgroundColor:"#9E1010",
+        zIndex:2,
+    }
 });

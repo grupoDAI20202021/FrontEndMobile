@@ -26,41 +26,31 @@ export default function SignUp3 ({ navigation }){
                 <TouchableHighlight style={styles.sports}>
                     <View style={styles.sportsView}>
                         <Text style={styles.sportsText}>Desporto</Text>
-                        <View style={styles.sportsimgContainer}>
-                            <Image source={require("../../sports.png")} style={styles.sportsimg}/>
-                        </View>
+                        <Image source={require("../../sports.png")} style={styles.sportsimg}/>
                     </View>
                 </TouchableHighlight>
                 <TouchableHighlight style={styles.literature}>
                     <View style={styles.literatureView}>
                         <Text style={styles.literatureText}>Literatura</Text>
-                        <View style={styles.literatureimgContainer}>
-                            <Image source={require("../../literature.png")} style={styles.literatureimg}/>
-                        </View>
+                        <Image source={require("../../literature.png")} style={styles.literatureimg}/>
                     </View>
                 </TouchableHighlight>
                 <TouchableHighlight style={styles.cinema}>
                     <View style={styles.cinemaView}>
                         <Text style={styles.cinemaText}>Cinema</Text>
-                        <View style={styles.cinemaimgContainer}>
-                            <Image source={require("../../cinema.png")} style={styles.cinemaimg}/>
-                        </View>
+                        <Image source={require("../../cinema.png")} style={styles.cinemaimg}/>
                     </View>
                 </TouchableHighlight>
                 <TouchableHighlight style={styles.music}>
                     <View style={styles.musicView}>
                         <Text style={styles.musicText}>Música</Text>
-                        <View style={styles.musicimgContainer}>
-                            <Image source={require("../../music.png")} style={styles.musicimg}/>
-                        </View>
+                        <Image source={require("../../music.png")} style={styles.musicimg}/>
                     </View>
                 </TouchableHighlight>
                 <TouchableHighlight style={styles.videogames}>
                     <View style={styles.videogamesView}>
                         <Text style={styles.videogamesText}>Videojogos</Text>
-                        <View style={styles.videogamesimgContainer}>
-                            <Image source={require("../../videogames.png")} style={styles.videogamesimg}/>
-                        </View>
+                        <Image source={require("../../videogames.png")} style={styles.videogamesimg}/>
                     </View>
                 </TouchableHighlight>
                 <TouchableHighlight style={styles.continueButton} onPress={() => navigation.navigate('SignUp4')}>
@@ -124,38 +114,35 @@ const styles = StyleSheet.create({
         maxWidth: 360,
         top: '20%',
         width: '85%',
-        height: '10%',
-        maxHeight: 70,
+        height: 70,
         backgroundColor: '#ff5a5f',
         borderRadius: 90,
         alignItems: 'center',
         justifyContent: 'center',
+        flexDirection:"row",
     },
 
     sportsView:{
+        width: '100%',
         flexDirection: 'row', 
         alignItems: 'center', 
-        justifyContent:'center',
+        justifyContent:'flex-start',
     },
 
     sportsText:{
+        position: 'absolute',
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
         color: "white",
         fontSize: 36,
         fontFamily:'RedHatDisplay_400Regular',
-    },
-
-    sportsimgContainer:{
-        width: 70,
-        height: 70,
-        left: '-100%',
+        marginLeft:100,
     },
 
     sportsimg:{
-        flex: 1,
-        width: undefined,
-        height: undefined,
-        resizeMode: 'cover',
-        left: '0%',
+        width: 70,
+        height: 70,
     },
 
     literature:{
@@ -163,8 +150,7 @@ const styles = StyleSheet.create({
         maxWidth: 360,
         top: '33%',
         width: '85%',
-        height: '10%',
-        maxHeight: 70,
+        height: 70,
         backgroundColor: '#fabe55',
         borderRadius: 90,
         alignItems: 'center',
@@ -178,22 +164,16 @@ const styles = StyleSheet.create({
     },
 
     literatureText:{
+        position: 'absolute',
+        textAlign: 'center',
         color: "white",
         fontSize: 36,
         fontFamily:'RedHatDisplay_400Regular',
     },
 
-    literatureimgContainer:{
+    literatureimg:{
         width: 70,
         height: 70,
-        left: '-100%',
-    },
-
-    literatureimg:{
-        flex: 1,
-        width: undefined,
-        height: undefined,
-        resizeMode: 'cover',
         left: '0%',
     },
 
@@ -202,7 +182,7 @@ const styles = StyleSheet.create({
         maxWidth: 360,
         top: '46%',
         width: '85%',
-        height: '10%',
+        height: 70,
         maxHeight: 70,
         backgroundColor: '#6a4c93',
         borderRadius: 90,
@@ -217,22 +197,17 @@ const styles = StyleSheet.create({
     },
 
     cinemaText:{
+        position: 'absolute',
+        textAlign: 'center',
         color: "white",
         fontSize: 36,
         fontFamily:'RedHatDisplay_400Regular',
     },
 
-    cinemaimgContainer:{
-        width: 70,
-        height: 70,
-        left: '-100%',
-    },
-
     cinemaimg:{
         flex: 1,
-        width: undefined,
-        height: undefined,
-        resizeMode: 'cover',
+        width: 70,
+        height: 70,
         left: '0%',
     },
 
@@ -241,7 +216,7 @@ const styles = StyleSheet.create({
         maxWidth: 360,
         top: '59%',
         width: '85%',
-        height: '10%',
+        height: 70,
         maxHeight: 70,
         backgroundColor: '#1a82c4',
         borderRadius: 90,
@@ -256,22 +231,17 @@ const styles = StyleSheet.create({
     },
 
     musicText:{
+        position: 'absolute',
+        textAlign: 'center',
         color: "white",
         fontSize: 36,
         fontFamily:'RedHatDisplay_400Regular',
     },
 
-    musicimgContainer:{
-        width: 70,
-        height: 70,
-        left: '-100%',
-    },
-
     musicimg:{
         flex: 1,
-        width: undefined,
-        height: undefined,
-        resizeMode: 'cover',
+        width: 70,
+        height: 70,
         left: '0%',
     },
 
@@ -280,7 +250,7 @@ const styles = StyleSheet.create({
         maxWidth: 360,
         top: '72%',
         width: '85%',
-        height: '10%',
+        height: 70,
         maxHeight: 70,
         backgroundColor: '#8ac926',
         borderRadius: 90,
@@ -295,22 +265,17 @@ const styles = StyleSheet.create({
     },
 
     videogamesText:{
+        position: 'absolute',
+        textAlign: 'center',
         color: "white",
         fontSize: 36,
         fontFamily:'RedHatDisplay_400Regular',
     },
 
-    videogamesimgContainer:{
-        width: 70,
-        height: 70,
-        left: '-100%',
-    },
-
     videogamesimg:{
         flex: 1,
-        width: undefined,
-        height: undefined,
-        resizeMode: 'cover',
+        width: 70,
+        height: 70,
         left: '0%',
     },
 

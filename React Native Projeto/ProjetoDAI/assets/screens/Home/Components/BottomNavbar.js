@@ -3,7 +3,7 @@ import { StyleSheet, View, Image, TouchableHighlight, Text } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faTrophy, faComments, faLightbulb, faStar, faHome } from '@fortawesome/free-solid-svg-icons';
-import Forum from "../Forum";
+import Forum from "../../Forum/Forum";
 import Suggestion from "../../Suggestion/Suggestion";
 import HomeMenuStack from "../../HomeMenu/HomeMenuStack";
 import Rank from "../../Rank/Rank";
