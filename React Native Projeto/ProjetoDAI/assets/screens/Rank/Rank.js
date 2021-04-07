@@ -1,12 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Text, View, StyleSheet, Animated, ScrollView } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { useFonts, RedHatDisplay_400Regular } from '@expo-google-fonts/red-hat-display';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
-
+// Verificar se o scroll ta bem
 export default function Rank() {
+    const scrollY= new Animated.Value(0);
+    let scrollYValue = scrollY._value;
+    const [scrolled, setScrolled] = useState(false);
     let [fontsLoaded] = useFonts({
         RedHatDisplay_400Regular,
     });
@@ -15,7 +18,7 @@ export default function Rank() {
     } else {
         return(
             <View style={styles.container}>
-                <View style={styles.topNavbar}>
+                <View style={scrolled ? styles.topNavbarScrolled : styles.topNavbar}>
                     <FontAwesomeIcon icon={faChevronLeft} onPress={() => navigation.navigate('HomeMenu')} style={styles.chevronLeft}/>
                     <Text style={styles.rankText}>Rank</Text>
                 </View>
@@ -42,11 +45,26 @@ const styles = StyleSheet.create({
     topNavbar: {
         flex: 1,
         width:"100%",
-        height:100,
         backgroundColor: '#FCFCFC',
         flexDirection: 'row', 
         alignItems: 'center',
         justifyContent: 'center',
+        zIndex:2,
+    },
+
+    topNavbarScrolled:{
+        flex: 1,
+        width:"100%",
+        backgroundColor: '#FCFCFC',
+        flexDirection: 'row', 
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex:2,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity:  0.4,
+        shadowRadius: 3,
+        elevation: 5,
     },
 
     rankText:{

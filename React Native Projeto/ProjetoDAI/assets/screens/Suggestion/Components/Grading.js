@@ -107,7 +107,7 @@ export default function Grading() {
             <TouchableOpacity style={styles.sendButton} activeOpacity={0.6}>
                 <Text style={styles.sendButtonText} onPress={submit}>Enviar</Text>
             </TouchableOpacity>
-            <View style={styles.erroMessage}></View>
+            {/*<View style={styles.erroMessage}></View>*/}
         </View>
     );
 }
@@ -285,6 +285,8 @@ const styles = StyleSheet.create({
         width:200,
         height:200,
         backgroundColor:"#9E1010",
-        zIndex:2,
+        zIndex:3,
+        position:"absolute",
+        top:"50%",
     }
 });
