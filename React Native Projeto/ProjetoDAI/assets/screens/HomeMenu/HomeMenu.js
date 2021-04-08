@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { useFonts, RedHatDisplay_400Regular } from '@expo-google-fonts/red-hat-display';
-import { Animated, StyleSheet, Text, View, ScrollView, Image, TouchableHighlight } from 'react-native';
+import { Animated, StyleSheet, Text, View, ScrollView, Image, TouchableHighlight, FlatList } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faBell, faUser } from '@fortawesome/free-solid-svg-icons';
@@ -9,11 +9,49 @@ export default function HomeMenu({ navigation }){
     const scrollY= new Animated.Value(0);
     let scrollYValue = scrollY._value;
     const [scrolled, setScrolled] = useState(false);
+    const [favoriteList, setfavoriteList] = useState(false);
+    const [loaded, setLoaded] = useState(false);
+    
+    //Fetch
+    useEffect(() => {
+        async function submit() {
+            const response = await fetch("http://192.168.1.74:8080/api/preferences/7", {//MUDAR O 7
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            });
+            const response_1 = await response.json();
+            setfavoriteList(response_1);
+            console.log(favoriteList);
+            setLoaded(true);
+            /*fetch("http://192.168.1.74:8080/api/preferences/7",{method: 'GET'})
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (result) {
+                if (result.status.response === "success") {
+                    setfavoriteList(result);
+                    console.log("1")
+                };
+                console.log(result.data_list);
+            })
+            .catch(function (error) {
+                console.log("-------- error ------- "+error);
+                alert("result:"+error)
+            });*/
+        }
+        if(!loaded){
+            submit();
+            setLoaded(true);
+        }
+    });
 
     let [fontsLoaded] = useFonts({
         RedHatDisplay_400Regular,
     });
-    if (!fontsLoaded) {
+    if (!fontsLoaded && !loaded) {
         return <AppLoading/>;
     } else {
         return(
@@ -22,18 +60,93 @@ export default function HomeMenu({ navigation }){
                     <TouchableHighlight onPress={() => navigation.navigate('Profile')} underlayColor={"rgba(15, 122, 190, 0.8)"} style={styles.profileButton}>
                         <FontAwesomeIcon icon={faUser} style={styles.profileIcon} size={20}/>
                     </TouchableHighlight>
-                    <Image source={require("../../LOGOPNG.png")} style={styles.logoPng}/>
-                    <TouchableHighlight onPress={() => navigation.navigate('Notifications')} underlayColor={"rgba(15, 122, 190, 0.8)"} style={styles.notificationButton}>
+                    <Image source={require("../../LOGOPNG.png")} style={styles.logoPng} />
+                    <TouchableHighlight /*onPress={submit}*/ /*onPress={() => navigation.navigate('Notifications')}*/ underlayColor={"rgba(15, 122, 190, 0.8)"} style={styles.notificationButton}>
                         <FontAwesomeIcon icon={faBell} style={styles.bell} size={20}/>
                     </TouchableHighlight>
                 </View>
                 <View style={styles.activitiesScreen}>
-                    <Animated.ScrollView style={styles.activitiesScreenScroll} scrollEventThrottle={1} onScroll={(e)=>{scrollY.setValue(e.nativeEvent.contentOffset.y); scrollYValue = scrollY._value; scrollYValue > 0 ? setScrolled(true) : setScrolled(false);}}>
+                    <FlatList data={favoriteList} 
+                        renderItem={({ item }) => {
+                            if(item.idPreference==9){
+                                return(
+                                    <View style={styles.activitiesScreenScrollView}>
+                                        <Text style={styles.activitiesText}>Atividades</Text>
+                                        <View style={styles.favoriteActivities}>
+                                            <Text style={styles.seeAllActivities}>Ver todas</Text>
+                                        </View>
+                                        <View style={styles.sportActivities}>
+                                            <View style={styles.sportActivitiesSearch}>
+                                                <Text style={styles.sportActivitiesSearchText}>Procurar</Text>
+                                            </View>
+                                            <Text style={styles.sportActivitiesSportText}>Desporto</Text>
+                                            <Text style={styles.sportActivitiesHowManyText}>8 atividades esta semana</Text>
+                                            <Image source={require("../../sports.png")} style={styles.sportsPng}></Image>
+                                        </View>
+                                    </View>
+                                )
+                            }
+                            if(item.idPreference==9){
+                                return(
+                                    <Text>
+                                        asdad
+                                    </Text>
+                                )
+                            }
+                        }}
+                        keyExtractor={(item, index) => index}
+                        style={styles.activitiesScreenScroll}
+                    />
+                    {/*<Animated.ScrollView style={styles.activitiesScreenScroll} scrollEventThrottle={1} onScroll={(e)=>{scrollY.setValue(e.nativeEvent.contentOffset.y); scrollYValue = scrollY._value; scrollYValue > 0 ? setScrolled(true) : setScrolled(false);}}>
+                        {data.map((postData) => {
+								console.log(postData);
+								return (
+									<Card  key={postData.id}>
+										<Card.Img variant="top" src={postData.image} />
+										<Card.Body>
+											<Card.Title className={style.tile}>
+												{postData.title}
+											</Card.Title>
+											<Card.Subtitle className={style.tag}>
+												{postData.tag + " "}
+											</Card.Subtitle>
+
+											<Card.Text className={style.para}>
+												{postData.body}
+											</Card.Text>
+										</Card.Body>
+									</Card>
+								);
+							})}
                         <View style={styles.activitiesScreenScrollView}>
                             <Text style={styles.activitiesText}>Atividades</Text>
                             <View style={styles.favoriteActivities}>
                                 <Text style={styles.seeAllActivities}>Ver todas</Text>
                             </View>
+                            <FlatList data={favoriteList} 
+                                renderItem={({ item }) => {
+                                    if(item.idPreference==9){
+                                        return(
+                                            <View style={styles.sportActivities}>
+                                                <View style={styles.sportActivitiesSearch}>
+                                                    <Text style={styles.sportActivitiesSearchText}>Procurar</Text>
+                                                </View>
+                                                <Text style={styles.sportActivitiesSportText}>Desporto</Text>
+                                                <Text style={styles.sportActivitiesHowManyText}>8 atividades esta semana</Text>
+                                                <Image source={require("../../sports.png")} style={styles.sportsPng}></Image>
+                                            </View>
+                                        )
+                                    }
+                                    if(item.idPreference==8){
+                                        return(
+                                            <Text>
+                                                asdad
+                                            </Text>
+                                        )
+                                    }
+                                }}
+                                keyExtractor={(item, index) => index}
+                            />
                             <View style={styles.sportActivities}>
                                 <View style={styles.sportActivitiesSearch}>
                                     <Text style={styles.sportActivitiesSearchText}>Procurar</Text>
@@ -75,7 +188,7 @@ export default function HomeMenu({ navigation }){
                                 <Image source={require("../../cinema.png")} style={styles.cinemaPng}></Image>
                             </View>
                         </View>
-                    </Animated.ScrollView>
+                    </Animated.ScrollView>*/}
                 </View>
             </View>
         );

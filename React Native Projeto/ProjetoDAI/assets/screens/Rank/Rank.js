@@ -10,6 +10,37 @@ export default function Rank() {
     const scrollY= new Animated.Value(0);
     let scrollYValue = scrollY._value;
     const [scrolled, setScrolled] = useState(false);
+
+        /*.then(function (result) {
+            if(result.status.response === "success"){
+                that.setState({ 
+                    JSONResult: result.data_list,
+                });
+            }
+        }*/
+    /*const submit = () => {
+        return fetch(url,{
+            method: 'POST',//GET and ...
+            headers:{
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                elm: "elm" //is fake
+            })
+           })
+           .then(function (response) {
+            return response.json();
+           })
+           .then(function (result) {
+            if(result.status.response === "success"){
+                that.setState({ 
+                    JSONResult: result.data_list,
+                });
+            }
+        }
+        }*/
+
     let [fontsLoaded] = useFonts({
         RedHatDisplay_400Regular,
     });
