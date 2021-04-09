@@ -43,7 +43,7 @@ export default function Rank() {
     } else {
         return(
             <View style={styles.container}>
-                <View style={scrolled ? styles.topNavbarScrolled : styles.topNavbar}>
+                <View style={scrolled ? styles.topNavbarScrolled : styles.topNavbar}>{/* Não deve estar a dar agora*/}
                     <FontAwesomeIcon icon={faChevronLeft} onPress={() => navigation.navigate('HomeMenu')} style={styles.chevronLeft}/>
                     <Text style={styles.rankText}>Rank</Text>
                 </View>
