@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { useFonts, RedHatDisplay_400Regular } from '@expo-google-fonts/red-hat-display';
-import { Animated, StyleSheet, Text, View, ScrollView, Image, TouchableHighlight, FlatList, ActivityIndicator } from 'react-native';
+import { Animated, StyleSheet, Text, View, ScrollView, Image, TouchableHighlight, FlatList } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faBell, faUser } from '@fortawesome/free-solid-svg-icons';
@@ -11,7 +11,6 @@ export default function HomeMenu({ navigation }){
     const [scrolled, setScrolled] = useState(false);
     const [favoriteList, setfavoriteList] = useState(false);
     const [loaded, setLoaded] = useState(false);
-    const [sportFavorite, setSportFavorite] = useState(false);
     
     //Fetch
     useEffect(() => {
@@ -70,15 +69,13 @@ export default function HomeMenu({ navigation }){
                     <FlatList data={favoriteList} 
                         renderItem={({ item }) => {
                             if(item.idPreference==9){
-                                setSportFavorite(true);
-                            };
-                            return(
+                                return(
                                     <View style={styles.activitiesScreenScrollView}>
                                         <Text style={styles.activitiesText}>Atividades</Text>
                                         <View style={styles.favoriteActivities}>
                                             <Text style={styles.seeAllActivities}>Ver todas</Text>
                                         </View>
-                                        <View style={sportFavorite ? styles.sportActivities : styles.notFav}>
+                                        <View style={styles.sportActivities}>
                                             <View style={styles.sportActivitiesSearch}>
                                                 <Text style={styles.sportActivitiesSearchText}>Procurar</Text>
                                             </View>
@@ -87,7 +84,15 @@ export default function HomeMenu({ navigation }){
                                             <Image source={require("../../sports.png")} style={styles.sportsPng}></Image>
                                         </View>
                                     </View>
-                            );
+                                )
+                            }
+                            if(item.idPreference==9){
+                                return(
+                                    <Text>
+                                        asdad
+                                    </Text>
+                                )
+                            }
                         }}
                         keyExtractor={(item, index) => index.toString()}
                         style={styles.activitiesScreenScroll}
@@ -586,9 +591,5 @@ const styles = StyleSheet.create({
         position:"absolute",
         top:"12%",
         right:"4.9%",
-    },
-
-    notFav:{
-
     },
 });
