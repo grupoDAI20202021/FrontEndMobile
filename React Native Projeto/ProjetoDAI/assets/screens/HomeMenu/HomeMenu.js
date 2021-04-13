@@ -9,7 +9,7 @@ export default function HomeMenu({ navigation }){
     const scrollY= new Animated.Value(0);
     let scrollYValue = scrollY._value;
     const [scrolled, setScrolled] = useState(false);
-    const [favoriteList, setfavoriteList] = useState(false);
+    const [favoriteList, setfavoriteList] = useState(null);
     const [loaded, setLoaded] = useState(false);
     
     //Fetch
@@ -67,7 +67,7 @@ export default function HomeMenu({ navigation }){
                 </View>
                 <View style={styles.activitiesScreen}>
                     <FlatList data={favoriteList} 
-                        renderItem={({ item }) => {
+                        renderItem={({ item, index }) => {
                             if(item.idPreference==9){
                                 return(
                                     <View style={styles.activitiesScreenScrollView}>
@@ -86,7 +86,7 @@ export default function HomeMenu({ navigation }){
                                     </View>
                                 )
                             }
-                            if(item.idPreference==9){
+                            if(item.idPreference==8){
                                 return(
                                     <Text>
                                         asdad
