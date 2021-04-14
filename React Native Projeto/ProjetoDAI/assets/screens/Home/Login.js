@@ -1,12 +1,57 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { StyleSheet, View, Image, TouchableHighlight, Text, TextInput} from 'react-native';
 import { useFonts, RedHatDisplay_400Regular } from '@expo-google-fonts/red-hat-display';
 import AppLoading from 'expo-app-loading';
 import { StatusBar } from 'expo-status-bar';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faChevronLeft, faEye} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faChevronLeft, faEye} from '@fortawesome/free-solid-svg-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import ErrorLogin from '../Error/ErroLogin';
 
 export default function Login ({ navigation }){
+    const [emailLogin, setEmailLogin] = useState(null);
+    const [passwordLogin, setPasswordLogin] = useState(null);
+    const [borderError, setBorderError] = useState(false);
+    const handleEmailInput = (text) => {
+        setEmailLogin(text);
+    };
+    const handlePasswordInput = (text) => {
+        setPasswordLogin(text);
+    };
+
+    //Fetch
+    
+    const submit = async () => {
+        try {
+            const response = await fetch("http://192.168.1.74:8080/api/auth/signin", {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: emailLogin,
+                    password: passwordLogin,
+                })
+            })
+            const response_1 = await response.json();
+            console.log(response_1);
+            if(response_1.error=="Unauthorized"){
+                setBorderError(true);
+                return response_1;
+            }else{
+                const userId = response_1.userId;
+                console.log(userId);
+                await AsyncStorage.setItem('userToken',JSON.stringify({userId}));
+                navigation.navigate('BottomNavbar');
+                return response_1;
+            }
+            
+        }catch (error) {
+            console.error(error);
+        }
+    };
+
     let [fontsLoaded] = useFonts({
         RedHatDisplay_400Regular,
     });
@@ -24,16 +69,16 @@ export default function Login ({ navigation }){
                 </View>
                 <Image source={require("../../LOGOPNG.png")} style={styles.logoPng}/>
                 <Text style={styles.emailText}>E-mail</Text>
-                <TextInput style={styles.emailBox}></TextInput>
+                <TextInput style={borderError ? styles.emailBoxError : styles.emailBox} onChangeText={handleEmailInput}></TextInput>
                 <Text style={styles.passwordText}>Palavra-passe</Text>
-                <View style={styles.passwordBox}>
-                    <TextInput style={styles.passwordBoxText} secureTextEntry={true}></TextInput>
+                <View style={borderError ? styles.passwordBoxError : styles.passwordBox}>
+                    <TextInput style={styles.passwordBoxText} secureTextEntry={true} onChangeText={handlePasswordInput}></TextInput>
                     <TouchableHighlight style={styles.showPassword}>
                         <FontAwesomeIcon icon={faEye} size={25} style={styles.showPasswordIcon}/>
                     </TouchableHighlight>
                 </View>
                 <Text style={styles.forgottenPassword}>Esqueceste-te da tua palavra-passe?</Text>
-                <TouchableHighlight style={styles.signInButton} onPress={() => navigation.navigate('BottomNavbar')}>
+                <TouchableHighlight style={styles.signInButton} onPress={submit}>
                     <View style={styles.signInButtonView}>
                         <Text style={styles.textSignInButton}>Iniciar Sessão</Text>
                     </View>
@@ -119,6 +164,24 @@ const styles = StyleSheet.create({
         color: '#707070',
     },
 
+    emailBoxError:{
+        position: 'absolute',
+        maxWidth: 360,
+        width: '92%',
+        height: '7%',
+        top: '32%',
+        backgroundColor: '#FAFAFA',
+        borderWidth: 1,
+        borderColor: '#CD0000',
+        borderRadius: 30,
+        fontFamily:'RedHatDisplay_400Regular',
+        fontSize: 18,
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        color: '#707070',
+    },
+
     passwordText:{
         fontFamily:'RedHatDisplay_400Regular',
         fontSize:20,
@@ -136,6 +199,20 @@ const styles = StyleSheet.create({
         backgroundColor: '#FAFAFA',
         borderWidth: 1,
         borderColor: '#EBEBEB',
+        borderRadius: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    passwordBoxError:{
+        position: 'absolute',
+        maxWidth: 360,
+        height: '7%',
+        width: '92%',
+        top: '46%',
+        backgroundColor: '#FAFAFA',
+        borderWidth: 1,
+        borderColor: '#CD0000',
         borderRadius: 30,
         alignItems: 'center',
         justifyContent: 'center',

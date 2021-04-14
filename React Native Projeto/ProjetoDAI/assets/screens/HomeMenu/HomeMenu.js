@@ -4,6 +4,7 @@ import { Animated, StyleSheet, Text, View, ScrollView, Image, TouchableHighlight
 import AppLoading from 'expo-app-loading';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faBell, faUser } from '@fortawesome/free-solid-svg-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function HomeMenu({ navigation }){
     const scrollY= new Animated.Value(0);
@@ -11,11 +12,15 @@ export default function HomeMenu({ navigation }){
     const [scrolled, setScrolled] = useState(false);
     const [favoriteList, setfavoriteList] = useState(null);
     const [loaded, setLoaded] = useState(false);
+
     
     //Fetch
     useEffect(() => {
         async function submit() {
-            const response = await fetch("http://192.168.1.74:8080/api/preferences/7", {//MUDAR O 7
+            const valueTokenStorage = await AsyncStorage.getItem('userToken');
+            const valueToken = JSON.parse(valueTokenStorage);
+            console.log(valueToken.userId)
+            const response = await fetch("http://192.168.1.74:8080/api/preferences/"+valueToken.userId, {
                 method: 'GET',
                 headers: {
                     Accept: 'application/json',
@@ -24,7 +29,7 @@ export default function HomeMenu({ navigation }){
             });
             const response_1 = await response.json();
             setfavoriteList(response_1);
-            console.log(favoriteList);
+            console.log(response_1);
             setLoaded(true);
             /*fetch("http://192.168.1.74:8080/api/preferences/7",{method: 'GET'})
             .then(function (response) {
@@ -68,7 +73,7 @@ export default function HomeMenu({ navigation }){
                 <View style={styles.activitiesScreen}>
                     <FlatList data={favoriteList} 
                         renderItem={({ item, index }) => {
-                            if(item.idPreference==9){
+                            if(index==0 && item.activityType.idActivityType==3){
                                 return(
                                     <View style={styles.activitiesScreenScrollView}>
                                         <Text style={styles.activitiesText}>Atividades</Text>
@@ -86,11 +91,156 @@ export default function HomeMenu({ navigation }){
                                     </View>
                                 )
                             }
-                            if(item.idPreference==8){
+                            if(index==0 && item.activityType.idActivityType==4){
                                 return(
-                                    <Text>
-                                        asdad
-                                    </Text>
+                                    <View style={styles.activitiesScreenScrollView}>
+                                        <Text style={styles.activitiesText}>Atividades</Text>
+                                        <View style={styles.favoriteActivities}>
+                                            <Text style={styles.seeAllActivities}>Ver todas</Text>
+                                        </View>
+                                        <View style={styles.literatureActivities}>
+                                            <View style={styles.literatureActivitiesSearch}>
+                                                <Text style={styles.literatureActivitiesSearchText}>Procurar</Text>
+                                            </View>
+                                            <Text style={styles.literatureActivitiesSportText}>Literatura</Text>
+                                            <Text style={styles.literatureActivitiesHowManyText}>7 atividades esta semana</Text>
+                                            <Image source={require("../../literature.png")} style={styles.literaturePng}></Image>
+                                        </View>
+                                    </View>
+                                )
+                            }
+                            if(index==0 && item.activityType.idActivityType==5){
+                                return(
+                                    <View style={styles.activitiesScreenScrollView}>
+                                        <Text style={styles.activitiesText}>Atividades</Text>
+                                        <View style={styles.favoriteActivities}>
+                                            <Text style={styles.seeAllActivities}>Ver todas</Text>
+                                        </View>
+                                        <View style={styles.musicActivities}>
+                                            <View style={styles.musicActivitiesSearch}>
+                                                <Text style={styles.musicActivitiesSearchText}>Procurar</Text>
+                                            </View>
+                                            <Text style={styles.musicActivitiesSportText}>Música</Text>
+                                            <Text style={styles.musicActivitiesHowManyText}>3 atividades esta semana</Text>
+                                            <Image source={require("../../music.png")} style={styles.musicPng}></Image>
+                                        </View>
+                                    </View>
+                                )
+                            }
+                            if(index==0 && item.activityType.idActivityType==6){
+                                return(
+                                    <View style={styles.activitiesScreenScrollView}>
+                                        <Text style={styles.activitiesText}>Atividades</Text>
+                                        <View style={styles.favoriteActivities}>
+                                            <Text style={styles.seeAllActivities}>Ver todas</Text>
+                                        </View>
+                                        <View style={styles.cinemaActivities}>
+                                            <View style={styles.cinemaActivitiesSearch}>
+                                                <Text style={styles.cinemaActivitiesSearchText}>Procurar</Text>
+                                            </View>
+                                            <Text style={styles.cinemaActivitiesSportText}>Cinema</Text>
+                                            <Text style={styles.cinemaActivitiesHowManyText}>100 atividades esta semana</Text>
+                                            <Image source={require("../../cinema.png")} style={styles.cinemaPng}></Image>
+                                        </View>
+                                    </View>
+                                )
+                            }
+                            if(index==0 && item.activityType.idActivityType==7){
+                                return(
+                                    <View style={styles.activitiesScreenScrollView}>
+                                        <Text style={styles.activitiesText}>Atividades</Text>
+                                        <View style={styles.favoriteActivities}>
+                                            <Text style={styles.seeAllActivities}>Ver todas</Text>
+                                        </View>
+                                        <View style={styles.videoGamesActivities}>
+                                            <View style={styles.videoGamesActivitiesSearch}>
+                                                <Text style={styles.videoGamesActivitiesSearchText}>Procurar</Text>
+                                            </View>
+                                            <Text style={styles.videoGamesActivitiesSportText}>Video Jogos</Text>
+                                            <Text style={styles.videoGamesActivitiesHowManyText}>11 atividades esta semana</Text>
+                                            <Image source={require("../../videogames.png")} style={styles.videogamesPng}></Image>
+                                        </View>
+                                    </View>
+                                )
+                            }
+                            if(index==0){
+                                return(
+                                    <View style={styles.activitiesScreenScrollView}>
+                                        <Text style={styles.activitiesText}>Atividades</Text>
+                                        <View style={styles.favoriteActivities}>
+                                            <Text style={styles.seeAllActivities}>Ver todas</Text>
+                                        </View>
+                                    </View>
+                                )
+                            }
+                            if(item.activityType.idActivityType==3){
+                                return(
+                                    <View style={styles.activitiesScreenScrollView}>
+                                        <View style={styles.sportActivities}>
+                                            <View style={styles.sportActivitiesSearch}>
+                                                <Text style={styles.sportActivitiesSearchText}>Procurar</Text>
+                                            </View>
+                                            <Text style={styles.sportActivitiesSportText}>Desporto</Text>
+                                            <Text style={styles.sportActivitiesHowManyText}>8 atividades esta semana</Text>
+                                            <Image source={require("../../sports.png")} style={styles.sportsPng}></Image>
+                                        </View>
+                                    </View>
+                                )
+                            }
+                            if(item.activityType.idActivityType==4){
+                                return(
+                                    <View style={styles.activitiesScreenScrollView}>
+                                        <View style={styles.literatureActivities}>
+                                            <View style={styles.literatureActivitiesSearch}>
+                                                <Text style={styles.literatureActivitiesSearchText}>Procurar</Text>
+                                            </View>
+                                            <Text style={styles.literatureActivitiesSportText}>Literatura</Text>
+                                            <Text style={styles.literatureActivitiesHowManyText}>7 atividades esta semana</Text>
+                                            <Image source={require("../../literature.png")} style={styles.literaturePng}></Image>
+                                        </View>
+                                    </View>
+                                )
+                            }
+                            if(item.activityType.idActivityType==5){
+                                return(
+                                    <View style={styles.activitiesScreenScrollView}>
+                                        <View style={styles.musicActivities}>
+                                            <View style={styles.musicActivitiesSearch}>
+                                                <Text style={styles.musicActivitiesSearchText}>Procurar</Text>
+                                            </View>
+                                            <Text style={styles.musicActivitiesSportText}>Música</Text>
+                                            <Text style={styles.musicActivitiesHowManyText}>3 atividades esta semana</Text>
+                                            <Image source={require("../../music.png")} style={styles.musicPng}></Image>
+                                        </View>
+                                    </View>
+                                )
+                            }
+                            if(item.activityType.idActivityType==6){
+                                return(
+                                    <View style={styles.activitiesScreenScrollView}>
+                                        <View style={styles.cinemaActivities}>
+                                            <View style={styles.cinemaActivitiesSearch}>
+                                                <Text style={styles.cinemaActivitiesSearchText}>Procurar</Text>
+                                            </View>
+                                            <Text style={styles.cinemaActivitiesSportText}>Cinema</Text>
+                                            <Text style={styles.cinemaActivitiesHowManyText}>100 atividades esta semana</Text>
+                                            <Image source={require("../../cinema.png")} style={styles.cinemaPng}></Image>
+                                        </View>
+                                    </View>
+                                )
+                            }
+                            if(item.activityType.idActivityType==7){
+                                return(
+                                    <View style={styles.activitiesScreenScrollView}>
+                                        <View style={styles.videoGamesActivities}>
+                                            <View style={styles.videoGamesActivitiesSearch}>
+                                                <Text style={styles.videoGamesActivitiesSearchText}>Procurar</Text>
+                                            </View>
+                                            <Text style={styles.videoGamesActivitiesSportText}>Video Jogos</Text>
+                                            <Text style={styles.videoGamesActivitiesHowManyText}>11 atividades esta semana</Text>
+                                            <Image source={require("../../videogames.png")} style={styles.videogamesPng}></Image>
+                                        </View>
+                                    </View>
                                 )
                             }
                         }}
@@ -194,9 +344,6 @@ export default function HomeMenu({ navigation }){
         );
     }
 }
-const loginButton = () =>{
-    console.log('asd');
-}
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -290,6 +437,7 @@ const styles = StyleSheet.create({
         backgroundColor:"#FCFCFC",
         alignItems: 'center',
         justifyContent: 'center',
+        marginTop:10,
     },
 
     favoriteActivities:{

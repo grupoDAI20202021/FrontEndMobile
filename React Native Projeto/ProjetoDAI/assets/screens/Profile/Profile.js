@@ -4,8 +4,9 @@ import AppLoading from 'expo-app-loading';
 import { useFonts, RedHatDisplay_400Regular } from '@expo-google-fonts/red-hat-display';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faChevronLeft, faTrophy, faPen } from '@fortawesome/free-solid-svg-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Notifications() {
+export default function Profile() {
     const scrollY= new Animated.Value(0);
     let scrollYValue = scrollY._value;
     const [scrolled, setScrolled] = useState(false);
@@ -15,7 +16,10 @@ export default function Notifications() {
     //Fetch
     useEffect(() => {
         async function submit() {
-            const response = await fetch("http://192.168.1.74:8080/api/children/8", {//MUDAR O 8
+            const valueTokenStorage = await AsyncStorage.getItem('userToken');
+            const valueToken = JSON.parse(valueTokenStorage);
+            //console.log(valueToken.userId);
+            const response = await fetch("http://192.168.1.74:8080/api/children/"+valueToken.userId, {
                 method: 'GET',
                 headers: {
                     Accept: 'application/json',
@@ -24,12 +28,12 @@ export default function Notifications() {
             });
             const response_1 = await response.json();
             setProfileData([response_1]);
-            console.log(profileData);
+            //console.log(profileData);
         }
         if(!loaded){
             submit();
             setLoaded(true);
-            console.log(profileData);
+            //console.log(profileData);
         }
     });
 
