@@ -81,9 +81,9 @@ export default function HomeMenu({ navigation }){
                                             <Text style={styles.seeAllActivities}>Ver todas</Text>
                                         </View>
                                         <View style={styles.sportActivities}>
-                                            <View style={styles.sportActivitiesSearch}>
+                                            <TouchableHighlight style={styles.sportActivitiesSearch} onPress={() => navigation.navigate('SportsScreen')}>
                                                 <Text style={styles.sportActivitiesSearchText}>Procurar</Text>
-                                            </View>
+                                            </TouchableHighlight>
                                             <Text style={styles.sportActivitiesSportText}>Desporto</Text>
                                             <Text style={styles.sportActivitiesHowManyText}>8 atividades esta semana</Text>
                                             <Image source={require("../../sports.png")} style={styles.sportsPng}></Image>
@@ -177,9 +177,9 @@ export default function HomeMenu({ navigation }){
                                 return(
                                     <View style={styles.activitiesScreenScrollView}>
                                         <View style={styles.sportActivities}>
-                                            <View style={styles.sportActivitiesSearch}>
+                                            <TouchableHighlight style={styles.sportActivitiesSearch} onPress={() => navigation.navigate('SportsScreen')}>
                                                 <Text style={styles.sportActivitiesSearchText}>Procurar</Text>
-                                            </View>
+                                            </TouchableHighlight>
                                             <Text style={styles.sportActivitiesSportText}>Desporto</Text>
                                             <Text style={styles.sportActivitiesHowManyText}>8 atividades esta semana</Text>
                                             <Image source={require("../../sports.png")} style={styles.sportsPng}></Image>

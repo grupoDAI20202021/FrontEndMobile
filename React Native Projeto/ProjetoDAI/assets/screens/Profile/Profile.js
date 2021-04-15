@@ -47,7 +47,7 @@ export default function Profile() {
             <View style={styles.container}>
                 <View style={scrolled ? styles.topNavbarScrolled : styles.topNavbar}>
                     <FontAwesomeIcon icon={faChevronLeft} onPress={() => navigation.navigate('HomeMenu')} style={styles.chevronLeft}/>
-                    <Text style={styles.profileText} onPress={console.log(profileData)}>Perfil</Text>
+                    <Text style={styles.profileText}>Perfil</Text>
                 </View>
                 <View style={styles.profileScreen}>
                     <FlatList data={profileData} 
