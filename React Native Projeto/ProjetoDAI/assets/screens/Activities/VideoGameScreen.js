@@ -7,12 +7,12 @@ import { faChevronLeft, faMapMarkedAlt, faUser, faCalendarAlt, faClock} from '@f
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default function SportsScreen({navigation}) {
+export default function VideoGameScreen({navigation}) {
     const scrollY= new Animated.Value(0);
     let scrollYValue = scrollY._value;
     const [scrolled, setScrolled] = useState(false);
     const [loaded, setLoaded] = useState(false);
-    const [sportActivity, setSportActivity] = useState(null);
+    const [videoGameActivity, setvideoGameActivity] = useState(null);
     const [valueToken, setValueToken] = useState(null);
     const [inscriptions, setInscriptions] = useState(null);
     const [disableInscription, setDisableInscription] = useState(false);
@@ -45,7 +45,7 @@ export default function SportsScreen({navigation}) {
                 },
             });
             const response_1 = await response.json();
-            setSportActivity(response_1);
+            setvideoGameActivity(response_1);
             //console.log(profileData);
         }
         if(!loaded){
@@ -84,16 +84,16 @@ export default function SportsScreen({navigation}) {
             <View style={styles.container}>
                 <View style={scrolled ? styles.topNavbarScrolled : styles.topNavbar}>
                     <FontAwesomeIcon icon={faChevronLeft} onPress={() => navigation.navigate('HomeMenu')} style={styles.chevronLeft}/>
-                    <Image source={require("../../sports.png")} style={styles.sportsImage}></Image>
+                    <Image source={require("../../videogames.png")} style={styles.videoGamesImage}></Image>
                 </View>
-                <View style={styles.sportsScreen}>
-                    <FlatList data={sportActivity}
+                <View style={styles.videoGamesScreen}>
+                    <FlatList data={videoGameActivity}
                         scrollEventThrottle={1} onScroll={(e)=>{scrollY.setValue(e.nativeEvent.contentOffset.y); scrollYValue = scrollY._value; scrollYValue > 0 ? setScrolled(true) : setScrolled(false);}}
                         renderItem={({item, index}) => {
-                            if(index==0 && item.activityType.idActivityType==3 && item.status=="Aprovada"){
+                            if(index==0 && item.activityType.idActivityType==7 && item.status=="Aprovada"){
                                 return(
-                                    <View style={styles.sportActivitiesScreenView}>
-                                        <View style={styles.sportsActivitiesTextView}>
+                                    <View style={styles.videoGameActivitiesScreenView}>
+                                        <View style={styles.videoGamesActivitiesTextView}>
                                             <Text style={styles.forYouText}>Para ti!</Text>
                                             <Text style={styles.comingSoonText}>Próximas atividades nas proximidades</Text>
                                         </View>
@@ -105,8 +105,8 @@ export default function SportsScreen({navigation}) {
                             }else{
                                 if(index==0){
                                     return(
-                                        <View style={styles.sportActivitiesScreenView}>
-                                            <View style={styles.sportsActivitiesTextView}>
+                                        <View style={styles.videoGameActivitiesScreenView}>
+                                            <View style={styles.videoGamesActivitiesTextView}>
                                                 <Text style={styles.forYouText}>Para ti!</Text>
                                                 <Text style={styles.comingSoonText}>Próximas atividades nas proximidades</Text>
                                             </View>
@@ -114,11 +114,11 @@ export default function SportsScreen({navigation}) {
                                     )
                                 }
                             }
-                            if(item.activityType.idActivityType==3 && item.status=="Aprovada"){
+                            if(item.activityType.idActivityType==7 && item.status=="Aprovada"){
                                 for(let i = 0; i < inscriptions.length; i++){
                                     if(inscriptions[i].idActivity==item.idActivity){
                                         return(
-                                            <View style={styles.sportActivitiesScreenView}>
+                                            <View style={styles.videoGameActivitiesScreenView}>
                                                 <View style={styles.registerActivityView}>
                                                     <View style={styles.tileFetchedTextContainer}>
                                                         <Text style={styles.tileFetchedText} numberOfLines={1}>{item.title}</Text>
@@ -156,7 +156,7 @@ export default function SportsScreen({navigation}) {
                                     }
                                 };
                                 return(
-                                    <View style={styles.sportActivitiesScreenView}>
+                                    <View style={styles.videoGameActivitiesScreenView}>
                                         <View style={styles.registerActivityView}>
                                             <View style={styles.tileFetchedTextContainer}>
                                                 <Text style={styles.tileFetchedText} numberOfLines={1}>{item.title}</Text>
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
 
-    sportsImage:{
+    videoGamesImage:{
         position:'absolute',
         bottom:"0%",
         width:60,
@@ -251,8 +251,8 @@ const styles = StyleSheet.create({
         color:"#B0B0B0",
     },
 
-    //Sports
-    sportsScreen:{
+    //videoGames
+    videoGamesScreen:{
         flex: 5,
         maxWidth:414,
         width:"100%",
@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
     },
 
-    sportActivitiesScreenView: {
+    videoGameActivitiesScreenView: {
         flex: 1,
         backgroundColor:"#FCFCFC",
         alignItems: 'center',
@@ -271,7 +271,7 @@ const styles = StyleSheet.create({
         marginTop:10,
     },
     
-    sportsActivitiesTextView:{
+    videoGamesActivitiesTextView:{
         justifyContent:'flex-start',
         flexDirection:'column',
         alignItems:'flex-start',
@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
     },
 
     forYouText:{
-        color:"#FF5A5F",
+        color:"#8AC926",
         fontFamily:"RedHatDisplay_400Regular",
         fontSize:36,
         fontWeight:"bold",
@@ -369,14 +369,14 @@ const styles = StyleSheet.create({
         alignItems:"center",
         flexDirection:'column',
         borderWidth:1,
-        borderColor:"#FF5A5F",
+        borderColor:"#8AC926",
         borderRadius:50,
     },
 
     inscriptionButtonText:{
         fontSize:20,
         fontFamily:"RedHatDisplay_400Regular",
-        color:"#FF5A5F",
+        color:"#8AC926",
     },
 
     inscriptionJoinedButton:{
@@ -385,7 +385,7 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:"center",
         flexDirection:'column',
-        backgroundColor:'#FF5A5F',
+        backgroundColor:'#8AC926',
         borderRadius:50,
     },
 

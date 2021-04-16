@@ -7,6 +7,10 @@ import HomeMenu from "./HomeMenu";
 import Notifications from "../Home/Notifications";
 import Profile from "../Profile/Profile";
 import SportsScreen from '../Activities/SportsScreen';
+import LiteratureScreen from '../Activities/LiteratureScreen';
+import MusicScreen from '../Activities/MusicScreen';
+import VideoGameScreen from '../Activities/VideoGameScreen';
+import CinemaScreen from '../Activities/CinemaScreen';
 
 const Stack = createStackNavigator();
 
@@ -17,6 +21,10 @@ export default function App() {
         <Stack.Screen name="Notifications" component={Notifications} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
         <Stack.Screen name="Profile" component={Profile} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
         <Stack.Screen name="SportsScreen" component={SportsScreen} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
+        <Stack.Screen name="LiteratureScreen" component={LiteratureScreen} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
+        <Stack.Screen name="MusicScreen" component={MusicScreen} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
+        <Stack.Screen name="CinemaScreen" component={CinemaScreen} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
+        <Stack.Screen name="VideoGameScreen" component={VideoGameScreen} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
       </Stack.Navigator>
   );
 }

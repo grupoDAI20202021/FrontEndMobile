@@ -50,7 +50,7 @@ export default function Profile() {
                     <Text style={styles.profileText}>Perfil</Text>
                 </View>
                 <View style={styles.profileScreen}>
-                    <FlatList data={profileData} 
+                    <FlatList data={profileData}
                         renderItem={({ item}) => {
                             return(
                                 <View style={styles.profileScreenFlatListContainer}>
@@ -247,7 +247,8 @@ const styles = StyleSheet.create({
 
     logout:{
         color:"#FE6C6C",
-        marginTop:5,
+        marginTop:10,
+        marginBottom:20,
         fontSize:24,
     },
 });

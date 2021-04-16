@@ -71,7 +71,8 @@ export default function HomeMenu({ navigation }){
                     </TouchableHighlight>
                 </View>
                 <View style={styles.activitiesScreen}>
-                    <FlatList data={favoriteList} 
+                    <FlatList data={favoriteList}
+                        scrollEventThrottle={1} onScroll={(e)=>{scrollY.setValue(e.nativeEvent.contentOffset.y); scrollYValue = scrollY._value; scrollYValue > 0 ? setScrolled(true) : setScrolled(false);}}
                         renderItem={({ item, index }) => {
                             if(index==0 && item.activityType.idActivityType==3){
                                 return(
@@ -95,13 +96,13 @@ export default function HomeMenu({ navigation }){
                                 return(
                                     <View style={styles.activitiesScreenScrollView}>
                                         <Text style={styles.activitiesText}>Atividades</Text>
-                                        <View style={styles.favoriteActivities}>
+                                        <TouchableHighlight style={styles.favoriteActivities}>
                                             <Text style={styles.seeAllActivities}>Ver todas</Text>
-                                        </View>
+                                        </TouchableHighlight>
                                         <View style={styles.literatureActivities}>
-                                            <View style={styles.literatureActivitiesSearch}>
+                                            <TouchableHighlight style={styles.literatureActivitiesSearch} onPress={() => navigation.navigate('LiteratureScreen')}>
                                                 <Text style={styles.literatureActivitiesSearchText}>Procurar</Text>
-                                            </View>
+                                            </TouchableHighlight>
                                             <Text style={styles.literatureActivitiesSportText}>Literatura</Text>
                                             <Text style={styles.literatureActivitiesHowManyText}>7 atividades esta semana</Text>
                                             <Image source={require("../../literature.png")} style={styles.literaturePng}></Image>
@@ -117,9 +118,9 @@ export default function HomeMenu({ navigation }){
                                             <Text style={styles.seeAllActivities}>Ver todas</Text>
                                         </View>
                                         <View style={styles.musicActivities}>
-                                            <View style={styles.musicActivitiesSearch}>
+                                            <TouchableHighlight style={styles.musicActivitiesSearch} onPress={() => navigation.navigate('MusicScreen')}>
                                                 <Text style={styles.musicActivitiesSearchText}>Procurar</Text>
-                                            </View>
+                                            </TouchableHighlight>
                                             <Text style={styles.musicActivitiesSportText}>Música</Text>
                                             <Text style={styles.musicActivitiesHowManyText}>3 atividades esta semana</Text>
                                             <Image source={require("../../music.png")} style={styles.musicPng}></Image>
@@ -135,9 +136,9 @@ export default function HomeMenu({ navigation }){
                                             <Text style={styles.seeAllActivities}>Ver todas</Text>
                                         </View>
                                         <View style={styles.cinemaActivities}>
-                                            <View style={styles.cinemaActivitiesSearch}>
+                                            <TouchableHighlight style={styles.cinemaActivitiesSearch} >
                                                 <Text style={styles.cinemaActivitiesSearchText}>Procurar</Text>
-                                            </View>
+                                            </TouchableHighlight>
                                             <Text style={styles.cinemaActivitiesSportText}>Cinema</Text>
                                             <Text style={styles.cinemaActivitiesHowManyText}>100 atividades esta semana</Text>
                                             <Image source={require("../../cinema.png")} style={styles.cinemaPng}></Image>
@@ -153,9 +154,9 @@ export default function HomeMenu({ navigation }){
                                             <Text style={styles.seeAllActivities}>Ver todas</Text>
                                         </View>
                                         <View style={styles.videoGamesActivities}>
-                                            <View style={styles.videoGamesActivitiesSearch}>
+                                            <TouchableHighlight style={styles.videoGamesActivitiesSearch} onPress={() => navigation.navigate('videoGameScreen')}>
                                                 <Text style={styles.videoGamesActivitiesSearchText}>Procurar</Text>
-                                            </View>
+                                            </TouchableHighlight>
                                             <Text style={styles.videoGamesActivitiesSportText}>Video Jogos</Text>
                                             <Text style={styles.videoGamesActivitiesHowManyText}>11 atividades esta semana</Text>
                                             <Image source={require("../../videogames.png")} style={styles.videogamesPng}></Image>
@@ -191,9 +192,9 @@ export default function HomeMenu({ navigation }){
                                 return(
                                     <View style={styles.activitiesScreenScrollView}>
                                         <View style={styles.literatureActivities}>
-                                            <View style={styles.literatureActivitiesSearch}>
+                                            <TouchableHighlight style={styles.literatureActivitiesSearch} onPress={() => navigation.navigate('LiteratureScreen')}>
                                                 <Text style={styles.literatureActivitiesSearchText}>Procurar</Text>
-                                            </View>
+                                            </TouchableHighlight>
                                             <Text style={styles.literatureActivitiesSportText}>Literatura</Text>
                                             <Text style={styles.literatureActivitiesHowManyText}>7 atividades esta semana</Text>
                                             <Image source={require("../../literature.png")} style={styles.literaturePng}></Image>
@@ -205,9 +206,9 @@ export default function HomeMenu({ navigation }){
                                 return(
                                     <View style={styles.activitiesScreenScrollView}>
                                         <View style={styles.musicActivities}>
-                                            <View style={styles.musicActivitiesSearch}>
+                                            <TouchableHighlight style={styles.musicActivitiesSearch} onPress={() => navigation.navigate('MusicScreen')}>
                                                 <Text style={styles.musicActivitiesSearchText}>Procurar</Text>
-                                            </View>
+                                            </TouchableHighlight>
                                             <Text style={styles.musicActivitiesSportText}>Música</Text>
                                             <Text style={styles.musicActivitiesHowManyText}>3 atividades esta semana</Text>
                                             <Image source={require("../../music.png")} style={styles.musicPng}></Image>
@@ -233,9 +234,9 @@ export default function HomeMenu({ navigation }){
                                 return(
                                     <View style={styles.activitiesScreenScrollView}>
                                         <View style={styles.videoGamesActivities}>
-                                            <View style={styles.videoGamesActivitiesSearch}>
+                                            <TouchableHighlight style={styles.videoGamesActivitiesSearch} onPress={() => navigation.navigate('VideoGameScreen')}>
                                                 <Text style={styles.videoGamesActivitiesSearchText}>Procurar</Text>
-                                            </View>
+                                            </TouchableHighlight>
                                             <Text style={styles.videoGamesActivitiesSportText}>Video Jogos</Text>
                                             <Text style={styles.videoGamesActivitiesHowManyText}>11 atividades esta semana</Text>
                                             <Image source={require("../../videogames.png")} style={styles.videogamesPng}></Image>
