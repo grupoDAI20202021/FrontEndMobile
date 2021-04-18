@@ -51,6 +51,7 @@ export default function Profile() {
                 </View>
                 <View style={styles.profileScreen}>
                     <FlatList data={profileData}
+                        scrollEventThrottle={1} onScroll={(e)=>{scrollY.setValue(e.nativeEvent.contentOffset.y); scrollYValue = scrollY._value; scrollYValue > 0 ? setScrolled(true) : setScrolled(false);}}
                         renderItem={({ item}) => {
                             return(
                                 <View style={styles.profileScreenFlatListContainer}>

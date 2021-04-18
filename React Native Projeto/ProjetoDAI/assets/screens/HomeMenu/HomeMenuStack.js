@@ -11,6 +11,7 @@ import LiteratureScreen from '../Activities/LiteratureScreen';
 import MusicScreen from '../Activities/MusicScreen';
 import VideoGameScreen from '../Activities/VideoGameScreen';
 import CinemaScreen from '../Activities/CinemaScreen';
+import SeeAllScreen from '../Activities/SeeAllScreen';
 
 const Stack = createStackNavigator();
 
@@ -25,6 +26,7 @@ export default function App() {
         <Stack.Screen name="MusicScreen" component={MusicScreen} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
         <Stack.Screen name="CinemaScreen" component={CinemaScreen} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
         <Stack.Screen name="VideoGameScreen" component={VideoGameScreen} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
+        <Stack.Screen name="SeeAllScreen" component={SeeAllScreen} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
       </Stack.Navigator>
   );
 }

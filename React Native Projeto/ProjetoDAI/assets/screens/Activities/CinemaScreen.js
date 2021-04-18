@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
     },
 
     forYouText:{
-        color:"#1A82C4",
+        color:"#6A4C93",
         fontFamily:"RedHatDisplay_400Regular",
         fontSize:36,
         fontWeight:"bold",
@@ -369,14 +369,14 @@ const styles = StyleSheet.create({
         alignItems:"center",
         flexDirection:'column',
         borderWidth:1,
-        borderColor:"#1A82C4",
+        borderColor:"#6A4C93",
         borderRadius:50,
     },
 
     inscriptionButtonText:{
         fontSize:20,
         fontFamily:"RedHatDisplay_400Regular",
-        color:"#1A82C4",
+        color:"#6A4C93",
     },
 
     inscriptionJoinedButton:{
@@ -385,7 +385,7 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:"center",
         flexDirection:'column',
-        backgroundColor:'#1A82C4',
+        backgroundColor:'#6A4C93',
         borderRadius:50,
     },
 

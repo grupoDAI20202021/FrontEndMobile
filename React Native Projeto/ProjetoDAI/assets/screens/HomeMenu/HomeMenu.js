@@ -5,6 +5,7 @@ import AppLoading from 'expo-app-loading';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faBell, faUser } from '@fortawesome/free-solid-svg-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function HomeMenu({ navigation }){
     const scrollY= new Animated.Value(0);
@@ -78,9 +79,9 @@ export default function HomeMenu({ navigation }){
                                 return(
                                     <View style={styles.activitiesScreenScrollView}>
                                         <Text style={styles.activitiesText}>Atividades</Text>
-                                        <View style={styles.favoriteActivities}>
+                                        <TouchableOpacity style={styles.favoriteActivities} onPress={() => navigation.navigate('SeeAllScreen')}>
                                             <Text style={styles.seeAllActivities}>Ver todas</Text>
-                                        </View>
+                                        </TouchableOpacity>
                                         <View style={styles.sportActivities}>
                                             <TouchableHighlight style={styles.sportActivitiesSearch} onPress={() => navigation.navigate('SportsScreen')}>
                                                 <Text style={styles.sportActivitiesSearchText}>Procurar</Text>
