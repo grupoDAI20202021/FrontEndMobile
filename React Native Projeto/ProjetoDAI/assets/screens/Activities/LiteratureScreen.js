@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faChevronLeft, faMapMarkedAlt, faUser, faCalendarAlt, faClock} from '@fortawesome/free-solid-svg-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import LiteratureInscriptionButton from './Components/LiteratureInscriptionButton';
 
 export default function LiteratureScreen({navigation}) {
     const scrollY= new Animated.Value(0);
@@ -183,10 +184,8 @@ export default function LiteratureScreen({navigation}) {
                                                     </View>
                                                 </View>
                                             </View>
-                                            <View style={styles.inscriptionButtonContainer}>
-                                                <TouchableOpacity style={disableInscription ? styles.inscriptionJoinedButton : styles.inscriptionButton} onPress={() => joinIn(item.idActivity)}>
-                                                    <Text style={disableInscription ? styles.inscriptionJoinedButtonText : styles.inscriptionButtonText}>Inscrever</Text>
-                                                </TouchableOpacity>
+                                            <View style={styles.inscriptionButtonContainer} onPress={joinIn(item.idActivity)}>
+                                                <LiteratureInscriptionButton/>
                                             </View>
                                         </View>
                                     </View>

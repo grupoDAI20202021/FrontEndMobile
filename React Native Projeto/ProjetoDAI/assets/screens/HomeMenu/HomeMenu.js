@@ -1,11 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import { useFonts, RedHatDisplay_400Regular } from '@expo-google-fonts/red-hat-display';
-import { Animated, StyleSheet, Text, View, ScrollView, Image, TouchableHighlight, FlatList } from 'react-native';
+import { Animated, StyleSheet, Text, View, ScrollView, Image, TouchableHighlight, FlatList, BackHandler, Alert, TouchableOpacity } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faBell, faUser } from '@fortawesome/free-solid-svg-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function HomeMenu({ navigation }){
     const scrollY= new Animated.Value(0);
@@ -14,7 +13,24 @@ export default function HomeMenu({ navigation }){
     const [favoriteList, setfavoriteList] = useState(null);
     const [loaded, setLoaded] = useState(false);
 
+    const backAction = () => {
+        navigation.navigate('HomeMenu');
+        Alert.alert("Alto e para o baile!", "Queres mesmo sair seu caralho?", [
+        {
+            text: "Cancel",
+            onPress: () => null,
+            style: "cancel"
+        },
+        { text: "YES", onPress: () => BackHandler.exitApp() }
+        ]);
+        return true;
+    };
     
+    useEffect(() => {
+        BackHandler.addEventListener("hardwareBackPress", backAction);
+        return () => BackHandler.removeEventListener("hardwareBackPress", backAction);
+    }, []);
+
     //Fetch
     useEffect(() => {
         async function submit() {
@@ -54,6 +70,17 @@ export default function HomeMenu({ navigation }){
         }
     });
 
+    const emptyFavorites = () =>{
+        return(
+            <View style={styles.activitiesScreenScrollView}>
+                <Text style={styles.activitiesText}>Atividades</Text>
+                <TouchableOpacity style={styles.favoriteActivities} onPress={() => navigation.navigate('SeeAllScreen')}>
+                    <Text style={styles.seeAllActivities}>Ver todas</Text>
+                </TouchableOpacity>
+            </View>
+        )
+    }
+
     let [fontsLoaded] = useFonts({
         RedHatDisplay_400Regular,
     });
@@ -63,17 +90,18 @@ export default function HomeMenu({ navigation }){
         return(
             <View style={styles.container}>
                 <View style={scrolled ? styles.topOfTheScreenScrolled : styles.topOfTheScreen}>
-                    <TouchableHighlight onPress={() => navigation.navigate('Profile')} underlayColor={"rgba(15, 122, 190, 0.8)"} style={styles.profileButton}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={styles.profileButton}>
                         <FontAwesomeIcon icon={faUser} style={styles.profileIcon} size={20}/>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                     <Image source={require("../../LOGOPNG.png")} style={styles.logoPng} />
-                    <TouchableHighlight /*onPress={submit}*/ /*onPress={() => navigation.navigate('Notifications')}*/ underlayColor={"rgba(15, 122, 190, 0.8)"} style={styles.notificationButton}>
+                    <TouchableOpacity /*onPress={submit}*/ /*onPress={() => navigation.navigate('Notifications')}*/ style={styles.notificationButton}>
                         <FontAwesomeIcon icon={faBell} style={styles.bell} size={20}/>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.activitiesScreen}>
                     <FlatList data={favoriteList}
                         scrollEventThrottle={1} onScroll={(e)=>{scrollY.setValue(e.nativeEvent.contentOffset.y); scrollYValue = scrollY._value; scrollYValue > 0 ? setScrolled(true) : setScrolled(false);}}
+                        ListEmptyComponent={emptyFavorites}
                         renderItem={({ item, index }) => {
                             if(index==0 && item.activityType.idActivityType==3){
                                 return(

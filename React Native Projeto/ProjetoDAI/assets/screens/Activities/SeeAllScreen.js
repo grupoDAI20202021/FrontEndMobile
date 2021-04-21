@@ -1,11 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import { Animated, StyleSheet, Text, View, ScrollView, Image, TouchableHighlight, FlatList } from 'react-native';
+import { Animated, StyleSheet, Text, View, ScrollView, Image, TouchableHighlight, FlatList, TouchableOpacity } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { useFonts, RedHatDisplay_400Regular } from '@expo-google-fonts/red-hat-display';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faChevronLeft, faMapMarkedAlt, faUser, faCalendarAlt, faClock} from '@fortawesome/free-solid-svg-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function SeeAllScreen({ navigation }){
     const scrollY= new Animated.Value(0);
@@ -98,14 +97,14 @@ export default function SeeAllScreen({ navigation }){
                                 </TouchableHighlight>
                             </View>
                             <View style={styles.cinemaActivities}>
-                                <Text style={styles.cinemaActivitiesSportText}>Música</Text>
+                                <Text style={styles.cinemaActivitiesSportText}>Cinema</Text>
                                 <Image source={require("../../cinema.png")} style={styles.cinemaPng}/>
                                 <TouchableHighlight style={styles.cinemaActivitiesSearch} onPress={() => navigation.navigate('CinemaScreen')}>
                                     <Text style={styles.cinemaActivitiesSearchText}>Ver +</Text>
                                 </TouchableHighlight>
                             </View>
                             <View style={styles.videoGamesActivities}>
-                                <Text style={styles.videoGamesActivitiesSportText}>Música</Text>
+                                <Text style={styles.videoGamesActivitiesSportText}>Video Jogos</Text>
                                 <Image source={require("../../videogames.png")} style={styles.videogamesPng}/>
                                 <TouchableHighlight style={styles.videoGamesActivitiesSearch} onPress={() => navigation.navigate('VideoGameScreen')}>
                                     <Text style={styles.videoGamesActivitiesSearchText}>Ver +</Text>
@@ -210,7 +209,7 @@ const styles = StyleSheet.create({
     sportActivities:{
         marginTop:15,
         maxWidth:370,
-        width:"90%",
+        width:"100%",
         height:130,
         backgroundColor:"#FAFAFA",
         shadowColor: "#000",
@@ -246,7 +245,7 @@ const styles = StyleSheet.create({
         color:"#FF5A5F",
         position:"absolute",
         top:"12%",
-        left:"8.9%",
+        left:"6.9%",
     },
     sportActivitiesHowManyText:{
         color:"#CDCDCD",
@@ -266,7 +265,7 @@ const styles = StyleSheet.create({
     literatureActivities:{
         marginTop:15,
         maxWidth:370,
-        width:"90%",
+        width:"100%",
         height:130,
         backgroundColor:"#FAFAFA",
         shadowColor: "#000",
@@ -302,7 +301,7 @@ const styles = StyleSheet.create({
         color:"#FABE55",
         position:"absolute",
         top:"12%",
-        left:"8.9%",
+        left:"6.9%",
     },
     literatureActivitiesHowManyText:{
         color:"#CDCDCD",
@@ -322,7 +321,7 @@ const styles = StyleSheet.create({
     musicActivities:{
         marginTop:15,
         maxWidth:370,
-        width:"90%",
+        width:"100%",
         height:130,
         backgroundColor:"#FAFAFA",
         shadowColor: "#000",
@@ -358,7 +357,7 @@ const styles = StyleSheet.create({
         color:"#1A82C4",
         position:"absolute",
         top:"12%",
-        left:"8.9%",
+        left:"6.9%",
     },
     musicActivitiesHowManyText:{
         color:"#CDCDCD",
@@ -378,7 +377,7 @@ const styles = StyleSheet.create({
     cinemaActivities:{
         marginTop:15,
         maxWidth:370,
-        width:"90%",
+        width:"100%",
         height:130,
         backgroundColor:"#FAFAFA",
         shadowColor: "#000",
@@ -414,7 +413,7 @@ const styles = StyleSheet.create({
         color:"#6A4C93",
         position:"absolute",
         top:"12%",
-        left:"8.9%",
+        left:"6.9%",
     },
     cinemaActivitiesHowManyText:{
         color:"#CDCDCD",
@@ -434,7 +433,7 @@ const styles = StyleSheet.create({
     videoGamesActivities:{
         marginTop:15,
         maxWidth:370,
-        width:"90%",
+        width:"100%",
         height:130,
         backgroundColor:"#FAFAFA",
         shadowColor: "#000",
@@ -471,7 +470,7 @@ const styles = StyleSheet.create({
         color:"#8AC926",
         position:"absolute",
         top:"12%",
-        left:"8.9%",
+        left:"6.9%",
     },
     videoGamesActivitiesHowManyText:{
         color:"#CDCDCD",

@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faChevronLeft, faMicrophone} from '@fortawesome/free-solid-svg-icons';
 import Grading from './Components/Grading';
 
-export default function Notifications() {
+export default function Notifications({navigation}) {
     const scrollY= new Animated.Value(0);
     let scrollYValue = scrollY._value;
     const [scrolled, setScrolled] = useState(false);

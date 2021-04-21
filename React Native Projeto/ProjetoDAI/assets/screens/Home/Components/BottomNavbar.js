@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, View, Image, TouchableHighlight, Text } from 'react-native';
+import React, {useEffect} from 'react';
+import { StyleSheet, View, Image, TouchableHighlight, Text, BackHandler, Alert  } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faTrophy, faComments, faLightbulb, faStar, faHome } from '@fortawesome/free-solid-svg-icons';

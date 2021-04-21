@@ -1,19 +1,80 @@
-import React, {useState} from 'react';
-import { Text, View, StyleSheet, Animated, ScrollView, Image, TextInput } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { Animated, StyleSheet, Text, View, ScrollView, Image, TouchableHighlight, FlatList, TouchableOpacity, TextInput } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { useFonts, RedHatDisplay_400Regular } from '@expo-google-fonts/red-hat-display';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faChevronLeft, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faPaperPlane, faUser, faCalendarAlt, faClock, faStar, faHeart, faComment} from '@fortawesome/free-solid-svg-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Verificar se o scroll ta bem
-export default function Notifications({navigation}) {
+export default function Forum({navigation}) {
     const scrollY= new Animated.Value(0);
     let scrollYValue = scrollY._value;
     const [scrolled, setScrolled] = useState(false);
+    const [valueToken, setValueToken] = useState(null);
+    const [allPosts, setAllPosts] = useState(null);
+    const [loaded, setLoaded] = useState(false);
+    const [avatarChosenState, setAvatarChosenState] = useState(null);
+
+    const avatarChosen = (avatar) =>{
+        if(avatar==1)
+            setAvatarChosenState(require("../../avatar1.png"));
+        if(avatar==2)
+            setAvatarChosenState(require("../../avatar2.png"));
+        if(avatar==3)
+            setAvatarChosenState(require("../../avatar3.png"));
+        if(avatar==4)
+            setAvatarChosenState(require("../../avatar4.png"));
+        if(avatar==5)
+            setAvatarChosenState(require("../../avatar5.png"));
+        if(avatar==6)
+            setAvatarChosenState(require("../../avatar6.png"));
+        if(avatar==7)
+            setAvatarChosenState(require("../../avatar7.png"));
+        if(avatar==8)
+            setAvatarChosenState(require("../../avatar8.png"));
+    };
+
+
+    useEffect(() => {
+        async function submit() {
+            const valueTokenStorage = await AsyncStorage.getItem('userToken');
+            const valueToken = JSON.parse(valueTokenStorage);
+            setValueToken(valueToken);
+
+            const response = await fetch("http://192.168.1.74:8080/api/posts", {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            });
+            const response_1 = await response.json();
+            setAllPosts(response_1);
+            console.log(response_1);
+
+            const response2 = await fetch("http://192.168.1.74:8080/api/children/"+valueToken.userId, {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            });
+            const response_3 = await response2.json();
+            avatarChosen(response_3.idAvatar);
+            setLoaded(true);
+        }
+        if(!loaded){
+            submit();
+            setLoaded(true);
+        }
+    });
+
+
     let [fontsLoaded] = useFonts({
         RedHatDisplay_400Regular,
     });
-    if (!fontsLoaded) {
+    if (!fontsLoaded && !loaded) {
         return <AppLoading/>;
     } else {
         return(
@@ -23,14 +84,26 @@ export default function Notifications({navigation}) {
                     <Text style={styles.forumText}>Forum</Text>
                 </View>
                 <View style={styles.forumScreenScrollContainer}>
-                    <Animated.ScrollView style={styles.forumScreenScroll} scrollEventThrottle={1} onScroll={(e)=>{scrollY.setValue(e.nativeEvent.contentOffset.y); scrollYValue = scrollY._value; scrollYValue > 0 ? setScrolled(true) : setScrolled(false);}}>
+                    <ScrollView style={styles.forumScreenScroll} scrollEventThrottle={1} onScroll={(e)=>{scrollY.setValue(e.nativeEvent.contentOffset.y); scrollYValue = scrollY._value; scrollYValue > 0 ? setScrolled(true) : setScrolled(false);}}>
                         <View style={styles.forumPostsContainer}>
-                            <View style={styles.postView}></View>
+                            <View style={styles.postView}>
+                                <View style={styles.userInformationView}>
+                                    <Image source={require("../../avatar1.png")} style={styles.avatarPoster}/>
+                                    <Text style={styles.namePoster}>asdsasda</Text>
+                                </View>
+                                <View style={styles.contentView}>
+                                    <Text style={styles.contentPoster}>asdsasda</Text>
+                                </View>
+                                <View style={styles.interactionView}>
+                                    <FontAwesomeIcon icon={faHeart} onPress={() => navigation.navigate('HomeMenu')} style={styles.heart} size={25}/>
+                                    <FontAwesomeIcon icon={faComment} onPress={() => navigation.navigate('HomeMenu')} style={styles.heart} size={25}/>
+                                </View>
+                            </View>
                         </View>
-                    </Animated.ScrollView>
+                    </ScrollView>
                 </View>
                 <View style={styles.sendPostView}>
-                    <Image source={require("../../avatar1.png")} style={styles.avatar1png}/>
+                    <Image source={avatarChosenState} style={styles.avatar1png}/>
                     <TextInput style={styles.sendPostTextInput}></TextInput>
                     <FontAwesomeIcon icon={faPaperPlane} onPress={() => navigation.navigate('HomeMenu')} style={styles.paperPlane} size={25}/>
                 </View>
@@ -113,7 +186,6 @@ const styles = StyleSheet.create({
         maxWidth:400,
         marginTop:10,
         marginBottom:5,
-        height:200,
         backgroundColor:"#FCFCFC",
         //borderColor:"#000",
         //borderWidth:3,
@@ -127,13 +199,14 @@ const styles = StyleSheet.create({
         elevation: 2,
         alignItems:'center',
         justifyContent:'center',
+        flexDirection:"column",
         borderRadius:30,
     },
 
     sendPostView:{
         flex:0.7,
         backgroundColor:"#FCFCFC",
-        zIndex:2,
+        zIndex:1,
         width:"100%",
         alignItems:'center',
         justifyContent:'space-evenly',
@@ -166,5 +239,50 @@ const styles = StyleSheet.create({
 
     paperPlane:{
         color:"#1A82C4",
+    },
+
+    userInformationView:{
+        height:60,
+        width:"100%",
+        justifyContent:'flex-start',
+        alignItems:'center',
+        flexDirection:'row',
+        marginLeft:25,
+    },
+
+    contentView:{
+        width:"90%",
+        justifyContent:'flex-start',
+        alignItems:'flex-start',
+    },
+
+    interactionView:{
+        height:60,
+        width:100,
+        justifyContent:'space-evenly',
+        alignItems:'center',
+        flexDirection:'row',
+    },
+
+    avatarPoster:{
+        width:35,
+        height:35,
+    },
+
+    namePoster:{
+        marginLeft:10,
+        fontFamily:"RedHatDisplay_400Regular",
+        fontSize:18,
+        color:"#1A82C4",
+    },
+
+    contentPoster:{
+        color:"#A7A7A7",
+        fontFamily:"RedHatDisplay_400Regular",
+        fontSize:18,
+    },
+
+    heart:{
+        color:"#E9E9E9",
     },
 });

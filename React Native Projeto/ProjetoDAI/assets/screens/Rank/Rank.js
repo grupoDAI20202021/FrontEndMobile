@@ -1,18 +1,16 @@
 import React, {useState, useEffect} from 'react';
-import { Text, View, StyleSheet, Animated, ScrollView, Image, FlatList } from 'react-native';
+import { Text, View, StyleSheet, Animated, ScrollView, Image, FlatList, BackHandler, Alert } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { useFonts, RedHatDisplay_400Regular } from '@expo-google-fonts/red-hat-display';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faChevronLeft, faTrophy } from '@fortawesome/free-solid-svg-icons';
 
 // Verificar se o scroll ta bem
-export default function Rank() {
+export default function Rank({navigation}) {
     const scrollY= new Animated.Value(0);
     let scrollYValue = scrollY._value;
     const [scrolled, setScrolled] = useState(false);
     let rankingPosition = 1;
-
-    const [loaded, setLoaded] = useState(false);
     
     //Fetch
     /*useEffect(() => {

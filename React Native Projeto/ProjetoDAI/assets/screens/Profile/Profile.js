@@ -6,13 +6,32 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faChevronLeft, faTrophy, faPen } from '@fortawesome/free-solid-svg-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Profile() {
+export default function Profile({navigation}) {
     const scrollY= new Animated.Value(0);
     let scrollYValue = scrollY._value;
     const [scrolled, setScrolled] = useState(false);
     const [loaded, setLoaded] = useState(false);
     const [profileData, setProfileData] = useState(null);
-    
+    const [avatarChosenState, setAvatarChosenState] = useState(null);
+    const avatarChosen = (avatar) =>{
+        if(avatar==1)
+            setAvatarChosenState(require("../../avatar1.png"));
+        if(avatar==2)
+            setAvatarChosenState(require("../../avatar2.png"));
+        if(avatar==3)
+            setAvatarChosenState(require("../../avatar3.png"));
+        if(avatar==4)
+            setAvatarChosenState(require("../../avatar4.png"));
+        if(avatar==5)
+            setAvatarChosenState(require("../../avatar5.png"));
+        if(avatar==6)
+            setAvatarChosenState(require("../../avatar6.png"));
+        if(avatar==7)
+            setAvatarChosenState(require("../../avatar7.png"));
+        if(avatar==8)
+            setAvatarChosenState(require("../../avatar8.png"));
+    };
+
     //Fetch
     useEffect(() => {
         async function submit() {
@@ -28,6 +47,7 @@ export default function Profile() {
             });
             const response_1 = await response.json();
             setProfileData([response_1]);
+            avatarChosen(response_1.idAvatar);
             //console.log(profileData);
         }
         if(!loaded){
@@ -52,12 +72,12 @@ export default function Profile() {
                 <View style={styles.profileScreen}>
                     <FlatList data={profileData}
                         scrollEventThrottle={1} onScroll={(e)=>{scrollY.setValue(e.nativeEvent.contentOffset.y); scrollYValue = scrollY._value; scrollYValue > 0 ? setScrolled(true) : setScrolled(false);}}
-                        renderItem={({ item}) => {
+                        renderItem={({item}) => {
                             return(
                                 <View style={styles.profileScreenFlatListContainer}>
                                     <View style={styles.childProfileContainer}>
                                         <View style={styles.avatarContainer}>
-                                            <Image source={require("../../avatar1.png")} style={styles.avatar}/>
+                                            <Image source={avatarChosenState} style={styles.avatar}/>
                                             <FontAwesomeIcon icon={faPen} onPress={() => navigation.navigate('HomeMenu')} style={styles.faPen} size={30}/>
                                         </View>
                                     </View>
@@ -83,7 +103,7 @@ export default function Profile() {
                                         <View style={styles.dataTextContainer}>
                                             <Text style={styles.dataBasicTextMargin}>Contacto</Text>
                                             <View style={styles.dataText}>
-                                                <Text style={styles.dataTextMargin}>Não dá pra ja</Text>
+                                                <Text style={styles.dataTextMargin}>{item.contact}</Text>
                                             </View>
                                         </View>
                                         <View style={styles.dataTextContainer}>

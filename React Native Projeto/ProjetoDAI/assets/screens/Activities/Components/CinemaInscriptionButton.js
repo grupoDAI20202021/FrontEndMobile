@@ -7,11 +7,11 @@ import { faChevronLeft, faMapMarkedAlt, faUser, faCalendarAlt, faClock, faStar} 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default function SaveButton() {
-    const [disableEvaluation, setDisableEvaluation] = useState(false);
+export default function CinemaInscriptionButton() {
+    const [disableInscription, setDisableInscription] = useState(false);
     
     const disable = async () => {
-        setDisableEvaluation(true);
+        setDisableInscription(true);
     }
 
     let [fontsLoaded] = useFonts({
@@ -21,21 +21,14 @@ export default function SaveButton() {
         return <AppLoading/>;
     } else {
         return(
-            <TouchableOpacity style={disableEvaluation ? styles.inscriptionJoinedButton : styles.inscriptionButton} onPress={() => disable()}>
-                <Text style={disableEvaluation ? styles.inscriptionJoinedButtonText : styles.inscriptionButtonText}>Salvar</Text>
+            <TouchableOpacity style={disableInscription ? styles.inscriptionJoinedButton : styles.inscriptionButton} onPress={() => disable()}>
+                <Text style={disableInscription ? styles.inscriptionJoinedButtonText : styles.inscriptionButtonText}>Inscrever</Text>
             </TouchableOpacity>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-
     container: {
         flex: 1,
         backgroundColor: '#F4F4F4',
@@ -68,13 +61,12 @@ const styles = StyleSheet.create({
         shadowRadius: 3,
         elevation: 5,
     },
-    
-    profileText:{
+
+    cinemasImage:{
         position:'absolute',
         bottom:"0%",
-        fontSize:40,
-        color:"#1A82C4",
-        fontFamily:"RedHatDisplay_400Regular",
+        width:60,
+        height:60,
     },
 
     chevronLeft:{
@@ -84,8 +76,8 @@ const styles = StyleSheet.create({
         color:"#B0B0B0",
     },
 
-    //Avaliar Screen
-    evaluationScreen:{
+    //cinemas
+    cinemasScreen:{
         flex: 5,
         maxWidth:414,
         width:"100%",
@@ -95,16 +87,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
     },
 
-    evaluationScreenView: {
-        flex: 1,
-        backgroundColor:"#FCFCFC",
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection:'column',
-        marginTop:10,
-    },
-
-    musicActivitiesScreenView: {
+    cinemaActivitiesScreenView: {
         flex: 1,
         backgroundColor:"#FCFCFC",
         alignItems: 'center',
@@ -113,7 +96,7 @@ const styles = StyleSheet.create({
         marginTop:10,
     },
     
-    musicsActivitiesTextView:{
+    cinemasActivitiesTextView:{
         justifyContent:'flex-start',
         flexDirection:'column',
         alignItems:'flex-start',
@@ -121,7 +104,7 @@ const styles = StyleSheet.create({
     },
 
     forYouText:{
-        color:"#1A82C4",
+        color:"#6A4C93",
         fontFamily:"RedHatDisplay_400Regular",
         fontSize:36,
         fontWeight:"bold",
@@ -137,7 +120,7 @@ const styles = StyleSheet.create({
     registerActivityView:{
         width:"99%",
         maxWidth:414,
-        height:240,
+        height:190,
         backgroundColor:"#FFF",
         borderRadius:15,
         shadowColor: "#000",
@@ -195,11 +178,11 @@ const styles = StyleSheet.create({
 
     inscriptionButtonContainer:{
         width:"100%",
-        height:100,
+        height:70,
         borderTopWidth:2,
         borderTopColor:"#F1F1F1",
         backgroundColor:"transparent",
-        justifyContent:'space-evenly',
+        justifyContent:'center',
         alignItems:"center",
         flexDirection:'column',
     },
@@ -211,19 +194,24 @@ const styles = StyleSheet.create({
         alignItems:"center",
         flexDirection:'column',
         borderWidth:1,
-        borderColor:"#1A82C4",
+        borderColor:"#6A4C93",
         borderRadius:50,
     },
 
     inscriptionButtonText:{
         fontSize:20,
         fontFamily:"RedHatDisplay_400Regular",
-        color:"#1A82C4",
+        color:"#6A4C93",
     },
 
     inscriptionJoinedButton:{
-        width:0,
-        height:0,
+        width:115,
+        height:40,
+        justifyContent:'center',
+        alignItems:"center",
+        flexDirection:'column',
+        backgroundColor:'#6A4C93',
+        borderRadius:50,
     },
 
     inscriptionJoinedButtonText:{
@@ -269,19 +257,5 @@ const styles = StyleSheet.create({
         fontSize:14,
         fontFamily:"RedHatDisplay_400Regular",
         color:"#D7D7D7",
-    },
-
-    starContainer:{
-        justifyContent:'center',
-        alignItems:"center",
-        flexDirection:'row',
-    },
-
-    star:{
-        color:"#EFEFEF",
-    },
-
-    starSelected:{
-        color:"#1A82C4",
     },
 });

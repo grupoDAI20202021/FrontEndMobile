@@ -1,11 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import { Animated, StyleSheet, Text, View, ScrollView, Image, TouchableHighlight, FlatList } from 'react-native';
+import { Animated, StyleSheet, Text, View, ScrollView, Image, TouchableHighlight, FlatList, TouchableOpacity } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { useFonts, RedHatDisplay_400Regular } from '@expo-google-fonts/red-hat-display';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faChevronLeft, faMapMarkedAlt, faUser, faCalendarAlt, faClock, faStar} from '@fortawesome/free-solid-svg-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function GradingActivities() {
     const scrollY= new Animated.Value(0);
