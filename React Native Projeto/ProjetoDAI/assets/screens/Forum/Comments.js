@@ -7,7 +7,7 @@ import { faChevronLeft, faMapMarkedAlt, faUser, faCalendarAlt, faClock, faStar} 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default function LiteratureInscriptionButton() {
+export default function LiteratureInscriptionButton({navigation}) {
     const scrollY= new Animated.Value(0);
     let scrollYValue = scrollY._value;
     const [scrolled, setScrolled] = useState(false);
