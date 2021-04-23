@@ -86,7 +86,7 @@ export default function Login ({ navigation }){
                 <Text style={styles.orText}>OU</Text>
                 <Image source={require("../../fingerprint.png")} style={styles.fingerprint}/>
                 <Text style={styles.createAccountText}>Ainda não tens uma conta?</Text>
-                <TouchableHighlight onPress={() => navigation.navigate('SignUp')} style={styles.createAccountButton}>
+                <TouchableHighlight onPress={() => navigation.navigate('SignUp1')} style={styles.createAccountButton}>
                     <View style={styles.createAccountView}>
                         <Text style={styles.textCreateAccount}>Registar</Text>
                     </View>

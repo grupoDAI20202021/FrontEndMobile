@@ -110,8 +110,8 @@ export default function HomeWithoutLogin({ navigation }){
           <Image source={require("../../LOGOPNG.png")} style={styles.logoPng}/>
         </View>
         <Text style={styles.forumText}>Fórum</Text>
-        <TouchableOpacity style={styles.forumIconContainer}>
-          <FontAwesomeIcon icon={faComments} onPress={() => navigation.navigate('Login')} size={25} style={styles.commentsIcon}/>
+        <TouchableOpacity style={styles.forumIconContainer}  onPress={() => navigation.navigate('ForumWithoutLogin')}>
+          <FontAwesomeIcon icon={faComments} size={25} style={styles.commentsIcon}/>
         </TouchableOpacity>
         <Text style={styles.activitiesOfTheWeek}>Proximas atividades</Text>
         <ScrollView style={styles.activitiesScrollView}>

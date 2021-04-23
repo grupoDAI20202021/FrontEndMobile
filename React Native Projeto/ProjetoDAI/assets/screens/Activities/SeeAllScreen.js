@@ -23,15 +23,31 @@ export default function SeeAllScreen({ navigation }){
     const [sportNotNull, setSportNotNull] = useState(false);
     //Literature
     const [upcomingLiterature, setUpcomingLiterature] = useState(null);
+    const [addressUpcomingLiterature, setAddressUpcomingLiterature] = useState(null);
+    const [dateUpcomingLiterature, setDateUpcomingLiterature] = useState(null);
+    const [hourUpcomingLiterature, setHourUpcomingLiterature] = useState(null);
+    const [spacesUpcomingLiterature, setSpacesUpcomingLiterature] = useState(null);
     const [literatureNotNull, setLiteratureNotNull] = useState(false);
     //Music
     const [upcomingMusic, setUpcomingMusic] = useState(null);
+    const [addressUpcomingMusic, setAddressUpcomingMusic] = useState(null);
+    const [dateUpcomingMusic, setDateUpcomingMusic] = useState(null);
+    const [hourUpcomingMusic, setHourUpcomingMusic] = useState(null);
+    const [spacesUpcomingMusic, setSpacesUpcomingMusic] = useState(null);
     const [musicNotNull, setMusicNotNull] = useState(false);
     //Cinema
     const [upcomingCinema, setUpcomingCinema] = useState(null);
+    const [addressUpcomingCinema, setAddressUpcomingCinema] = useState(null);
+    const [dateUpcomingCinema, setDateUpcomingCinema] = useState(null);
+    const [hourUpcomingCinema, setHourUpcomingCinema] = useState(null);
+    const [spacesUpcomingCinema, setSpacesUpcomingCinema] = useState(null);
     const [cinemaNotNull, setCinemaNotNull] = useState(false);
     //Video Games
     const [upcomingVideoGames, setUpcomingVideoGames] = useState(null);
+    const [addressUpcomingVideoGames, setAddressUpcomingVideoGames] = useState(null);
+    const [dateUpcomingVideoGames, setDateUpcomingVideoGames] = useState(null);
+    const [hourUpcomingVideoGames, setHourUpcomingVideoGames] = useState(null);
+    const [spacesUpcomingVideoGames, setSpacesUpcomingVideoGames] = useState(null);
     const [videoGamesNotNull, setVideoGamesNotNull] = useState(false);
     
     //Fetch
@@ -91,17 +107,41 @@ export default function SeeAllScreen({ navigation }){
                     ++l;
                     ++lnull;
                     setUpcomingLiterature(response_3[i].title);
+                    setAddressUpcomingLiterature(response_3[i].address);
+                    setDateUpcomingLiterature(response_3[i].init_data.slice(0, 10));
+                    setHourUpcomingLiterature(response_3[i].init_data.slice(10, 16));
+                    setSpacesUpcomingLiterature(response_3[i].spaces);
                     setLiteratureNotNull(true);
                 }
             }
+            if(lnull==0){
+                setUpcomingLiterature("N/A");
+                setAddressUpcomingLiterature("N/A");
+                setDateUpcomingLiterature("N/A");
+                setHourUpcomingLiterature("N/A");
+                setSpacesUpcomingLiterature("N/A");
+            }
             //Music
             let m = 0;
+            let mnull = 0;
             for(let i=0; i<response_3.length; i++){
                 if(response_3[i].status=="Aprovada" && response_3[i].activityType.idActivityType==5 && m==0){
                     ++m;
+                    ++mnull;
                     setUpcomingMusic(response_3[i].title);
+                    setAddressUpcomingMusic(response_3[i].address);
+                    setDateUpcomingMusic(response_3[i].init_data.slice(0, 10));
+                    setHourUpcomingMusic(response_3[i].init_data.slice(10, 16));
+                    setSpacesUpcomingMusic(response_3[i].spaces);
                     setMusicNotNull(true);
                 }
+            }
+            if(mnull==0){
+                setUpcomingMusic("N/A");
+                setAddressUpcomingMusic("N/A");
+                setDateUpcomingMusic("N/A");
+                setHourUpcomingMusic("N/A");
+                setSpacesUpcomingMusic("N/A");
             }
             //Cinema
             let c = 0;
@@ -111,11 +151,19 @@ export default function SeeAllScreen({ navigation }){
                     ++c;
                     ++cnull;
                     setUpcomingCinema(response_3[i].title);
+                    setAddressUpcomingCinema(response_3[i].address);
+                    setDateUpcomingCinema(response_3[i].init_data.slice(0, 10));
+                    setHourUpcomingCinema(response_3[i].init_data.slice(10, 16));
+                    setSpacesUpcomingCinema(response_3[i].spaces);
                     setCinemaNotNull(true);
                 }
             }
             if(cnull==0){
-                setUpcomingSport("N/A");
+                setUpcomingCinema("N/A");
+                setAddressUpcomingCinema("N/A");
+                setDateUpcomingCinema("N/A");
+                setHourUpcomingCinema("N/A");
+                setSpacesUpcomingCinema("N/A");
             }
             //VideoGames
             let v = 0;
@@ -125,11 +173,19 @@ export default function SeeAllScreen({ navigation }){
                     ++v;
                     ++vnull;
                     setUpcomingVideoGames(response_3[i].title);
+                    setAddressUpcomingVideoGames(response_3[i].address);
+                    setDateUpcomingVideoGames(response_3[i].init_data.slice(0, 10));
+                    setHourUpcomingVideoGames(response_3[i].init_data.slice(10, 16));
+                    setSpacesUpcomingVideoGames(response_3[i].spaces);
                     setVideoGamesNotNull(true);
                 }
             }
             if(vnull==0){
-                setUpcomingSport("N/A");
+                setUpcomingVideoGames("N/A");
+                setAddressUpcomingVideoGames("N/A");
+                setDateUpcomingVideoGames("N/A");
+                setHourUpcomingVideoGames("N/A");
+                setSpacesUpcomingVideoGames("N/A");
             }
         }
         if(!loaded){
@@ -197,7 +253,29 @@ export default function SeeAllScreen({ navigation }){
                                 <Text style={styles.literatureActivitiesSportText}>Literatura</Text>
                                 <Image source={require("../../literature.png")} style={styles.literaturePng}/>
                                 <View>
-                                    <Text>{upcomingLiterature}</Text>
+                                    <Text style={styles.activityTitle} numberOfLines={1}>{upcomingLiterature}</Text>
+                                </View>
+                                <View style={styles.firstCollum}>
+                                    <View>
+                                        <View style={styles.firstRowFirstCollum}>
+                                            <FontAwesomeIcon icon={faMapMarkedAlt} style={styles.mapMarked}/>
+                                            <Text style={styles.addressText} numberOfLines={1}>{addressUpcomingLiterature}</Text>
+                                        </View>
+                                        <View style={styles.firstRowFirstCollum}>
+                                            <FontAwesomeIcon icon={faUser} style={styles.mapMarked}/>
+                                            <Text style={styles.addressText}>{spacesUpcomingLiterature}</Text>
+                                        </View>
+                                    </View>
+                                    <View style={styles.SecondCollum}>
+                                        <View style={styles.firstRowFirstCollum}>
+                                            <FontAwesomeIcon icon={faCalendarAlt} style={styles.mapMarked}/>
+                                            <Text style={styles.addressText}>{dateUpcomingLiterature}</Text>
+                                        </View>
+                                        <View style={styles.firstRowFirstCollum}>
+                                            <FontAwesomeIcon icon={faClock} style={styles.mapMarked}/>
+                                            <Text style={styles.addressText}>{hourUpcomingLiterature}</Text>
+                                        </View>
+                                    </View>
                                 </View>
                                 <TouchableHighlight style={styles.literatureActivitiesSearch} onPress={() => navigation.navigate('LiteratureScreen')}>
                                     <Text style={styles.literatureActivitiesSearchText}>Ver +</Text>
@@ -207,7 +285,29 @@ export default function SeeAllScreen({ navigation }){
                                 <Text style={styles.musicActivitiesSportText}>Música</Text>
                                 <Image source={require("../../music.png")} style={styles.musicPng}/>
                                 <View>
-                                    <Text>{upcomingLiterature}</Text>
+                                    <Text style={styles.activityTitle} numberOfLines={1}>{upcomingMusic}</Text>
+                                </View>
+                                <View style={styles.firstCollum}>
+                                    <View>
+                                        <View style={styles.firstRowFirstCollum}>
+                                            <FontAwesomeIcon icon={faMapMarkedAlt} style={styles.mapMarked}/>
+                                            <Text style={styles.addressText} numberOfLines={1}>{addressUpcomingMusic}</Text>
+                                        </View>
+                                        <View style={styles.firstRowFirstCollum}>
+                                            <FontAwesomeIcon icon={faUser} style={styles.mapMarked}/>
+                                            <Text style={styles.addressText}>{spacesUpcomingMusic}</Text>
+                                        </View>
+                                    </View>
+                                    <View style={styles.SecondCollum}>
+                                        <View style={styles.firstRowFirstCollum}>
+                                            <FontAwesomeIcon icon={faCalendarAlt} style={styles.mapMarked}/>
+                                            <Text style={styles.addressText}>{dateUpcomingMusic}</Text>
+                                        </View>
+                                        <View style={styles.firstRowFirstCollum}>
+                                            <FontAwesomeIcon icon={faClock} style={styles.mapMarked}/>
+                                            <Text style={styles.addressText}>{hourUpcomingMusic}</Text>
+                                        </View>
+                                    </View>
                                 </View>
                                 <TouchableHighlight style={styles.musicActivitiesSearch} onPress={() => navigation.navigate('MusicScreen')}>
                                     <Text style={styles.musicActivitiesSearchText}>Ver +</Text>
@@ -217,7 +317,29 @@ export default function SeeAllScreen({ navigation }){
                                 <Text style={styles.cinemaActivitiesSportText}>Cinema</Text>
                                 <Image source={require("../../cinema.png")} style={styles.cinemaPng}/>
                                 <View>
-                                    <Text>{upcomingCinema}</Text>
+                                    <Text style={styles.activityTitle} numberOfLines={1}>{upcomingCinema}</Text>
+                                </View>
+                                <View style={styles.firstCollum}>
+                                    <View>
+                                        <View style={styles.firstRowFirstCollum}>
+                                            <FontAwesomeIcon icon={faMapMarkedAlt} style={styles.mapMarked}/>
+                                            <Text style={styles.addressText} numberOfLines={1}>{addressUpcomingCinema}</Text>
+                                        </View>
+                                        <View style={styles.firstRowFirstCollum}>
+                                            <FontAwesomeIcon icon={faUser} style={styles.mapMarked}/>
+                                            <Text style={styles.addressText}>{spacesUpcomingCinema}</Text>
+                                        </View>
+                                    </View>
+                                    <View style={styles.SecondCollum}>
+                                        <View style={styles.firstRowFirstCollum}>
+                                            <FontAwesomeIcon icon={faCalendarAlt} style={styles.mapMarked}/>
+                                            <Text style={styles.addressText}>{dateUpcomingCinema}</Text>
+                                        </View>
+                                        <View style={styles.firstRowFirstCollum}>
+                                            <FontAwesomeIcon icon={faClock} style={styles.mapMarked}/>
+                                            <Text style={styles.addressText}>{hourUpcomingCinema}</Text>
+                                        </View>
+                                    </View>
                                 </View>
                                 <TouchableHighlight style={styles.cinemaActivitiesSearch} onPress={() => navigation.navigate('CinemaScreen')}>
                                     <Text style={styles.cinemaActivitiesSearchText}>Ver +</Text>
@@ -227,7 +349,29 @@ export default function SeeAllScreen({ navigation }){
                                 <Text style={styles.videoGamesActivitiesSportText}>Video Jogos</Text>
                                 <Image source={require("../../videogames.png")} style={styles.videogamesPng}/>
                                 <View>
-                                    <Text>{upcomingVideoGames}</Text>
+                                    <Text style={styles.activityTitle} numberOfLines={1}>{upcomingVideoGames}</Text>
+                                </View>
+                                <View style={styles.firstCollum}>
+                                    <View>
+                                        <View style={styles.firstRowFirstCollum}>
+                                            <FontAwesomeIcon icon={faMapMarkedAlt} style={styles.mapMarked}/>
+                                            <Text style={styles.addressText} numberOfLines={1}>{addressUpcomingVideoGames}</Text>
+                                        </View>
+                                        <View style={styles.firstRowFirstCollum}>
+                                            <FontAwesomeIcon icon={faUser} style={styles.mapMarked}/>
+                                            <Text style={styles.addressText}>{spacesUpcomingVideoGames}</Text>
+                                        </View>
+                                    </View>
+                                    <View style={styles.SecondCollum}>
+                                        <View style={styles.firstRowFirstCollum}>
+                                            <FontAwesomeIcon icon={faCalendarAlt} style={styles.mapMarked}/>
+                                            <Text style={styles.addressText}>{dateUpcomingVideoGames}</Text>
+                                        </View>
+                                        <View style={styles.firstRowFirstCollum}>
+                                            <FontAwesomeIcon icon={faClock} style={styles.mapMarked}/>
+                                            <Text style={styles.addressText}>{hourUpcomingVideoGames}</Text>
+                                        </View>
+                                    </View>
                                 </View>
                                 <TouchableHighlight style={styles.videoGamesActivitiesSearch} onPress={() => navigation.navigate('VideoGameScreen')}>
                                     <Text style={styles.videoGamesActivitiesSearchText}>Ver +</Text>

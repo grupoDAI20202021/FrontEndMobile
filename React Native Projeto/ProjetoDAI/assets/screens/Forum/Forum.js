@@ -152,7 +152,7 @@ export default function Forum({navigation}) {
                                         </View>
                                         <View style={styles.interactionView}>
                                             <LikeButton/>
-                                            <FontAwesomeIcon icon={faComment} onPress={() => navigation.navigate('HomeMenu')} style={styles.heart} size={25}/>
+                                            <FontAwesomeIcon icon={faComment} onPress={() => navigation.navigate('Comments')} style={styles.heart} size={25}/>
                                         </View>
                                     </View>
                                 </View>

@@ -1,13 +1,93 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, TouchableHighlight, Text, TextInput} from 'react-native';
 import { useFonts, RedHatDisplay_400Regular } from '@expo-google-fonts/red-hat-display';
 import AppLoading from 'expo-app-loading';
 import { StatusBar } from 'expo-status-bar';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 //import RNPickerSelect from 'react-native-picker-select';
 
-export default function SignUp ({ navigation }){
+export default function SignUp1 ({ navigation }){
+        const [nameValue,setNameValue] = useState(null);
+        const [emailValue,setEmailValue] = useState(null);
+        const [ageValue,setAgeValue] = useState(null);
+        const [passwordValue,setPasswordValue] = useState(null);
+        const [confirmpasswordValue,setconfirmPasswordValue] = useState(null);
+        const [addressValue,setAddressValue] = useState(null);
+        const [contactValue,setContactValue] = useState(null);
+        const [idRoleValue,setidRoleValue] = useState(null);
+
+        const handleNameText = (text) => {
+            setNameValue(text);
+        }
+
+        const handleEmailText = (text) => {
+            setEmailValue(text);
+        }
+
+        const handleAgeText = (text) => {
+            setAgeValue(text);
+        }
+
+        const handlePasswordText = (text) => {
+            setPasswordValue(text);
+        }
+
+        const handleConfirmPassword = (text) => {
+            setconfirmPasswordValue(text);
+        }
+
+        const handleAddressText = (text) => {
+            setAddressValue(text);
+        }
+
+        const handleContactText = (text) => {
+            setContactValue(text);
+        }
+    
+
+    //Fetch
+        /*const submit = async () => {
+                const response = await fetch("http://192.168.1.67:8080/api/children", {
+                    method: 'POST',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name:nameValue,
+                        email:emailValue,
+                        age:ageValue,
+                        password:passwordValue,
+                        confirmpassword:confirmpasswordValue,
+                        address:addressValue,
+                        role:{
+                            idRole:3,
+                        },
+                        contact:contactValue,
+                    })
+                });
+                const response_1 = await response.json();
+                return response_1;
+        }*/
+        
+        const submit = async () => {
+            await AsyncStorage.setItem('userData', JSON.stringify({
+                name:nameValue,
+                email:emailValue,
+                age:ageValue,
+                password:passwordValue,
+                confirmpassword:confirmpasswordValue,
+                address:addressValue,
+                role:{
+                    idRole:3,
+                },
+                contact:contactValue,
+            }));
+        }
+        
+    
     let [fontsLoaded] = useFonts({
         RedHatDisplay_400Regular,
     });
@@ -24,21 +104,21 @@ export default function SignUp ({ navigation }){
                     </TouchableHighlight>
                 </View>
                 <Text style={styles.emailText}>E-mail</Text>
-                <TextInput style={styles.emailBox}></TextInput>
+                <TextInput onChangeText={handleEmailText} style={styles.emailBox}></TextInput>
                 <Text style={styles.nameText}>Nome Completo</Text>
-                <TextInput style={styles.nameBox}></TextInput>
+                <TextInput onChangeText={handleNameText} style={styles.nameBox}></TextInput>
                 <Text style={styles.passwordText}>Palavra-passe</Text>
-                <TextInput style={styles.passwordBox} secureTextEntry={true}></TextInput>
+                <TextInput onChangeText={handlePasswordText} style={styles.passwordBox} secureTextEntry={true}></TextInput>
                 <Text style={styles.confirmPasswordText}>Confirmar Palavra-passe</Text>
-                <TextInput style={styles.confirmPasswordBox} secureTextEntry={true}></TextInput>
+                <TextInput onChangeText={handleConfirmPassword} style={styles.confirmPasswordBox} secureTextEntry={true}></TextInput>
                 <Text style={styles.cellphoneText}>Contacto</Text>
-                <TextInput style={styles.cellphoneBox} keyboardType='numeric' maxLength={9}></TextInput>
+                <TextInput onChangeText={handleContactText} style={styles.cellphoneBox} keyboardType='numeric' maxLength={9}></TextInput>
                 <Text style={styles.townHallText}>Câmara Municipal</Text>
-                <TextInput style={styles.townHallBox}></TextInput>
+                <TextInput onChangeText={handleAddressText} style={styles.townHallBox}></TextInput>
                 <Text style={styles.ageText}>Idade</Text>
-                <TextInput style={styles.ageBox}></TextInput>
+                <TextInput onChangeText={handleAgeText} style={styles.ageBox}></TextInput>
                 <TouchableHighlight style={styles.continueButton} onPress={() => navigation.navigate('SignUp2')}>
-                    <View style={styles.continueButtonView}>
+                    <View style={styles.continueButtonView} onPress={submit}>
                         <Text style={styles.textContinueButton}>Continuar</Text>
                     </View>
                 </TouchableHighlight>

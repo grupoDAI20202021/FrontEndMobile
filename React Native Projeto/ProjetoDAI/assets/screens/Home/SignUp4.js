@@ -3,8 +3,31 @@ import { StyleSheet, View, TouchableHighlight, Text, Image} from 'react-native';
 import { useFonts, RedHatDisplay_400Regular } from '@expo-google-fonts/red-hat-display';
 import AppLoading from 'expo-app-loading';
 import { StatusBar } from 'expo-status-bar';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function SignUp4 ({ navigation }){
+
+    /*const valueTokenStorage = await AsyncStorage.getItem('userToken');
+    const valueToken = JSON.parse(valueTokenStorage);
+
+    //Fetch
+        const submit = async () => {
+                
+    
+            const response = await fetch("http://192.168.1.67:8080/api/preferences/"+valueToken.userId,"", {
+                    method: 'POST',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                });
+                const response_1 = await response.json();
+                return response_1;
+        }*/
+
     let [fontsLoaded] = useFonts({
         RedHatDisplay_400Regular,
     });
@@ -14,18 +37,52 @@ export default function SignUp4 ({ navigation }){
         return (
             <View style={styles.container}>
                 <StatusBar style="auto" />
-                <Image source={require("../../check.png")} style={styles.checkimg}/>
-                <Text style={styles.accCreated}>Conta criada com sucesso!</Text>
-                <TouchableHighlight style={styles.startUsingButton} onPress={() => navigation.navigate('BottomNavbar')}>
-                    <View style={styles.startButtonView}>
-                        <Text style={styles.textStartButton}>Começar a utilizar</Text>
+                <View style={styles.headContainer}>
+                    <Text style={styles.pickAreas}>Escolhe as tuas áreas de interesse!</Text>
+                    <TouchableHighlight onPress={() => navigation.navigate('SignUp3')} style={styles.back}>
+                        <FontAwesomeIcon icon={faChevronLeft} style={styles.chevronLeft} size={15}/>
+                    </TouchableHighlight>
+                </View>
+                <Text style={styles.recomendations}>As recomendações serão feitas consoante as tuas escolhas</Text>
+                <TouchableHighlight style={styles.sports}>
+                    <View style={styles.sportsView}>
+                        <Text style={styles.sportsText}>Desporto</Text>
+                        <Image source={require("../../sports.png")} style={styles.sportsimg}/>
+                    </View>
+                </TouchableHighlight>
+                <TouchableHighlight style={styles.literature}>
+                    <View style={styles.literatureView}>
+                        <Text style={styles.literatureText}>Literatura</Text>
+                        <Image source={require("../../literature.png")} style={styles.literatureimg}/>
+                    </View>
+                </TouchableHighlight>
+                <TouchableHighlight style={styles.cinema}>
+                    <View style={styles.cinemaView}>
+                        <Text style={styles.cinemaText}>Cinema</Text>
+                        <Image source={require("../../cinema.png")} style={styles.cinemaimg}/>
+                    </View>
+                </TouchableHighlight>
+                <TouchableHighlight style={styles.music}>
+                    <View style={styles.musicView}>
+                        <Text style={styles.musicText}>Música</Text>
+                        <Image source={require("../../music.png")} style={styles.musicimg}/>
+                    </View>
+                </TouchableHighlight>
+                <TouchableHighlight style={styles.videogames}>
+                    <View style={styles.videogamesView}>
+                        <Text style={styles.videogamesText}>Videojogos</Text>
+                        <Image source={require("../../videogames.png")} style={styles.videogamesimg}/>
+                    </View>
+                </TouchableHighlight>
+                <TouchableHighlight style={styles.continueButton} onPress={() => navigation.navigate('SignUp5')}>
+                    <View style={styles.continueButtonView} /*onPress={submit}*/>
+                        <Text style={styles.textContinueButton}>Continuar</Text>
                     </View>
                 </TouchableHighlight>
             </View>
         );
     }
 }
-
 
 const styles = StyleSheet.create({
     container:{
@@ -35,39 +92,270 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 
-    checkimg:{
+    headContainer:{
         position: 'absolute',
-        width: 150,
-        height: 150,
-        top: '30%',
+        maxWidth: 375,
+        height: '10%',
+        width: '100%',
+        top: '2%',
         alignItems: 'center',
         justifyContent: 'center',
     },
 
-    accCreated:{
-        fontFamily:'RedHatDisplay_400Regular',
-        fontSize:28,
+    back:{
         position:'absolute',
-        color:'#1a82c4',
-        textAlign: 'center',
-        maxWidth: 360,
-        top: '55%',
+        left: '2%'
+    },
+    
+    chevronLeft:{
+        color: '#DBDBDB',
     },
 
+    pickAreas:{
+        fontFamily:'RedHatDisplay_400Regular',
+        fontSize:20,
+        position:'absolute',
+        color:'#1A82C4',
+        textAlign: 'center',
+    },
 
+    recomendations:{
+        fontFamily:'RedHatDisplay_400Regular',
+        fontSize:20,
+        position:'absolute',
+        color:'#D4D4D4',
+        textAlign: 'center',
+        maxWidth: 350,
+        top: '10%',
+    },
 
+    sports:{
+        position: 'absolute',
+        maxWidth: 360,
+        top: '20%',
+        width: '85%',
+        height: 70,
+        backgroundColor: '#ff5a5f',
+        borderRadius: 90,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection:"row",
+        shadowColor: "#a0a0a0",
+        shadowOffset: {
+	        width: 6,
+	        height: 6,
+        },
+        shadowOpacity: 0.58,
+        shadowRadius: 16.00,
+        elevation: 12,
+        },
 
+    sportsView:{
+        width: '100%',
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        justifyContent:'flex-start',
+    },
 
+    sportsText:{
+        position: 'absolute',
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: "white",
+        fontSize: 36,
+        fontFamily:'RedHatDisplay_400Regular',
+        marginLeft:100,
+    },
 
+    sportsimg:{
+        width: 70,
+        height: 70,
+    },
 
+    literature:{
+        position: 'absolute',
+        maxWidth: 360,
+        top: '33%',
+        width: '85%',
+        height: 70,
+        backgroundColor: '#fabe55',
+        borderRadius: 90,
+        alignItems: 'center',
+        justifyContent: 'center',
+        shadowColor: "#a0a0a0",
+        flexDirection:"row",
+        shadowOffset: {
+	        width: 6,
+	        height: 6,
+        },
+        shadowOpacity: 0.58,
+        shadowRadius: 16.00,
+        elevation: 12,
+    },
 
+    literatureView:{
+        width: '100%',
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        justifyContent:'flex-start',
+    },
 
+    literatureText:{
+        position: 'absolute',
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: "white",
+        fontSize: 36,
+        fontFamily:'RedHatDisplay_400Regular',
+        marginLeft:100,
+    },
 
+    literatureimg:{
+        width: 70,
+        height: 70,
+    },
 
+    cinema:{
+        position: 'absolute',
+        maxWidth: 360,
+        top: '46%',
+        width: '85%',
+        height: 70,
+        maxHeight: 70,
+        backgroundColor: '#6a4c93',
+        borderRadius: 90,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection:"row",
+        shadowColor: "#a0a0a0",
+        flexDirection:"row",
+        shadowOffset: {
+	        width: 6,
+	        height: 6,
+        },
+        shadowOpacity: 0.58,
+        shadowRadius: 16.00,
+        elevation: 12,
+    },
 
+    cinemaView:{
+        width: '100%',
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        justifyContent:'flex-start',
+    },
 
+    cinemaText:{
+        position: 'absolute',
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: "white",
+        fontSize: 36,
+        fontFamily:'RedHatDisplay_400Regular',
+        marginLeft:100,
+    },
 
-    startUsingButton:{
+    cinemaimg:{
+        width: 70,
+        height: 70,
+    },
+
+    music:{
+        position: 'absolute',
+        maxWidth: 360,
+        top: '59%',
+        width: '85%',
+        height: 70,
+        maxHeight: 70,
+        backgroundColor: '#1a82c4',
+        borderRadius: 90,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection:"row",
+        shadowColor: "#a0a0a0",
+        flexDirection:"row",
+        shadowOffset: {
+	        width: 6,
+	        height: 6,
+        },
+        shadowOpacity: 0.58,
+        shadowRadius: 16.00,
+        elevation: 12,
+    },
+
+    musicView:{
+        width: '100%',
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        justifyContent:'flex-start',
+    },
+
+    musicText:{
+        position: 'absolute',
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: "white",
+        fontSize: 36,
+        fontFamily:'RedHatDisplay_400Regular',
+        marginLeft:100,
+    },
+
+    musicimg:{
+        width: 70,
+        height: 70,
+    },
+
+    videogames:{
+        position: 'absolute',
+        maxWidth: 360,
+        top: '72%',
+        width: '85%',
+        height: 70,
+        maxHeight: 70,
+        backgroundColor: '#8ac926',
+        borderRadius: 90,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection:"row",
+        shadowColor: "#a0a0a0",
+        flexDirection:"row",
+        shadowOffset: {
+	        width: 6,
+	        height: 6,
+        },
+        shadowOpacity: 0.58,
+        shadowRadius: 16.00,
+        elevation: 12,
+    },
+
+    videogamesView:{
+        width: '100%',
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        justifyContent:'flex-start',
+    },
+
+    videogamesText:{
+        position: 'absolute',
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: "white",
+        fontSize: 36,
+        fontFamily:'RedHatDisplay_400Regular',
+        marginLeft:100,
+    },
+
+    videogamesimg:{
+        width: 70,
+        height: 70,
+    },
+
+    continueButton:{
         position: 'absolute',
         maxWidth: 360,
         top: '90%',
@@ -79,13 +367,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 
-    startButtonView:{
+    ContinueButtonView:{
         flexDirection: 'row', 
         alignItems: 'center', 
         justifyContent:'center'
     },
 
-    textStartButton:{
+    textContinueButton:{
         color: "white",
         fontSize: 22,
         fontFamily:'RedHatDisplay_400Regular',

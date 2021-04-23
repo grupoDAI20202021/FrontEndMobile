@@ -1,60 +1,110 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { StyleSheet, View, TouchableHighlight, Text, Image} from 'react-native';
 import { useFonts, RedHatDisplay_400Regular } from '@expo-google-fonts/red-hat-display';
 import AppLoading from 'expo-app-loading';
 import { StatusBar } from 'expo-status-bar';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+//import RNPickerSelect from 'react-native-picker-select';
 
 export default function SignUp3 ({ navigation }){
+    const [idAvatarValue,setidAvatarValue] = useState(null);
+
+    const handleAvatar1 = () => {
+        setidAvatarValue(1);
+    }
+
+    const handleAvatar2 = () => {
+        setidAvatarValue(2);
+    }
+
+    const handleAvatar3 = () => {
+        setidAvatarValue(3);
+    }
+
+    const handleAvatar4 = () => {
+        setidAvatarValue(4);
+    }
+
+    const handleAvatar5 = () => {
+        setidAvatarValue(5);
+    }
+
+    const handleAvatar6 = () => {
+        setidAvatarValue(6);
+    }
+
+    const handleAvatar7 = () => {
+        setidAvatarValue(7);
+    }
+
+    const handleAvatar8 = () => {
+        setidAvatarValue(8);
+    }
+
+     //Fetch
+        /*const submit = async () => {
+                const response = await fetch("http://192.168.1.67:8080/api/children", {
+                    method: 'POST',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        idAvatar:idAvatarValue,
+                    })
+                });
+                const response_1 = await response.json();
+                return response_1;
+        }*/
+
+        const submit = async () => {
+            await AsyncStorage.setItem('userData', JSON.stringify({
+                idAvatar:idAvatarValue,
+            }));
+        }
+    
+    
     let [fontsLoaded] = useFonts({
         RedHatDisplay_400Regular,
     });
     if (!fontsLoaded) {
         return <AppLoading/>;
     } else {
+        console.log(123);
         return (
             <View style={styles.container}>
                 <StatusBar style="auto" />
                 <View style={styles.headContainer}>
-                    <Text style={styles.pickAreas}>Escolhe as tuas áreas de interesse!</Text>
-                    <TouchableHighlight onPress={() => navigation.navigate('SignUp2')} style={styles.back}>
-                        <FontAwesomeIcon icon={faChevronLeft} style={styles.chevronLeft} size={15}/>
-                    </TouchableHighlight>
+                    <Text style={styles.pickAvatar}>Escolhe o teu avatar!</Text>
                 </View>
-                <Text style={styles.recomendations}>As recomendações serão feitas consoante as tuas escolhas</Text>
-                <TouchableHighlight style={styles.sports}>
-                    <View style={styles.sportsView}>
-                        <Text style={styles.sportsText}>Desporto</Text>
-                        <Image source={require("../../sports.png")} style={styles.sportsimg}/>
-                    </View>
-                </TouchableHighlight>
-                <TouchableHighlight style={styles.literature}>
-                    <View style={styles.literatureView}>
-                        <Text style={styles.literatureText}>Literatura</Text>
-                        <Image source={require("../../literature.png")} style={styles.literatureimg}/>
-                    </View>
-                </TouchableHighlight>
-                <TouchableHighlight style={styles.cinema}>
-                    <View style={styles.cinemaView}>
-                        <Text style={styles.cinemaText}>Cinema</Text>
-                        <Image source={require("../../cinema.png")} style={styles.cinemaimg}/>
-                    </View>
-                </TouchableHighlight>
-                <TouchableHighlight style={styles.music}>
-                    <View style={styles.musicView}>
-                        <Text style={styles.musicText}>Música</Text>
-                        <Image source={require("../../music.png")} style={styles.musicimg}/>
-                    </View>
-                </TouchableHighlight>
-                <TouchableHighlight style={styles.videogames}>
-                    <View style={styles.videogamesView}>
-                        <Text style={styles.videogamesText}>Videojogos</Text>
-                        <Image source={require("../../videogames.png")} style={styles.videogamesimg}/>
-                    </View>
-                </TouchableHighlight>
+                <View style={styles.avatarsContainer}>
+                    <TouchableHighlight style={styles.avatar1} onPress={handleAvatar1}>
+                        <Image source={require("../../avatar1.png")} style={styles.avatar1png}/>
+                    </TouchableHighlight>
+                    <TouchableHighlight style={styles.avatar2} onPress={handleAvatar2}>
+                        <Image source={require("../../avatar2.png")} style={styles.avatar2png}/>
+                    </TouchableHighlight>
+                    <TouchableHighlight style={styles.avatar3} onPress={handleAvatar3}>
+                        <Image source={require("../../avatar3.png")} style={styles.avatar3png}/>
+                    </TouchableHighlight>
+                    <TouchableHighlight style={styles.avatar4} onPress={handleAvatar4}>
+                        <Image source={require("../../avatar4.png")} style={styles.avatar4png}/>
+                    </TouchableHighlight>
+                    <TouchableHighlight style={styles.avatar5} onPress={handleAvatar5}>
+                        <Image source={require("../../avatar5.png")} style={styles.avatar5png}/>
+                    </TouchableHighlight>
+                    <TouchableHighlight style={styles.avatar6} onPress={handleAvatar6}>
+                        <Image source={require("../../avatar6.png")} style={styles.avatar6png}/>
+                    </TouchableHighlight>
+                    <TouchableHighlight style={styles.avatar7} onPress={handleAvatar7}>
+                        <Image source={require("../../avatar7.png")} style={styles.avatar7png}/>
+                    </TouchableHighlight>
+                    <TouchableHighlight style={styles.avatar8} onPress={handleAvatar8}>
+                        <Image source={require("../../avatar8.png")} style={styles.avatar8png}/>
+        </TouchableHighlight>
+                </View>
                 <TouchableHighlight style={styles.continueButton} onPress={() => navigation.navigate('SignUp4')}>
-                    <View style={styles.continueButtonView}>
+                    <View style={styles.continueButtonView} onPress={submit}>
                         <Text style={styles.textContinueButton}>Continuar</Text>
                     </View>
                 </TouchableHighlight>
@@ -91,192 +141,149 @@ const styles = StyleSheet.create({
         color: '#DBDBDB',
     },
 
-    pickAreas:{
+    pickAvatar:{
         fontFamily:'RedHatDisplay_400Regular',
-        fontSize:20,
+        fontSize:28,
         position:'absolute',
         color:'#1A82C4',
         textAlign: 'center',
     },
 
-    recomendations:{
-        fontFamily:'RedHatDisplay_400Regular',
-        fontSize:20,
-        position:'absolute',
-        color:'#D4D4D4',
-        textAlign: 'center',
-        maxWidth: 350,
-        top: '10%',
-    },
-
-    sports:{
+    avatarsContainer:{
         position: 'absolute',
         maxWidth: 360,
-        top: '20%',
-        width: '85%',
-        height: 70,
-        backgroundColor: '#ff5a5f',
+        top: '15%',
+        width: '90%',
+        height: '70%',
+        alignItems: 'center',
+    },
+
+    avatar1:{
+        position: 'absolute',
+        top: '0%',
+        left: '16%',
+        width: 100,
+        height: 100,
         borderRadius: 90,
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection:"row",
     },
 
-    sportsView:{
-        width: '100%',
-        flexDirection: 'row', 
-        alignItems: 'center', 
-        justifyContent:'flex-start',
-    },
-
-    sportsText:{
+    avatar1png:{
         position: 'absolute',
-        textAlign: 'center',
-        justifyContent: 'center',
-        alignItems: 'center',
-        color: "white",
-        fontSize: 36,
-        fontFamily:'RedHatDisplay_400Regular',
-        marginLeft:100,
-    },
-
-    sportsimg:{
-        width: 70,
-        height: 70,
-    },
-
-    literature:{
-        position: 'absolute',
-        maxWidth: 360,
-        top: '33%',
-        width: '85%',
-        height: 70,
-        backgroundColor: '#fabe55',
+        width: 100,
+        height: 100,
         borderRadius: 90,
-        alignItems: 'center',
-        justifyContent: 'center',
     },
 
-    literatureView:{
-        flexDirection: 'row', 
-        alignItems: 'center', 
-        justifyContent:'center',
-    },
-
-    literatureText:{
+    avatar2:{
         position: 'absolute',
-        textAlign: 'center',
-        color: "white",
-        fontSize: 36,
-        fontFamily:'RedHatDisplay_400Regular',
-    },
-
-    literatureimg:{
-        width: 70,
-        height: 70,
-        left: '0%',
-    },
-
-    cinema:{
-        position: 'absolute',
-        maxWidth: 360,
-        top: '46%',
-        width: '85%',
-        height: 70,
-        maxHeight: 70,
-        backgroundColor: '#6a4c93',
+        top: '0%',
+        left: '56%',
+        width: 100,
+        height: 100,
         borderRadius: 90,
-        alignItems: 'center',
-        justifyContent: 'center',
     },
 
-    cinemaView:{
-        flexDirection: 'row', 
-        alignItems: 'center', 
-        justifyContent:'center',
-    },
-
-    cinemaText:{
+    avatar2png:{
         position: 'absolute',
-        textAlign: 'center',
-        color: "white",
-        fontSize: 36,
-        fontFamily:'RedHatDisplay_400Regular',
-    },
-
-    cinemaimg:{
-        flex: 1,
-        width: 70,
-        height: 70,
-        left: '0%',
-    },
-
-    music:{
-        position: 'absolute',
-        maxWidth: 360,
-        top: '59%',
-        width: '85%',
-        height: 70,
-        maxHeight: 70,
-        backgroundColor: '#1a82c4',
+        width: 100,
+        height: 100,
         borderRadius: 90,
-        alignItems: 'center',
-        justifyContent: 'center',
     },
 
-    musicView:{
-        flexDirection: 'row', 
-        alignItems: 'center', 
-        justifyContent:'center',
-    },
-
-    musicText:{
+    avatar3:{
         position: 'absolute',
-        textAlign: 'center',
-        color: "white",
-        fontSize: 36,
-        fontFamily:'RedHatDisplay_400Regular',
-    },
-
-    musicimg:{
-        flex: 1,
-        width: 70,
-        height: 70,
-        left: '0%',
-    },
-
-    videogames:{
-        position: 'absolute',
-        maxWidth: 360,
-        top: '72%',
-        width: '85%',
-        height: 70,
-        maxHeight: 70,
-        backgroundColor: '#8ac926',
+        top: '25%',
+        left: '16%',
+        width: 100,
+        height: 100,
         borderRadius: 90,
-        alignItems: 'center',
-        justifyContent: 'center',
     },
 
-    videogamesView:{
-        flexDirection: 'row', 
-        alignItems: 'center', 
-        justifyContent:'center',
-    },
-
-    videogamesText:{
+    avatar3png:{
         position: 'absolute',
-        textAlign: 'center',
-        color: "white",
-        fontSize: 36,
-        fontFamily:'RedHatDisplay_400Regular',
+        width: 100,
+        height: 100,
+        borderRadius: 90,
     },
 
-    videogamesimg:{
-        flex: 1,
-        width: 70,
-        height: 70,
-        left: '0%',
+    avatar4:{
+        position: 'absolute',
+        top: '25%',
+        left: '56%',
+        width: 100,
+        height: 100,
+        borderRadius: 90,
+    },
+
+    avatar4png:{
+        position: 'absolute',
+        width: 100,
+        height: 100,
+        borderRadius: 90,
+    },
+
+    avatar5:{
+        position: 'absolute',
+        top: '50%',
+        left: '16%',
+        width: 100,
+        height: 100,
+        borderRadius: 90,
+    },
+
+    avatar5png:{
+        position: 'absolute',
+        width: 100,
+        height: 100,
+        borderRadius: 90,
+    },
+
+    avatar6:{
+        position: 'absolute',
+        top: '50%',
+        left: '56%',
+        width: 100,
+        height: 100,
+        borderRadius: 90,
+    },
+
+    avatar6png:{
+        position: 'absolute',
+        width: 100,
+        height: 100,
+        borderRadius: 90,
+    },
+
+    avatar7:{
+        position: 'absolute',
+        top: '75%',
+        left: '16%',
+        width: 100,
+        height: 100,
+        borderRadius: 90,
+    },
+
+    avatar7png:{
+        position: 'absolute',
+        width: 100,
+        height: 100,
+        borderRadius: 90,
+    },
+
+    avatar8:{
+        position: 'absolute',
+        top: '75%',
+        left: '56%',
+        width: 100,
+        height: 100,
+        borderRadius: 90,
+    },
+
+    avatar8png:{
+        position: 'absolute',
+        width: 100,
+        height: 100,
+        borderRadius: 90,
     },
 
     continueButton:{
@@ -304,6 +311,4 @@ const styles = StyleSheet.create({
         width:275,
         textAlign: 'center',
     },
-
-
 })

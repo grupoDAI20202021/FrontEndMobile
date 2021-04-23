@@ -7,10 +7,12 @@ import HomeWithoutLogin from "./assets/screens/Home/HomeWithoutLogin";
 import OpenScreen from "./assets/screens/Home/OpenScreen";
 import BottomNavbar from "./assets/screens/Home/Components/BottomNavbar";
 import Login from "./assets/screens/Home/Login";
-import SignUp from "./assets/screens/Home/SignUp";
+import SignUp1 from "./assets/screens/Home/SignUp1";
 import SignUp2 from "./assets/screens/Home/SignUp2";
 import SignUp3 from "./assets/screens/Home/SignUp3";
 import SignUp4 from "./assets/screens/Home/SignUp4";
+import SignUp5 from "./assets/screens/Home/SignUp5";
+import ForumWithoutLogin from "./assets/screens/Home/ForumWithoutLogin";
 
 const Stack = createStackNavigator();
 
@@ -22,10 +24,12 @@ export default function App() {
         <Stack.Screen name="HomeWithoutLogin" component={HomeWithoutLogin} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
         <Stack.Screen name="BottomNavbar" component={BottomNavbar} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
         <Stack.Screen name="Login" component={Login} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
-        <Stack.Screen name="SignUp" component={SignUp} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
+        <Stack.Screen name="SignUp1" component={SignUp1} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
         <Stack.Screen name="SignUp2" component={SignUp2} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
         <Stack.Screen name="SignUp3" component={SignUp3} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
         <Stack.Screen name="SignUp4" component={SignUp4} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
+        <Stack.Screen name="SignUp5" component={SignUp5} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
+        <Stack.Screen name="ForumWithoutLogin" component={ForumWithoutLogin} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

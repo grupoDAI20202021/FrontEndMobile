@@ -3,7 +3,7 @@ import { StyleSheet, View, Image, TouchableHighlight, Text, BackHandler, Alert  
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faTrophy, faComments, faLightbulb, faStar, faHome } from '@fortawesome/free-solid-svg-icons';
-import Forum from "../../Forum/Forum";
+import ForumStack from "../../Forum/ForumStack";
 import Suggestion from "../../Suggestion/Suggestion";
 import HomeMenuStack from "../../HomeMenu/HomeMenuStack";
 import Rank from "../../Rank/Rank";
@@ -21,8 +21,8 @@ export default function BottomNavbar() {
         }}
       >
         <Tab.Screen
-          name="Forum"
-          component={Forum}
+          name="ForumStack"
+          component={ForumStack}
           options={{
             tabBarLabel: () => {return null},
             tabBarIcon: ({ color, size }) => (
