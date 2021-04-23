@@ -13,6 +13,7 @@ export default function Profile({navigation}) {
     const [loaded, setLoaded] = useState(false);
     const [profileData, setProfileData] = useState(null);
     const [avatarChosenState, setAvatarChosenState] = useState(null);
+    const [valueToken, setValueToken] = useState(null);
     const avatarChosen = (avatar) =>{
         if(avatar==1)
             setAvatarChosenState(require("../../avatar1.png"));
@@ -37,6 +38,7 @@ export default function Profile({navigation}) {
         async function submit() {
             const valueTokenStorage = await AsyncStorage.getItem('userToken');
             const valueToken = JSON.parse(valueTokenStorage);
+            setValueToken(valueTokenStorage);
             //console.log(valueToken.userId);
             const response = await fetch("http://192.168.1.74:8080/api/children/"+valueToken.userId, {
                 method: 'GET',
@@ -56,6 +58,12 @@ export default function Profile({navigation}) {
             //console.log(profileData);
         }
     });
+
+    //SignOut
+    const signOut = async() =>{
+        await AsyncStorage.removeItem(valueToken);
+        navigation.navigate('Login')
+    };
 
     let [fontsLoaded] = useFonts({
         RedHatDisplay_400Regular,
@@ -118,7 +126,7 @@ export default function Profile({navigation}) {
                                                 <Text style={styles.dataTextMargin}>{item.age}</Text>
                                             </View>
                                         </View>
-                                        <Text style={styles.logout}>Terminar Sessão</Text>
+                                        <Text style={styles.logout} onPress={signOut}>Terminar Sessão</Text>
                                     </View>
                                 </View>
                             )

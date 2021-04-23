@@ -15,14 +15,6 @@ export default function HomeMenu({ navigation }){
 
     const backAction = () => {
         navigation.navigate('HomeMenu');
-        Alert.alert("Alto e para o baile!", "Queres mesmo sair seu caralho?", [
-        {
-            text: "Cancel",
-            onPress: () => null,
-            style: "cancel"
-        },
-        { text: "YES", onPress: () => BackHandler.exitApp() }
-        ]);
         return true;
     };
     
@@ -125,9 +117,9 @@ export default function HomeMenu({ navigation }){
                                 return(
                                     <View style={styles.activitiesScreenScrollView}>
                                         <Text style={styles.activitiesText}>Atividades</Text>
-                                        <TouchableHighlight style={styles.favoriteActivities}>
+                                        <TouchableOpacity style={styles.favoriteActivities} onPress={() => navigation.navigate('SeeAllScreen')}>
                                             <Text style={styles.seeAllActivities}>Ver todas</Text>
-                                        </TouchableHighlight>
+                                        </TouchableOpacity>
                                         <View style={styles.literatureActivities}>
                                             <TouchableHighlight style={styles.literatureActivitiesSearch} onPress={() => navigation.navigate('LiteratureScreen')}>
                                                 <Text style={styles.literatureActivitiesSearchText}>Procurar</Text>
@@ -143,9 +135,9 @@ export default function HomeMenu({ navigation }){
                                 return(
                                     <View style={styles.activitiesScreenScrollView}>
                                         <Text style={styles.activitiesText}>Atividades</Text>
-                                        <View style={styles.favoriteActivities}>
+                                        <TouchableOpacity style={styles.favoriteActivities} onPress={() => navigation.navigate('SeeAllScreen')}>
                                             <Text style={styles.seeAllActivities}>Ver todas</Text>
-                                        </View>
+                                        </TouchableOpacity>
                                         <View style={styles.musicActivities}>
                                             <TouchableHighlight style={styles.musicActivitiesSearch} onPress={() => navigation.navigate('MusicScreen')}>
                                                 <Text style={styles.musicActivitiesSearchText}>Procurar</Text>
@@ -161,11 +153,11 @@ export default function HomeMenu({ navigation }){
                                 return(
                                     <View style={styles.activitiesScreenScrollView}>
                                         <Text style={styles.activitiesText}>Atividades</Text>
-                                        <View style={styles.favoriteActivities}>
+                                        <TouchableOpacity style={styles.favoriteActivities} onPress={() => navigation.navigate('SeeAllScreen')}>
                                             <Text style={styles.seeAllActivities}>Ver todas</Text>
-                                        </View>
+                                        </TouchableOpacity>
                                         <View style={styles.cinemaActivities}>
-                                            <TouchableHighlight style={styles.cinemaActivitiesSearch} >
+                                            <TouchableHighlight style={styles.cinemaActivitiesSearch} onPress={() => navigation.navigate('CinemaScreen')}>
                                                 <Text style={styles.cinemaActivitiesSearchText}>Procurar</Text>
                                             </TouchableHighlight>
                                             <Text style={styles.cinemaActivitiesSportText}>Cinema</Text>
@@ -179,9 +171,9 @@ export default function HomeMenu({ navigation }){
                                 return(
                                     <View style={styles.activitiesScreenScrollView}>
                                         <Text style={styles.activitiesText}>Atividades</Text>
-                                        <View style={styles.favoriteActivities}>
+                                        <TouchableOpacity style={styles.favoriteActivities} onPress={() => navigation.navigate('SeeAllScreen')}>
                                             <Text style={styles.seeAllActivities}>Ver todas</Text>
-                                        </View>
+                                        </TouchableOpacity>
                                         <View style={styles.videoGamesActivities}>
                                             <TouchableHighlight style={styles.videoGamesActivitiesSearch} onPress={() => navigation.navigate('videoGameScreen')}>
                                                 <Text style={styles.videoGamesActivitiesSearchText}>Procurar</Text>
@@ -249,9 +241,9 @@ export default function HomeMenu({ navigation }){
                                 return(
                                     <View style={styles.activitiesScreenScrollView}>
                                         <View style={styles.cinemaActivities}>
-                                            <View style={styles.cinemaActivitiesSearch}>
+                                            <TouchableHighlight style={styles.cinemaActivitiesSearch} onPress={() => navigation.navigate('CinemaScreen')}>
                                                 <Text style={styles.cinemaActivitiesSearchText}>Procurar</Text>
-                                            </View>
+                                            </TouchableHighlight>
                                             <Text style={styles.cinemaActivitiesSportText}>Cinema</Text>
                                             <Text style={styles.cinemaActivitiesHowManyText}>100 atividades esta semana</Text>
                                             <Image source={require("../../cinema.png")} style={styles.cinemaPng}></Image>
@@ -494,6 +486,7 @@ const styles = StyleSheet.create({
     //Sports
     sportActivities:{
         marginTop:15,
+        marginBottom:5,
         maxWidth:370,
         width:"90%",
         height:180,
@@ -550,6 +543,7 @@ const styles = StyleSheet.create({
     //Literature
     literatureActivities:{
         marginTop:15,
+        marginBottom:5,
         maxWidth:370,
         width:"90%",
         height:180,
@@ -606,6 +600,7 @@ const styles = StyleSheet.create({
     //Video Games
     videoGamesActivities:{
         marginTop:15,
+        marginBottom:5,
         maxWidth:370,
         width:"90%",
         height:180,
@@ -662,6 +657,7 @@ const styles = StyleSheet.create({
     //Music
     musicActivities:{
         marginTop:15,
+        marginBottom:5,
         maxWidth:370,
         width:"90%",
         height:180,
@@ -718,6 +714,7 @@ const styles = StyleSheet.create({
     //Cinema
     cinemaActivities:{
         marginTop:15,
+        marginBottom:5,
         maxWidth:370,
         width:"90%",
         height:180,

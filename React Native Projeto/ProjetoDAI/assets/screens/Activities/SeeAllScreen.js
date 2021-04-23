@@ -14,7 +14,25 @@ export default function SeeAllScreen({ navigation }){
     const [allActivity, setAllActivity] = useState(null);
     const [valueToken, setValueToken] = useState(null);
     const [firstActivitieSports, setFirstActivitieSports] = useState(0);
-
+    //Sport
+    const [upcomingSport, setUpcomingSport] = useState(null);
+    const [addressUpcomingSport, setAddressUpcomingSport] = useState(null);
+    const [dateUpcomingSport, setDateUpcomingSport] = useState(null);
+    const [hourUpcomingSport, setHourUpcomingSport] = useState(null);
+    const [spacesUpcomingSport, setSpacesUpcomingSport] = useState(null);
+    const [sportNotNull, setSportNotNull] = useState(false);
+    //Literature
+    const [upcomingLiterature, setUpcomingLiterature] = useState(null);
+    const [literatureNotNull, setLiteratureNotNull] = useState(false);
+    //Music
+    const [upcomingMusic, setUpcomingMusic] = useState(null);
+    const [musicNotNull, setMusicNotNull] = useState(false);
+    //Cinema
+    const [upcomingCinema, setUpcomingCinema] = useState(null);
+    const [cinemaNotNull, setCinemaNotNull] = useState(false);
+    //Video Games
+    const [upcomingVideoGames, setUpcomingVideoGames] = useState(null);
+    const [videoGamesNotNull, setVideoGamesNotNull] = useState(false);
     
     //Fetch
     useEffect(() => {
@@ -34,6 +52,85 @@ export default function SeeAllScreen({ navigation }){
             const response_1 = await response.json();
             setAllActivity(response_1);
             //console.log(profileData);
+
+            const response2 = await fetch("http://192.168.1.74:8080/api/activities", {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            });
+            const response_3 = await response2.json();
+            //Sport
+            let s = 0;
+            let snull = 0;
+            for(let i=0; i<response_3.length; i++){
+                if(response_3[i].status=="Aprovada" && response_3[i].activityType.idActivityType==3 && s==0){
+                    ++s;
+                    ++snull;
+                    setUpcomingSport(response_3[i].title);
+                    setAddressUpcomingSport(response_3[i].address);
+                    setDateUpcomingSport(response_3[i].init_data.slice(0, 10));
+                    setHourUpcomingSport(response_3[i].init_data.slice(10, 16));
+                    setSpacesUpcomingSport(response_3[i].spaces);
+                    setSportNotNull(true);
+                }
+            }
+            if(snull==0){
+                setUpcomingSport("N/A");
+                setAddressUpcomingSport("N/A");
+                setDateUpcomingSport("N/A");
+                setHourUpcomingSport("N/A");
+                setSpacesUpcomingSport("N/A");
+            }
+            //Literature
+            let l = 0;
+            let lnull = 0;
+            for(let i=0; i<response_3.length; i++){
+                if(response_3[i].status=="Aprovada" && response_3[i].activityType.idActivityType==4 && l==0){
+                    ++l;
+                    ++lnull;
+                    setUpcomingLiterature(response_3[i].title);
+                    setLiteratureNotNull(true);
+                }
+            }
+            //Music
+            let m = 0;
+            for(let i=0; i<response_3.length; i++){
+                if(response_3[i].status=="Aprovada" && response_3[i].activityType.idActivityType==5 && m==0){
+                    ++m;
+                    setUpcomingMusic(response_3[i].title);
+                    setMusicNotNull(true);
+                }
+            }
+            //Cinema
+            let c = 0;
+            let cnull = 0;
+            for(let i=0; i<response_3.length; i++){
+                if(response_3[i].status=="Aprovada" && response_3[i].activityType.idActivityType==6 && c==0){
+                    ++c;
+                    ++cnull;
+                    setUpcomingCinema(response_3[i].title);
+                    setCinemaNotNull(true);
+                }
+            }
+            if(cnull==0){
+                setUpcomingSport("N/A");
+            }
+            //VideoGames
+            let v = 0;
+            let vnull = 0;
+            for(let i=0; i<response_3.length; i++){
+                if(response_3[i].status=="Aprovada" && response_3[i].activityType.idActivityType==7 && v==0){
+                    ++v;
+                    ++vnull;
+                    setUpcomingVideoGames(response_3[i].title);
+                    setVideoGamesNotNull(true);
+                }
+            }
+            if(vnull==0){
+                setUpcomingSport("N/A");
+            }
         }
         if(!loaded){
             submit();
@@ -64,27 +161,44 @@ export default function SeeAllScreen({ navigation }){
                             </View>
                             <View style={styles.sportActivities}>
                                 <Text style={styles.sportActivitiesSportText}>Desporto</Text>
-                                <Image source={require("../../sports.png")} style={styles.sportsPng}></Image>
-                                {/*<FlatList data={allActivity}
-                                    scrollEventThrottle={1} onScroll={(e)=>{scrollY.setValue(e.nativeEvent.contentOffset.y); scrollYValue = scrollY._value; scrollYValue > 0 ? setScrolled(true) : setScrolled(false);}}
-                                    
-                                    renderItem={({item}) => {
-                                            return(
-                                                <View>
-                                                    <Text >asdasdadasdasdasda</Text>
-                                                </View>
-                                            );
-                                    }}
-                                    keyExtractor={(item, index) => index.toString()}
-                                    style={styles.profileScreenScroll}
-                                />*/}
-                                <TouchableHighlight style={styles.sportActivitiesSearch} onPress={() => navigation.navigate('SportsScreen')}>
-                                    <Text style={styles.sportActivitiesSearchText}>Ver +</Text>
-                                </TouchableHighlight>
+                                <Image source={require("../../sports.png")} style={styles.sportsPng}/>
+                                <View>
+                                    <Text style={styles.activityTitle} numberOfLines={1}>{upcomingSport}</Text>
+                                </View>
+                                <View style={styles.firstCollum}>
+                                    <View>
+                                        <View style={styles.firstRowFirstCollum}>
+                                            <FontAwesomeIcon icon={faMapMarkedAlt} style={styles.mapMarked}/>
+                                            <Text style={styles.addressText} numberOfLines={1}>{addressUpcomingSport}</Text>
+                                        </View>
+                                        <View style={styles.firstRowFirstCollum}>
+                                            <FontAwesomeIcon icon={faUser} style={styles.mapMarked}/>
+                                            <Text style={styles.addressText}>{spacesUpcomingSport}</Text>
+                                        </View>
+                                    </View>
+                                    <View style={styles.SecondCollum}>
+                                        <View style={styles.firstRowFirstCollum}>
+                                            <FontAwesomeIcon icon={faCalendarAlt} style={styles.mapMarked}/>
+                                            <Text style={styles.addressText}>{dateUpcomingSport}</Text>
+                                        </View>
+                                        <View style={styles.firstRowFirstCollum}>
+                                            <FontAwesomeIcon icon={faClock} style={styles.mapMarked}/>
+                                            <Text style={styles.addressText}>{hourUpcomingSport}</Text>
+                                        </View>
+                                    </View>
+                                </View>
+                                <View style={styles.sportActivitiesSearchContainer}>
+                                    <TouchableHighlight style={styles.sportActivitiesSearch} onPress={() => navigation.navigate('SportsScreen')}>
+                                        <Text style={styles.sportActivitiesSearchText}>Ver +</Text>
+                                    </TouchableHighlight>
+                                </View>
                             </View>
-                            <View style={styles.sportActivities}>
+                            <View style={styles.literatureActivities}>
                                 <Text style={styles.literatureActivitiesSportText}>Literatura</Text>
                                 <Image source={require("../../literature.png")} style={styles.literaturePng}/>
+                                <View>
+                                    <Text>{upcomingLiterature}</Text>
+                                </View>
                                 <TouchableHighlight style={styles.literatureActivitiesSearch} onPress={() => navigation.navigate('LiteratureScreen')}>
                                     <Text style={styles.literatureActivitiesSearchText}>Ver +</Text>
                                 </TouchableHighlight>
@@ -92,6 +206,9 @@ export default function SeeAllScreen({ navigation }){
                             <View style={styles.musicActivities}>
                                 <Text style={styles.musicActivitiesSportText}>Música</Text>
                                 <Image source={require("../../music.png")} style={styles.musicPng}/>
+                                <View>
+                                    <Text>{upcomingLiterature}</Text>
+                                </View>
                                 <TouchableHighlight style={styles.musicActivitiesSearch} onPress={() => navigation.navigate('MusicScreen')}>
                                     <Text style={styles.musicActivitiesSearchText}>Ver +</Text>
                                 </TouchableHighlight>
@@ -99,6 +216,9 @@ export default function SeeAllScreen({ navigation }){
                             <View style={styles.cinemaActivities}>
                                 <Text style={styles.cinemaActivitiesSportText}>Cinema</Text>
                                 <Image source={require("../../cinema.png")} style={styles.cinemaPng}/>
+                                <View>
+                                    <Text>{upcomingCinema}</Text>
+                                </View>
                                 <TouchableHighlight style={styles.cinemaActivitiesSearch} onPress={() => navigation.navigate('CinemaScreen')}>
                                     <Text style={styles.cinemaActivitiesSearchText}>Ver +</Text>
                                 </TouchableHighlight>
@@ -106,15 +226,17 @@ export default function SeeAllScreen({ navigation }){
                             <View style={styles.videoGamesActivities}>
                                 <Text style={styles.videoGamesActivitiesSportText}>Video Jogos</Text>
                                 <Image source={require("../../videogames.png")} style={styles.videogamesPng}/>
+                                <View>
+                                    <Text>{upcomingVideoGames}</Text>
+                                </View>
                                 <TouchableHighlight style={styles.videoGamesActivitiesSearch} onPress={() => navigation.navigate('VideoGameScreen')}>
                                     <Text style={styles.videoGamesActivitiesSearchText}>Ver +</Text>
                                 </TouchableHighlight>
                             </View>
-                            
                         </View>
                     </ScrollView>
                 </View>
-             </View>
+            </View>
         )
     }
 }
@@ -210,7 +332,7 @@ const styles = StyleSheet.create({
         marginTop:15,
         maxWidth:370,
         width:"100%",
-        height:130,
+        height:280,
         backgroundColor:"#FAFAFA",
         shadowColor: "#000",
         shadowOffset: {
@@ -227,9 +349,18 @@ const styles = StyleSheet.create({
     sportActivitiesSearch:{
         backgroundColor:"#F0F0F0",
         width:"36.2%",
-        position:"absolute",
-        bottom:"12%",
         borderRadius:50,
+    },
+    sportActivitiesSearchContainer:{
+        borderTopWidth:2,
+        borderTopColor:"#F1F1F1",
+        width:"100%",
+        height:65,
+        borderRadius:50,
+        alignItems:'center',
+        justifyContent:'center',
+        position:'absolute',
+        bottom:0,
     },
     sportActivitiesSearchText:{
         textAlign:'center',
@@ -260,13 +391,42 @@ const styles = StyleSheet.create({
         top:"12%",
         right:"4.9%",
     },
+    activityTitle:{
+        fontFamily:"RedHatDisplay_400Regular",
+        fontSize:22,
+        color:"#D6D6D6",
+        fontWeight:'bold',
+        textAlign:'left',
+        width:270,
+    },
+    firstCollum:{
+        marginTop:20,
+        flexDirection:'row',
+        alignItems:'center',
+        justifyContent:'space-between',
+        width:270,
+    },
+    SecondCollum:{
+        width:80,
+    },
+    firstRowFirstCollum:{
+        flexDirection:'row',
+    },
+    mapMarked:{
+        color:"#D7D7D7",
+    },
+    addressText:{
+        color:"#D7D7D7",
+        marginLeft:5,
+        width:170,
+    },
 
     //Literature
     literatureActivities:{
         marginTop:15,
         maxWidth:370,
         width:"100%",
-        height:130,
+        height:230,
         backgroundColor:"#FAFAFA",
         shadowColor: "#000",
         shadowOffset: {
@@ -322,7 +482,7 @@ const styles = StyleSheet.create({
         marginTop:15,
         maxWidth:370,
         width:"100%",
-        height:130,
+        height:230,
         backgroundColor:"#FAFAFA",
         shadowColor: "#000",
         shadowOffset: {
@@ -378,7 +538,7 @@ const styles = StyleSheet.create({
         marginTop:15,
         maxWidth:370,
         width:"100%",
-        height:130,
+        height:230,
         backgroundColor:"#FAFAFA",
         shadowColor: "#000",
         shadowOffset: {
@@ -434,7 +594,7 @@ const styles = StyleSheet.create({
         marginTop:15,
         maxWidth:370,
         width:"100%",
-        height:130,
+        height:230,
         backgroundColor:"#FAFAFA",
         shadowColor: "#000",
         shadowOffset: {

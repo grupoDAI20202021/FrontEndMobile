@@ -12,12 +12,94 @@ export default function HomeWithoutLogin({ navigation }){
   const scrollY= new Animated.Value(0);
   let scrollYValue = scrollY._value;
   const [scrolled, setScrolled] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const [activities, setActivities] = useState(null);
+  //Sport
+  const [upcomingSport, setUpcomingSport] = useState(null);
+  const [sportNotNull, setSportNotNull] = useState(false);
+  //Literature
+  const [upcomingLiterature, setUpcomingLiterature] = useState(null);
+  const [literatureNotNull, setLiteratureNotNull] = useState(false);
+  //Music
+  const [upcomingMusic, setUpcomingMusic] = useState(null);
+  const [musicNotNull, setMusicNotNull] = useState(false);
+  //Cinema
+  const [upcomingCinema, setUpcomingCinema] = useState(null);
+  const [cinemaNotNull, setCinemaNotNull] = useState(false);
+  //Video Games
+  const [upcomingVideoGames, setUpcomingVideoGames] = useState(null);
+  const [videoGamesNotNull, setVideoGamesNotNull] = useState(false);
+
+  useEffect(() => {
+    async function submit() {
+        const response = await fetch("http://192.168.1.74:8080/api/activities", {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+        });
+        const response_1 = await response.json();
+        //Sport
+        let s = 0;
+        for(let i=0; i<response_1.length; i++){
+          if(response_1[i].status=="Aprovada" && response_1[i].activityType.idActivityType==3 && s==0){
+            ++s;
+            setUpcomingSport(response_1[i].title);
+            setSportNotNull(true);
+          }
+        }
+        //Literature
+        let l = 0;
+        for(let i=0; i<response_1.length; i++){
+          if(response_1[i].status=="Aprovada" && response_1[i].activityType.idActivityType==4 && l==0){
+            ++l;
+            setUpcomingLiterature(response_1[i].title);
+            setLiteratureNotNull(true);
+          }
+        }
+        //Music
+        let m = 0;
+        for(let i=0; i<response_1.length; i++){
+          if(response_1[i].status=="Aprovada" && response_1[i].activityType.idActivityType==5 && m==0){
+            ++m;
+            setUpcomingMusic(response_1[i].title);
+            setMusicNotNull(true);
+          }
+        }
+        //Cinema
+        let c = 0;
+        for(let i=0; i<response_1.length; i++){
+          if(response_1[i].status=="Aprovada" && response_1[i].activityType.idActivityType==6 && c==0){
+            ++c;
+            setUpcomingCinema(response_1[i].title);
+            setCinemaNotNull(true);
+          }
+        }
+        //VideoGames
+        let v = 0;
+        for(let i=0; i<response_1.length; i++){
+          if(response_1[i].status=="Aprovada" && response_1[i].activityType.idActivityType==7 && v==0){
+            ++v;
+            setUpcomingVideoGames(response_1[i].title);
+            setVideoGamesNotNull(true);
+          }
+        }
+        //console.log(profileData);
+        return response_1;
+    }
+    if(!loaded){
+        submit();
+        setLoaded(true);
+        //console.log(profileData);
+    }
+  });
 
 
   let [fontsLoaded] = useFonts({
     RedHatDisplay_400Regular,
   });
-  if (!fontsLoaded) {
+  if (!fontsLoaded && !loaded) {
     return <AppLoading />;
   } else {
     return (
@@ -31,17 +113,38 @@ export default function HomeWithoutLogin({ navigation }){
         <TouchableOpacity style={styles.forumIconContainer}>
           <FontAwesomeIcon icon={faComments} onPress={() => navigation.navigate('Login')} size={25} style={styles.commentsIcon}/>
         </TouchableOpacity>
-        <Text style={styles.activitiesOfTheWeek}>Atividades desta semana</Text>
+        <Text style={styles.activitiesOfTheWeek}>Proximas atividades</Text>
         <ScrollView style={styles.activitiesScrollView}>
           <View style={styles.activitiesContainer}>
             <View style={styles.sportView}>
-              <Image source={require("../../sports.png")} style={styles.sportsPng}/>
-                <Text>AAAAAAAAAAAAAAAAAAA</Text>
+              <Image source={require("../../sports.png")} style={styles.eachActivitiesPng}/>
+              <Text style={styles.upcomingActivitiesViewText} numberOfLines={2}>{sportNotNull?upcomingSport:'Não temos atividades desportivas disponíveis de momento'}</Text>
             </View>
           </View>
-        </ScrollView>
-        <ScrollView style={styles.activitiesScrollView}>
-
+          <View style={styles.activitiesContainer}>
+            <View style={styles.sportView}>
+              <Image source={require("../../literature.png")} style={styles.eachActivitiesPng}/>
+              <Text style={styles.upcomingActivitiesViewText} numberOfLines={2}>{literatureNotNull?upcomingLiterature:'Não temos atividades literaturiais disponíveis de momento'}</Text>
+            </View>
+          </View>
+          <View style={styles.activitiesContainer}>
+            <View style={styles.sportView}>
+              <Image source={require("../../music.png")} style={styles.eachActivitiesPng}/>
+              <Text style={styles.upcomingActivitiesViewText} numberOfLines={2}>{musicNotNull?upcomingMusic:'Não temos atividades musicais disponíveis de momento'}</Text>
+            </View>
+          </View>
+          <View style={styles.activitiesContainer}>
+            <View style={styles.sportView}>
+              <Image source={require("../../cinema.png")} style={styles.eachActivitiesPng}/>
+              <Text style={styles.upcomingActivitiesViewText} numberOfLines={2}>{cinemaNotNull?upcomingCinema:'Não temos atividades cinematográficas disponíveis de momento'}</Text>
+            </View>
+          </View>
+          <View style={styles.activitiesContainer}>
+            <View style={styles.sportView}>
+              <Image source={require("../../videogames.png")} style={styles.eachActivitiesPng}/>
+              <Text style={styles.upcomingActivitiesViewText} numberOfLines={2}>{videoGamesNotNull?upcomingVideoGames:'Não temos atividades de video jogos disponíveis de momento'}</Text>
+            </View>
+          </View>
         </ScrollView>
         <TouchableHighlight onPress={() => navigation.navigate('OpenScreen')} underlayColor={"rgba(15, 122, 190, 0.8)"} style={styles.buttonLogin}>
           <View style={styles.buttonLoginWithAccountView}>
@@ -99,13 +202,14 @@ const styles = StyleSheet.create({
   buttonLogin:{
     alignItems: 'center',
     flexDirection: "row",
-    backgroundColor: 'rgba(26, 130, 196, 0.8)',
+    backgroundColor: 'rgba(26, 130, 196, 1)',
     maxWidth: 370,
-    width:"89%",
+    maxHeight:80,
+    width:"95%",
     height: "9%",
+    position:'absolute',
+    bottom:15,
     borderRadius: 50,
-    position:"absolute",
-    bottom:"3%"
   },
   
   textButtonLoginWithAccount:{
@@ -170,14 +274,22 @@ const styles = StyleSheet.create({
 
   //Activities
   activitiesScrollView:{
-    height:100,
+    height:200,
     width:"100%",
     maxWidth:414,
+    marginBottom:60,
   },
   activitiesContainer:{
     justifyContent:'center',
     alignItems:'center',
     flexDirection:'column',
+  },
+  upcomingActivitiesViewText:{
+    width:"75%",
+    fontFamily:'RedHatDisplay_400Regular',
+    fontSize:16,
+    marginLeft:10,
+    color:'#000'
   },
 
   //Sport
@@ -190,8 +302,18 @@ const styles = StyleSheet.create({
     alignItems:'center',
     flexDirection:'row',
     justifyContent:'flex-start',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 2,
+      height: 0,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 1,
+    elevation: 1.5,
+    margin:3,
+    backgroundColor:"#fff",
   },
-  sportsPng:{
+  eachActivitiesPng:{
     width:60,
     height:60,
     marginLeft:10,
