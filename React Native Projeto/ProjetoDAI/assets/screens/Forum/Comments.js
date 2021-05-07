@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import { Animated, StyleSheet, Text, View, ScrollView, Image, TouchableHighlight, FlatList } from 'react-native';
+import { Animated, StyleSheet, Text, View, ScrollView, Image, TouchableHighlight, FlatList, TextInput } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { useFonts, RedHatDisplay_400Regular, RedHatDisplay_500Medium } from '@expo-google-fonts/red-hat-display';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faChevronLeft, faMapMarkedAlt, faUser, faCalendarAlt, faClock, faStar, faEllipsisH, faHeart, faComments} from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faMapMarkedAlt, faUser, faCalendarAlt, faClock, faPaperPlane, faEllipsisH, faHeart, faComments} from '@fortawesome/free-solid-svg-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -12,7 +12,82 @@ export default function LiteratureInscriptionButton({navigation}) {
     let scrollYValue = scrollY._value;
     const [scrolled, setScrolled] = useState(false);
     const [loaded, setLoaded] = useState(false);
+    const [contentPost, setContentPost] = useState(null);
+    const [allPosts, setAllPosts] = useState(null);
+    const [postIdSelected, setPostIdSelected] = useState(null);
+    const [selectedPostContent, setSelectedPostContent] = useState(null);
+    const [selectedPostTime, setSelectedPostTime] = useState(null);
+    const [selectedPostName, setSelectedPostName] = useState(null);
 
+    const handlerPostContent = (text) =>{
+        setContentPost(text)
+    };
+
+    //Initial Fetch
+    useEffect(() => {
+        async function submit() {
+            const postIdStorage = await AsyncStorage.getItem('postIdStorage');
+            const postStorage = JSON.parse(postIdStorage);
+            console.log(postIdStorage);
+
+            const response2 = await fetch("http://192.168.1.74:8080/api/posts/"+postStorage.idPost, {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            });
+            const response_3 = await response2.json();
+            console.log(response_3);
+            setSelectedPostContent(response_3.post);
+            setSelectedPostTime(response_3.insert_data.slice(0, 10));
+            setSelectedPostName(response_3.child.name)
+
+            const response = await fetch("http://192.168.1.74:8080/api/posts/"+postStorage.idPost+"/comments", {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            });
+            const response_1 = await response.json();
+            setAllPosts(response_1);
+
+
+            setLoaded(true);
+        }
+        if(!loaded){
+            submit();
+            setLoaded(true);
+        }
+    });
+    //Post on Forum Fetch
+    const publishPost = async (idActivity) => {
+        const response = await fetch("http://192.168.1.74:8080/api/posts/1/comments", {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                idChild: valueToken.userId,
+                post: contentPost
+            })
+        });
+        const response_1 = await response.json();
+        
+        const response2 = await fetch("http://192.168.1.74:8080/api/posts/1/comments", {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+        });
+        const response_3 = await response2.json();
+        setAllPosts(response_3);
+        
+        return response_1;
+    }
 
     let [fontsLoaded] = useFonts({
         RedHatDisplay_400Regular,
@@ -27,34 +102,59 @@ export default function LiteratureInscriptionButton({navigation}) {
                     <View style={styles.posterDataView}>
                         <Image source={require("../../avatar1.png")} style={styles.posterAvatarImage}/>
                         <View>
-                            <Text>asadsadas</Text>
+                            <Text>{selectedPostName}</Text>
                             <View style={styles.timePosterData}>
                                 <FontAwesomeIcon icon={faClock} style={styles.clock}/>
-                                <Text>asadsadas</Text>
+                                <Text>{selectedPostTime}</Text>
                             </View>
                         </View>
                         <FontAwesomeIcon icon={faEllipsisH} onPress={() => navigation.navigate('Forum')} style={styles.ellipsis}/>
                     </View>
                 </View>
-                <View>
-                    <Text>AAAAAAAAAAAAAAAAAAAAAAAAAAAA</Text>
-                </View>
-                <View style={styles.interactionstView}>
-                    <View style={styles.heartView}>
+                <View style={styles.posterContentContainer}>
+                    <Text>{selectedPostContent}</Text>
+                    <View style={styles.interactionstView}>
+                        <View style={styles.heartView}>
+                            <FontAwesomeIcon icon={faHeart} onPress={() => navigation.navigate('Forum')} style={styles.heart}/>
+                            <Text>Gosto</Text>
+                        </View>
+                        <View style={styles.commentsView}>
+                            <FontAwesomeIcon icon={faComments} onPress={() => navigation.navigate('Forum')} style={styles.comments}/>
+                            <Text>Comentar</Text>
+                        </View>
+                    </View>
+                    <View style={styles.numberOfLikesView}>
                         <FontAwesomeIcon icon={faHeart} onPress={() => navigation.navigate('Forum')} style={styles.heart}/>
-                        <Text>Gosto</Text>
-                    </View>
-                    <View style={styles.commentsView}>
-                        <FontAwesomeIcon icon={faComments} onPress={() => navigation.navigate('Forum')} style={styles.comments}/>
-                        <Text>Comentar</Text>
+                        <Text>Number of likes</Text>
                     </View>
                 </View>
-                <View>
-                    <FontAwesomeIcon icon={faHeart} onPress={() => navigation.navigate('Forum')} style={styles.heart}/>
-                    <Text>Number of likes</Text>
-                </View>
-                {/*<FlatList/>*/}
+                <FlatList/>
                 <View style={styles.commentScreen}>
+                    <FlatList
+                        data={allPosts}
+                        scrollEventThrottle={1} onScroll={(e)=>{scrollY.setValue(e.nativeEvent.contentOffset.y); scrollYValue = scrollY._value; scrollYValue > 0 ? setScrolled(true) : setScrolled(false);}}
+                        extraData={allPosts}
+                        renderItem={({ item, index }) => {
+                            return(
+                                    <View style={styles.eachCommentViewCenter}>
+                                        <View style={styles.eachCommentView}>
+                                            <Image source={require("../../avatar1.png")} style={styles.commenterAvatarImage}/>
+                                            <View style={styles.ContentTextView}>
+                                                <Text style={styles.commentContentText}>{item.child.name}</Text>
+                                                <Text style={styles.commentContentText}>{item.comment}</Text>
+                                            </View>
+                                        </View>
+                                    </View>
+                                    
+                            )
+                        }}
+                        keyExtractor={(item, index) => index.toString()}
+                    />
+                </View>
+                <View style={styles.sendPostView}>
+                    <Image source={require("../../avatar1.png")} style={styles.avatar1png}/>
+                    <TextInput style={styles.sendPostTextInput} onChangeText={handlerPostContent}/>
+                    <FontAwesomeIcon icon={faPaperPlane} onPress={publishPost} style={styles.paperPlane} size={25}/>
                 </View>
             </View>
         )
@@ -64,14 +164,14 @@ export default function LiteratureInscriptionButton({navigation}) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F4F4F4',
+        backgroundColor: '#FCFCFC',
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: "column",
     },
     //TopNavBar
     topNavbar: {
-        flex: 1,
+        flex: 1.5,
         width:"100%",
         backgroundColor: '#FCFCFC',
         flexDirection: 'row', 
@@ -149,6 +249,22 @@ const styles = StyleSheet.create({
     comments:{
         color:"#1A82C4",
     },
+    posterContentContainer:{
+        maxWidth:414,
+        width:"100%",
+        backgroundColor:"#FCFCFC",
+        alignItems:'center',
+        justifyContent:'center',
+        flexDirection:'column',
+    },
+    //
+    numberOfLikesView:{
+        marginLeft:20,
+        width:"100%",
+        flexDirection: 'row',
+        alignItems:'center',
+        justifyContent:'flex-start',
+    },
     //Comment Section
     commentScreen:{
         flex: 5,
@@ -158,5 +274,71 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-start',
         flexDirection: "column",
+    },
+    commenterAvatarImage:{
+        width:45,
+        height:45,
+        marginLeft:5,
+    },
+    eachCommentView:{
+        flexDirection:'row',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        flexDirection: "row",
+        height:60,
+        width:"90%",
+        borderRadius:50,
+        backgroundColor:"#fff",
+        margin:7,
+    },
+    eachCommentViewCenter:{
+        flexDirection:'column',
+        justifyContent:'center',
+        alignItems:'center',
+        width:360,
+    },
+    ContentTextView:{
+        flexDirection:'column',
+    },
+    commentContentText:{
+        marginLeft:15,
+    },
+    //Send Post
+    sendPostView:{
+        flex:0.7,
+        backgroundColor:"#FCFCFC",
+        zIndex:1,
+        width:"100%",
+        alignItems:'center',
+        justifyContent:'space-evenly',
+        flexDirection:"row",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 1,
+        shadowRadius: 3.84,
+
+        elevation: 5,
+    },
+
+    avatar1png:{
+        width:35,
+        height:35,
+    },
+
+    sendPostTextInput:{
+        width:"68%",
+        height:"70%",
+        backgroundColor:"#fff",
+        borderRadius:10,
+        borderColor:"#F0F0F0",
+        borderWidth: 1,
+        fontSize:15,
+    },
+
+    paperPlane:{
+        color:"#1A82C4",
     },
 });

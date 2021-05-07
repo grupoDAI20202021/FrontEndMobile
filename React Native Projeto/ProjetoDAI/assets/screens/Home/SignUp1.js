@@ -70,8 +70,53 @@ export default function SignUp1 ({ navigation }){
                 });
                 const response_1 = await response.json();
                 return response_1;
-        }*/
+        }
         
+
+        */
+        
+        const submit = async () => {
+            try {
+                const response = await fetch("http://192.168.1.74:8080/api/children", {
+                    method: 'POST',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email:"zecsasdaasd3",
+                        age:16,
+                        password : "hello5",
+                        contact: 917894567,
+                        confirmPassword: "hello5",
+                        name: "rui",
+                        address:"carcavelihns",
+                        role: {
+                            idRole: 3
+                        },
+                        idAvatar: 2
+                    
+                    })
+                });
+                const response_1 = await response.json();
+                console.log(response_1);
+                /*if(response_1.error=="Unauthorized"){
+                    setBorderError(true);
+                    return response_1;
+                }else{
+                    const userId = response_1.userId;
+                    console.log(userId);
+                    await AsyncStorage.setItem('userToken',JSON.stringify({userId}));
+                    navigation.navigate('BottomNavbar');
+                    return response_1;
+                }*/
+                
+            }catch (error) {
+                console.error(error);
+                console.log("asdadada");
+            }
+        };
+        /*
         const submit = async () => {
             await AsyncStorage.setItem('userData', JSON.stringify({
                 name:nameValue,
@@ -86,7 +131,7 @@ export default function SignUp1 ({ navigation }){
                 contact:contactValue,
             }));
         }
-        
+        */
     
     let [fontsLoaded] = useFonts({
         RedHatDisplay_400Regular,
@@ -117,8 +162,8 @@ export default function SignUp1 ({ navigation }){
                 <TextInput onChangeText={handleAddressText} style={styles.townHallBox}></TextInput>
                 <Text style={styles.ageText}>Idade</Text>
                 <TextInput onChangeText={handleAgeText} style={styles.ageBox}></TextInput>
-                <TouchableHighlight style={styles.continueButton} onPress={() => navigation.navigate('SignUp2')}>
-                    <View style={styles.continueButtonView} onPress={submit}>
+                <TouchableHighlight style={styles.continueButton} onPress={submit}>
+                    <View style={styles.continueButtonView}>
                         <Text style={styles.textContinueButton}>Continuar</Text>
                     </View>
                 </TouchableHighlight>

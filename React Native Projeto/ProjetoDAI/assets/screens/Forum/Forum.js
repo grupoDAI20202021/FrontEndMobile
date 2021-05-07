@@ -39,7 +39,11 @@ export default function Forum({navigation}) {
     const handlerPostContent = (text) =>{
         setContentPost(text)
     };
-
+    //Post on Forum Fetch
+    const selectPost = async (idPost) => {
+        await AsyncStorage.setItem('postIdStorage',JSON.stringify({idPost}));
+        navigation.navigate('Comments');
+    }
     //Initial Fetch
     useEffect(() => {
         async function submit() {
@@ -152,7 +156,7 @@ export default function Forum({navigation}) {
                                         </View>
                                         <View style={styles.interactionView}>
                                             <LikeButton/>
-                                            <FontAwesomeIcon icon={faComment} onPress={() => navigation.navigate('Comments')} style={styles.heart} size={25}/>
+                                            <FontAwesomeIcon icon={faComment} onPress={()=>selectPost(item.idPost)} style={styles.heart} size={25}/>
                                         </View>
                                     </View>
                                 </View>

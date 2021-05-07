@@ -170,7 +170,7 @@ export default function Rank({navigation}) {
                                 )
                             }
                         }}
-                        keyExtractor={(item, index) => index}
+                        keyExtractor={(item, index) => index.toString()}
                         style={styles.rankScreenScroll}
                     />
                 </View>
