@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TouchableHighlight, Text, TextInput, Alert} from 'react-native';
+import { StyleSheet, View, TouchableHighlight, Text, TextInput} from 'react-native';
 import { useFonts, RedHatDisplay_400Regular } from '@expo-google-fonts/red-hat-display';
 import AppLoading from 'expo-app-loading';
 import { StatusBar } from 'expo-status-bar';
@@ -84,35 +84,22 @@ export default function SignUp1 ({ navigation }){
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        email:emailValue,
-                        age:ageValue,
-                        password : passwordValue,
-                        contact: contactValue,
-                        confirmPassword: confirmpasswordValue,
-                        name: nameValue,
-                        address:addressValue,
+                        email:"zecsasdaasd3",
+                        age:16,
+                        password : "hello5",
+                        contact: 917894567,
+                        confirmPassword: "hello5",
+                        name: "rui",
+                        address:"carcavelihns",
                         role: {
                             idRole: 3
                         },
+                        idAvatar: 2
                     
                     })
                 });
                 const response_1 = await response.json();
-                console.log(response_1.success);
-                createdUserId = response_1.objectId;
-                if(response_1.success==false){
-                    Alert.alert(
-                        "Erro",
-                        "Os dados não foram bem introduzidos",
-                        [
-                          { text: "OK" }
-                        ]
-                    );
-                }
-                if(response_1.success==true){
-                    await AsyncStorage.setItem('createdUserId',JSON.stringify({createdUserId}));
-                    navigation.navigate('SignUp2');
-                }
+                console.log(response_1);
                 /*if(response_1.error=="Unauthorized"){
                     setBorderError(true);
                     return response_1;

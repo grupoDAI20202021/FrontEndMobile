@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, View, TouchableHighlight, Text, Image, Alert} from 'react-native';
+import { StyleSheet, View, TouchableHighlight, Text, Image} from 'react-native';
 import { useFonts, RedHatDisplay_400Regular } from '@expo-google-fonts/red-hat-display';
 import AppLoading from 'expo-app-loading';
 import { StatusBar } from 'expo-status-bar';
@@ -42,14 +42,9 @@ export default function SignUp3 ({ navigation }){
     }
 
      //Fetch
-        const submit = async () => {
-            const createdUserId = await AsyncStorage.getItem('createdUserId');
-            const createdUserIdParsed = JSON.parse(createdUserId);
-            console.log(createdUserIdParsed);
-
-            if(idAvatarValue!=null){
-                const response = await fetch("http://192.168.1.74:8080/api/children/"+createdUserIdParsed.createdUserId+"/avatar", {
-                    method: 'PUT',
+        /*const submit = async () => {
+                const response = await fetch("http://192.168.1.67:8080/api/children", {
+                    method: 'POST',
                     headers: {
                         Accept: 'application/json',
                         'Content-Type': 'application/json',
@@ -59,24 +54,14 @@ export default function SignUp3 ({ navigation }){
                     })
                 });
                 const response_1 = await response.json();
-                console.log(response_1);
-                navigation.navigate('SignUp4');
-            }else{
-                Alert.alert(
-                    "Erro",
-                    "Nenhum avatar foi selecionado",
-                    [
-                      { text: "OK" }
-                    ]
-                );
-            }
-        }
+                return response_1;
+        }*/
 
-        /*const submit = async () => {
+        const submit = async () => {
             await AsyncStorage.setItem('userData', JSON.stringify({
                 idAvatar:idAvatarValue,
             }));
-        }*/
+        }
     
     
     let [fontsLoaded] = useFonts({
@@ -118,8 +103,8 @@ export default function SignUp3 ({ navigation }){
                         <Image source={require("../../avatar8.png")} style={styles.avatar8png}/>
         </TouchableHighlight>
                 </View>
-                <TouchableHighlight style={styles.continueButton} onPress={submit}>
-                    <View style={styles.continueButtonView}>
+                <TouchableHighlight style={styles.continueButton} onPress={() => navigation.navigate('SignUp4')}>
+                    <View style={styles.continueButtonView} onPress={submit}>
                         <Text style={styles.textContinueButton}>Continuar</Text>
                     </View>
                 </TouchableHighlight>
