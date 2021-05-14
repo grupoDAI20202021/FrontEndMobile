@@ -161,7 +161,7 @@ export default function HomeMenu({ navigation }){
                                                 <Text style={styles.cinemaActivitiesSearchText}>Procurar</Text>
                                             </TouchableHighlight>
                                             <Text style={styles.cinemaActivitiesSportText}>Cinema</Text>
-                                            <Text style={styles.cinemaActivitiesHowManyText}>100 atividades esta semana</Text>
+                                            <Text style={styles.cinemaActivitiesHowManyText}>0 atividades esta semana</Text>
                                             <Image source={require("../../cinema.png")} style={styles.cinemaPng}></Image>
                                         </View>
                                     </View>

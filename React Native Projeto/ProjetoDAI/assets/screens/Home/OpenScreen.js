@@ -18,7 +18,7 @@ export default function HomeWithoutLogin({ navigation }){
                 <Image source={require("../../LOGOPNG.png")} style={styles.logoPng}/>
                 <View style={styles.loginButtonsView}>
                     <TouchableHighlight onPress={() => navigation.navigate('Login')} underlayColor={"rgba(229, 229, 229, 0.8)"} style={styles.loginButton}>
-                        <Text style={styles.loginButtonText}>Inicar Sessão</Text>
+                        <Text style={styles.loginButtonText}>Iniciar Sessão</Text>
                     </TouchableHighlight>
                     <TouchableHighlight onPress={() => navigation.navigate('HomeWithoutLogin')} underlayColor={"rgba(15, 122, 190, 0.8)"} style={styles.loginGuest}>
                         <Text style={styles.loginGuestText}>Entrar como{"\n"}  convidado</Text>

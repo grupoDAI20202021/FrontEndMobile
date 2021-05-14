@@ -94,14 +94,39 @@ export default function LiteratureScreen({navigation}) {
                             if(index==0 && item.activityType.idActivityType==4 && item.status=="Aprovada"){
                                 return(
                                     <View style={styles.literatureActivitiesScreenView}>
-                                        <View style={styles.literaturesActivitiesTextView}>
-                                            <Text style={styles.forYouText}>Para ti!</Text>
-                                            <Text style={styles.comingSoonText}>Próximas atividades nas proximidades</Text>
-                                        </View>
-                                        <View style={styles.registerActivityView}>
-                                            <Text>{item.title}</Text>
-                                        </View>
-                                    </View>
+                                                <View style={styles.registerActivityView}>
+                                                    <View style={styles.tileFetchedTextContainer}>
+                                                        <Text style={styles.tileFetchedText} numberOfLines={1}>{item.title}</Text>
+                                                    </View>
+                                                    <View style={styles.collumsContainerView}>
+                                                        <View style={styles.firstCollumView}>
+                                                            <View style={styles.adressView}>
+                                                                <FontAwesomeIcon icon={faMapMarkedAlt} style={styles.mapMarkedAlt}/>
+                                                                <Text style={styles.addressTextFirstCollum} numberOfLines={1}>{item.address}</Text>
+                                                            </View>
+                                                            <View style={styles.adressView}>
+                                                                <FontAwesomeIcon icon={faUser} style={styles.mapMarkedAlt}/>
+                                                                <Text style={styles.addressTextFirstCollum}>{item.spaces} Lugares</Text>{/* VER A PARTE DOS PONTOS */}
+                                                            </View>
+                                                        </View>
+                                                        <View style={styles.sendondCollumView}>
+                                                            <View style={styles.dateView}>
+                                                                <FontAwesomeIcon icon={faCalendarAlt} style={styles.mapMarkedAlt}/>
+                                                                <Text style={styles.dateText} numberOfLines={1}>{item.init_data.slice(0, 10)}</Text>
+                                                            </View>
+                                                            <View style={styles.dateView}>
+                                                                <FontAwesomeIcon icon={faClock} style={styles.mapMarkedAlt}/>
+                                                                <Text style={styles.hourText} numberOfLines={1}>{item.init_data.slice(10, 16)}</Text>
+                                                            </View>
+                                                        </View>
+                                                    </View>
+                                                    <View style={styles.inscriptionButtonContainer}>
+                                                        <TouchableOpacity style={styles.inscriptionJoinedButton}>
+                                                            <Text style={styles.inscriptionJoinedButtonText}>Inscrever</Text>
+                                                        </TouchableOpacity>
+                                                    </View>
+                                                </View>
+                                            </View>
                                 )
                             }else{
                                 if(index==0){

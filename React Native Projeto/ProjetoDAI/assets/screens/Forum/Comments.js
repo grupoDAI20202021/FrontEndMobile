@@ -18,10 +18,8 @@ export default function LiteratureInscriptionButton({navigation}) {
     const [selectedPostContent, setSelectedPostContent] = useState(null);
     const [selectedPostTime, setSelectedPostTime] = useState(null);
     const [selectedPostName, setSelectedPostName] = useState(null);
-
-    const handlerPostContent = (text) =>{
-        setContentPost(text)
-    };
+    const [valueTokenValue, setValueTokenValue] = useState(null);
+    const [postStorageValue, setPostStorageValue] = useState(null);
 
     //Initial Fetch
     useEffect(() => {
@@ -29,6 +27,11 @@ export default function LiteratureInscriptionButton({navigation}) {
             const postIdStorage = await AsyncStorage.getItem('postIdStorage');
             const postStorage = JSON.parse(postIdStorage);
             console.log(postIdStorage);
+            setPostStorageValue(postStorage);
+            const valueTokenStorage = await AsyncStorage.getItem('userToken');
+            const valueToken = JSON.parse(valueTokenStorage);
+            const valueTokenUserId = parseInt(valueToken.userId);
+            setValueTokenValue(valueTokenUserId);
 
             const response2 = await fetch("http://192.168.1.74:8080/api/posts/"+postStorage.idPost, {
                 method: 'GET',
@@ -62,21 +65,24 @@ export default function LiteratureInscriptionButton({navigation}) {
         }
     });
     //Post on Forum Fetch
-    const publishPost = async (idActivity) => {
-        const response = await fetch("http://192.168.1.74:8080/api/posts/1/comments", {
+    const publishPost = async () => {
+        console.log(postStorageValue.idPost);
+
+        const response = await fetch("http://192.168.1.74:8080/api/posts/"+postStorageValue.idPost+"/comments", {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                idChild: valueToken.userId,
+                idChild: valueTokenValue,
                 post: contentPost
             })
         });
         const response_1 = await response.json();
+        console.log(response_1);
         
-        const response2 = await fetch("http://192.168.1.74:8080/api/posts/1/comments", {
+        const response2 = await fetch("http://192.168.1.74:8080/api/posts/"+postStorageValue.idPost+"/comments", {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -97,35 +103,35 @@ export default function LiteratureInscriptionButton({navigation}) {
     } else {
         return(
             <View style={styles.container}>
-                <View style={scrolled ? styles.topNavbarScrolled : styles.topNavbar}>
+                <View style={styles.topNavbar}>
                     <FontAwesomeIcon icon={faChevronLeft} onPress={() => navigation.navigate('Forum')} style={styles.chevronLeft}/>
                     <View style={styles.posterDataView}>
                         <Image source={require("../../avatar1.png")} style={styles.posterAvatarImage}/>
                         <View>
-                            <Text>{selectedPostName}</Text>
+                            <Text style={styles.postNameStyle}>{selectedPostName}</Text>
                             <View style={styles.timePosterData}>
                                 <FontAwesomeIcon icon={faClock} style={styles.clock}/>
-                                <Text>{selectedPostTime}</Text>
+                                <Text style={styles.postTimeStyle}>{selectedPostTime}</Text>
                             </View>
                         </View>
                         <FontAwesomeIcon icon={faEllipsisH} onPress={() => navigation.navigate('Forum')} style={styles.ellipsis}/>
                     </View>
                 </View>
                 <View style={styles.posterContentContainer}>
-                    <Text>{selectedPostContent}</Text>
+                    <Text style={styles.posterContentContainerPostContentStyle}>{selectedPostContent}</Text>
                     <View style={styles.interactionstView}>
                         <View style={styles.heartView}>
-                            <FontAwesomeIcon icon={faHeart} onPress={() => navigation.navigate('Forum')} style={styles.heart}/>
-                            <Text>Gosto</Text>
+                            <FontAwesomeIcon icon={faHeart} onPress={() => navigation.navigate('Forum')} style={styles.heart} size={20}/>
+                            <Text style={styles.interactionstViewInteractionStyle}>Gosto</Text>
                         </View>
                         <View style={styles.commentsView}>
-                            <FontAwesomeIcon icon={faComments} onPress={() => navigation.navigate('Forum')} style={styles.comments}/>
-                            <Text>Comentar</Text>
+                            <FontAwesomeIcon icon={faComments} onPress={() => navigation.navigate('Forum')} style={styles.comments} size={20}/>
+                            <Text style={styles.interactionstViewInteractionStyle}>Comentar</Text>
                         </View>
                     </View>
                     <View style={styles.numberOfLikesView}>
-                        <FontAwesomeIcon icon={faHeart} onPress={() => navigation.navigate('Forum')} style={styles.heart}/>
-                        <Text>Number of likes</Text>
+                        <FontAwesomeIcon icon={faHeart} onPress={() => navigation.navigate('Forum')} style={styles.heart} size={15}/>
+                        <Text style={styles.interactionstViewInteractionStyle}>6</Text>
                     </View>
                 </View>
                 <FlatList/>
@@ -153,7 +159,7 @@ export default function LiteratureInscriptionButton({navigation}) {
                 </View>
                 <View style={styles.sendPostView}>
                     <Image source={require("../../avatar1.png")} style={styles.avatar1png}/>
-                    <TextInput style={styles.sendPostTextInput} onChangeText={handlerPostContent}/>
+                    <TextInput style={styles.sendPostTextInput} onChangeText={text => setContentPost(text)}/>
                     <FontAwesomeIcon icon={faPaperPlane} onPress={publishPost} style={styles.paperPlane} size={25}/>
                 </View>
             </View>
@@ -227,11 +233,14 @@ const styles = StyleSheet.create({
     //InteractionsBar
     interactionstView:{
         borderTopWidth:2,
+        borderBottomWidth:2,
         borderTopColor:"#F1F1F1",
         borderBottomColor:"#F1F1F1",
         flexDirection: 'row',
     },
     heartView:{
+        marginTop:10,
+        marginBottom:10,
         width:150,
         flexDirection: 'row',
         alignItems:'center',
@@ -340,5 +349,33 @@ const styles = StyleSheet.create({
 
     paperPlane:{
         color:"#1A82C4",
+    },
+
+    postNameStyle:{
+        color:"#1A82C4",
+        fontSize:18,
+        fontFamily:'RedHatDisplay_400Regular',
+        fontWeight:'700',
+        marginLeft:10,
+    },
+
+    postTimeStyle:{
+        width:200,
+        color:"#CECECE",
+        fontSize:14,
+        fontFamily:'RedHatDisplay_400Regular',
+    },
+
+    posterContentContainerPostContentStyle:{
+        color:"#BABABA",
+        fontSize:20,
+        fontFamily:'RedHatDisplay_400Regular',
+    },
+
+    interactionstViewInteractionStyle:{
+        color:"#1A82C4",
+        fontSize:18,
+        fontFamily:'RedHatDisplay_400Regular',
+        marginLeft:10,
     },
 });
