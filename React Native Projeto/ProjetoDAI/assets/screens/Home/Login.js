@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, View, Image, TouchableHighlight, Text, TextInput} from 'react-native';
+import { StyleSheet, View, Image, TouchableHighlight, Text, TextInput, TouchableOpacity} from 'react-native';
 import { useFonts, RedHatDisplay_400Regular } from '@expo-google-fonts/red-hat-display';
 import AppLoading from 'expo-app-loading';
 import { StatusBar } from 'expo-status-bar';
@@ -7,11 +7,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faChevronLeft, faEye} from '@fortawesome/free-solid-svg-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ErrorLogin from '../Error/ErroLogin';
+import { 
+    hasHardwareAsync,
+    isEnrolledAsync,
+    authenticateAsync 
+ } from 'expo-local-authentication';
 
 export default function Login ({ navigation }){
     const [emailLogin, setEmailLogin] = useState(null);
     const [passwordLogin, setPasswordLogin] = useState(null);
     const [borderError, setBorderError] = useState(false);
+    const [isBiometricSupported, setIsBiometricSupported] = useState(false);
     const handleEmailInput = (text) => {
         setEmailLogin(text);
     };
@@ -52,6 +58,20 @@ export default function Login ({ navigation }){
         }
     };
 
+    //TouchID
+    const biometricsAuth = async () => {
+        const compatible = await hasHardwareAsync()
+        if (!compatible) throw 'This device is not compatible for biometric authentication'
+        const enrolled = await isEnrolledAsync()
+        if (!enrolled) throw `This device doesn't have biometric authentication enabled`
+        const result = await authenticateAsync()
+        if (!result.success) throw `${result.error} - Authentication unsuccessful`
+        const userId = 11;
+        await AsyncStorage.setItem('userToken',JSON.stringify({userId}));
+        navigation.navigate('BottomNavbar');
+        return
+    }
+    
     let [fontsLoaded] = useFonts({
         RedHatDisplay_400Regular,
     });
@@ -84,7 +104,9 @@ export default function Login ({ navigation }){
                     </View>
                 </TouchableHighlight>
                 <Text style={styles.orText}>OU</Text>
-                <Image source={require("../../fingerprint.png")} style={styles.fingerprint}/>
+                <TouchableOpacity style={styles.fingerprint} onPress={biometricsAuth}>
+                    <Image source={require("../../fingerprint.png")} style={styles.fingerprintPng}/>
+                </TouchableOpacity>
                 <Text style={styles.createAccountText}>Ainda não tens uma conta?</Text>
                 <TouchableHighlight onPress={() => navigation.navigate('SignUp1')} style={styles.createAccountButton}>
                     <View style={styles.createAccountView}>
@@ -282,6 +304,10 @@ const styles = StyleSheet.create({
         color: '#1A82C4',
     },
 
+    fingerprintPng:{
+        width:70,
+        height:70
+    },
     fingerprint:{
         width:70,
         height:70,
