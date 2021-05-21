@@ -76,57 +76,74 @@ export default function SignUp1 ({ navigation }){
         */
         
         const submit = async () => {
-            try {
-                const response = await fetch("http://192.168.1.74:8080/api/children", {
-                    method: 'POST',
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        email:emailValue,
-                        age:ageValue,
-                        password : passwordValue,
-                        contact: contactValue,
-                        confirmPassword: confirmpasswordValue,
-                        name: nameValue,
-                        address:addressValue,
-                        role: {
-                            idRole: 3
+            if(ageValue>13){
+                try {
+                    const response = await fetch("http://192.168.1.74:8080/api/children", {
+                        method: 'POST',
+                        headers: {
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json',
                         },
+                        body: JSON.stringify({
+                            email:emailValue,
+                            age:ageValue,
+                            password : passwordValue,
+                            contact: contactValue,
+                            confirmPassword: confirmpasswordValue,
+                            name: nameValue,
+                            address:addressValue,
+                            role: {
+                                idRole: 3
+                            },
+                        
+                        })
+                    });
+                    const response_1 = await response.json();
+                    console.log(response_1.success);
+                    createdUserId = response_1.objectId;
+                    if(response_1.success==false){
+                        Alert.alert(
+                            "Erro",
+                            "Os dados não foram bem introduzidos",
+                            [
+                            { text: "OK" }
+                            ]
+                        );
+                    }
+                    if(response_1.success==true){
+                        await AsyncStorage.setItem('createdUserId',JSON.stringify({createdUserId}));
+                        navigation.navigate('SignUp3');
+                    }
+                    /*if(response_1.error=="Unauthorized"){
+                        setBorderError(true);
+                        return response_1;
+                    }else{
+                        const userId = response_1.userId;
+                        console.log(userId);
+                        await AsyncStorage.setItem('userToken',JSON.stringify({userId}));
+                        navigation.navigate('BottomNavbar');
+                        return response_1;
+                    }*/
                     
-                    })
-                });
-                const response_1 = await response.json();
-                console.log(response_1.success);
-                createdUserId = response_1.objectId;
-                if(response_1.success==false){
-                    Alert.alert(
-                        "Erro",
-                        "Os dados não foram bem introduzidos",
-                        [
-                          { text: "OK" }
-                        ]
-                    );
+                }catch (error) {
+                    console.error(error);
+                    console.log("asdadada");
                 }
-                if(response_1.success==true){
-                    await AsyncStorage.setItem('createdUserId',JSON.stringify({createdUserId}));
-                    navigation.navigate('SignUp2');
-                }
-                /*if(response_1.error=="Unauthorized"){
-                    setBorderError(true);
-                    return response_1;
-                }else{
-                    const userId = response_1.userId;
-                    console.log(userId);
-                    await AsyncStorage.setItem('userToken',JSON.stringify({userId}));
-                    navigation.navigate('BottomNavbar');
-                    return response_1;
-                }*/
-                
-            }catch (error) {
-                console.error(error);
-                console.log("asdadada");
+            }else
+            if(ageValue<13 && ageValue>0 && emailValue!=null && ageValue!=null && passwordValue!=null && contactValue!=null && confirmpasswordValue!=null && nameValue!=null && addressValue!=null){
+                await AsyncStorage.setItem('createUnderageUser',JSON.stringify({
+                    email:emailValue,
+                    age:ageValue,
+                    password : passwordValue,
+                    contact: contactValue,
+                    confirmPassword: confirmpasswordValue,
+                    name: nameValue,
+                    address:addressValue,
+                    role: {
+                        idRole: 3
+                    },
+                }));
+                navigation.navigate('SignUpUnder');
             }
         };
         /*

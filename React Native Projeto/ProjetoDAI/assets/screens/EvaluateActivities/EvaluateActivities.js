@@ -89,8 +89,8 @@ export default function EvaluateActivities({navigation}) {
             })
         });
         const response_1 = await response.json();
-        //console.log(idActivity);
-        //console.log(response_1);
+        console.log(idActivity);
+        console.log(response_1);
         return response_1;
     }
     
@@ -143,7 +143,9 @@ export default function EvaluateActivities({navigation}) {
                                             </View>
                                             <View style={styles.inscriptionButtonContainer}>
                                                 <GradingActivities/>
-                                                <SaveButton onPress={() => joinIn(item.idActivity)}/>
+                                                <TouchableOpacity onPress={()=>joinIn(item.idActivity)}>
+                                                    <SaveButton/>
+                                                </TouchableOpacity>
                                             </View>
                                         </View>
                                     </View>

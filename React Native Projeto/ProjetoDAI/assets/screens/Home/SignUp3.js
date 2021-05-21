@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { StyleSheet, View, TouchableHighlight, Text, Image, Alert} from 'react-native';
 import { useFonts, RedHatDisplay_400Regular } from '@expo-google-fonts/red-hat-display';
 import AppLoading from 'expo-app-loading';
@@ -8,6 +8,22 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function SignUp3 ({ navigation }){
     const [idAvatarValue,setidAvatarValue] = useState(null);
+    const [loaded, setLoaded] = useState(false);
+    const [valueToken, setValueToken] = useState(null);
+
+    useEffect(() => {
+        async function submit() {
+            const valueTokenStorage = await AsyncStorage.getItem('createdUserId');
+            const valueToken = JSON.parse(valueTokenStorage);
+            console.log(valueToken.createdUserId)
+            setValueToken(valueToken.createdUserId);
+            setLoaded(true);
+        }
+        if(!loaded){
+            submit();
+            setLoaded(true);
+        }
+    });
 
     const handleAvatar1 = () => {
         setidAvatarValue(1);
@@ -82,10 +98,9 @@ export default function SignUp3 ({ navigation }){
     let [fontsLoaded] = useFonts({
         RedHatDisplay_400Regular,
     });
-    if (!fontsLoaded) {
+    if (!fontsLoaded && !loaded) {
         return <AppLoading/>;
     } else {
-        console.log(123);
         return (
             <View style={styles.container}>
                 <StatusBar style="auto" />

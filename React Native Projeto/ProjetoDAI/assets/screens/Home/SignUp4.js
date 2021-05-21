@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, View, TouchableHighlight, Text, Image} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { StyleSheet, View, TouchableOpacity, Text, Image} from 'react-native';
 import { useFonts, RedHatDisplay_400Regular } from '@expo-google-fonts/red-hat-display';
 import AppLoading from 'expo-app-loading';
 import { StatusBar } from 'expo-status-bar';
@@ -9,29 +9,88 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function SignUp4 ({ navigation }){
+    const [valueToken, setValueToken] = useState(null);
+    const [loaded, setLoaded] = useState(false);
 
-    /*const valueTokenStorage = await AsyncStorage.getItem('userToken');
-    const valueToken = JSON.parse(valueTokenStorage);
+    useEffect(() => {
+        async function submit() {
+            const valueTokenStorage = await AsyncStorage.getItem('createdUserId');
+            const valueToken = JSON.parse(valueTokenStorage);
+            setValueToken(valueToken.createdUserId);
+            console.log(valueToken.createdUserId);
+        }
+        if(!loaded){
+            submit();
+            setLoaded(true);
+        }
+    });
 
     //Fetch
-        const submit = async () => {
-                
-    
-            const response = await fetch("http://192.168.1.67:8080/api/preferences/"+valueToken.userId,"", {
-                    method: 'POST',
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                });
-                const response_1 = await response.json();
-                return response_1;
-        }*/
+    const sportsPref = async () => {
+        const response = await fetch("http://192.168.1.74:8080/api/preferences/"+valueToken+"/3", {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+        });
+        const response_1 = await response.json();
+        console.log(response_1);
+        return response_1;
+    }
+    const literaturePref = async () => {
+        const response = await fetch("http://192.168.1.74:8080/api/preferences/"+valueToken+"/4", {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+        });
+        const response_1 = await response.json();
+        console.log(response_1);
+        return response_1;
+    }
+    const musicPref = async () => {
+        const response = await fetch("http://192.168.1.74:8080/api/preferences/"+valueToken+"/5", {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+        });
+        const response_1 = await response.json();
+        console.log(response_1);
+        return response_1;
+    }
+    const cinemaPref = async () => {
+        const response = await fetch("http://192.168.1.74:8080/api/preferences/"+valueToken+"/6", {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+        });
+        const response_1 = await response.json();
+        console.log(response_1);
+        return response_1;
+    }
+    const videoGamesPref = async () => {
+        const response = await fetch("http://192.168.1.74:8080/api/preferences/"+valueToken+"/7", {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+        });
+        const response_1 = await response.json();
+        console.log(response_1);
+        return response_1;
+    }
 
     let [fontsLoaded] = useFonts({
         RedHatDisplay_400Regular,
     });
-    if (!fontsLoaded) {
+    if (!fontsLoaded && !loaded) {
         return <AppLoading/>;
     } else {
         return (
@@ -39,46 +98,46 @@ export default function SignUp4 ({ navigation }){
                 <StatusBar style="auto" />
                 <View style={styles.headContainer}>
                     <Text style={styles.pickAreas}>Escolhe as tuas áreas de interesse!</Text>
-                    <TouchableHighlight onPress={() => navigation.navigate('SignUp3')} style={styles.back}>
+                    <TouchableOpacity onPress={() => navigation.navigate('SignUp3')} style={styles.back}>
                         <FontAwesomeIcon icon={faChevronLeft} style={styles.chevronLeft} size={15}/>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                 </View>
                 <Text style={styles.recomendations}>As recomendações serão feitas consoante as tuas escolhas</Text>
-                <TouchableHighlight style={styles.sports}>
+                <TouchableOpacity style={styles.sports} onPress={sportsPref}>
                     <View style={styles.sportsView}>
                         <Text style={styles.sportsText}>Desporto</Text>
                         <Image source={require("../../sports.png")} style={styles.sportsimg}/>
                     </View>
-                </TouchableHighlight>
-                <TouchableHighlight style={styles.literature}>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.literature} onPress={literaturePref}>
                     <View style={styles.literatureView}>
                         <Text style={styles.literatureText}>Literatura</Text>
                         <Image source={require("../../literature.png")} style={styles.literatureimg}/>
                     </View>
-                </TouchableHighlight>
-                <TouchableHighlight style={styles.cinema}>
-                    <View style={styles.cinemaView}>
-                        <Text style={styles.cinemaText}>Cinema</Text>
-                        <Image source={require("../../cinema.png")} style={styles.cinemaimg}/>
-                    </View>
-                </TouchableHighlight>
-                <TouchableHighlight style={styles.music}>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.music} onPress={musicPref}>
                     <View style={styles.musicView}>
                         <Text style={styles.musicText}>Música</Text>
                         <Image source={require("../../music.png")} style={styles.musicimg}/>
                     </View>
-                </TouchableHighlight>
-                <TouchableHighlight style={styles.videogames}>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.cinema} onPress={cinemaPref}>
+                    <View style={styles.cinemaView}>
+                        <Text style={styles.cinemaText}>Cinema</Text>
+                        <Image source={require("../../cinema.png")} style={styles.cinemaimg}/>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.videogames} onPress={videoGamesPref}>
                     <View style={styles.videogamesView}>
                         <Text style={styles.videogamesText}>Videojogos</Text>
                         <Image source={require("../../videogames.png")} style={styles.videogamesimg}/>
                     </View>
-                </TouchableHighlight>
-                <TouchableHighlight style={styles.continueButton} onPress={() => navigation.navigate('SignUp5')}>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.continueButton} onPress={() => navigation.navigate('SignUp5')}>
                     <View style={styles.continueButtonView} /*onPress={submit}*/>
                         <Text style={styles.textContinueButton}>Continuar</Text>
                     </View>
-                </TouchableHighlight>
+                </TouchableOpacity>
             </View>
         );
     }

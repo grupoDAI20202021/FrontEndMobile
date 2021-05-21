@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, View, Image, TouchableHighlight, Text, TextInput, TouchableOpacity} from 'react-native';
+import { StyleSheet, View, Image, TouchableHighlight, Text, TextInput, TouchableOpacity, Alert} from 'react-native';
 import { useFonts, RedHatDisplay_400Regular } from '@expo-google-fonts/red-hat-display';
 import AppLoading from 'expo-app-loading';
 import { StatusBar } from 'expo-status-bar';
@@ -43,6 +43,13 @@ export default function Login ({ navigation }){
             const response_1 = await response.json();
             console.log(response_1);
             if(response_1.error=="Unauthorized"){
+                Alert.alert(
+                    "Erro",
+                    "Esta conta não existe ou ainda não foi ativada.",
+                    [
+                    { text: "OK" }
+                    ]
+                );
                 setBorderError(true);
                 return response_1;
             }else{

@@ -47,7 +47,7 @@ export default function ForumWithoutLogin({ navigation }){
         <View style={styles.container}>
             {/*<StatusBar style="auto" />*/}
             <View style={/*scrolled ? styles.topNavbarScrolled :*/ styles.topNavbar}>
-            <FontAwesomeIcon icon={faChevronLeft} onPress={() => navigation.navigate('Login')} style={styles.chevronLeft}/>
+            <FontAwesomeIcon icon={faChevronLeft} onPress={() => navigation.navigate('HomeWithoutLogin')} style={styles.chevronLeft}/>
             <Image source={require("../../LOGOPNG.png")} style={styles.logoPng}/>
             </View>
             <Text style={styles.forumText}>Fórum</Text>

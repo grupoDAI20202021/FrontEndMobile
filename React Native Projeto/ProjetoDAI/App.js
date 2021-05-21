@@ -13,6 +13,7 @@ import SignUp3 from "./assets/screens/Home/SignUp3";
 import SignUp4 from "./assets/screens/Home/SignUp4";
 import SignUp5 from "./assets/screens/Home/SignUp5";
 import ForumWithoutLogin from "./assets/screens/Home/ForumWithoutLogin";
+import SignUpUnder from "./assets/screens/Home/SignUpUnder";
 
 const Stack = createStackNavigator();
 
@@ -30,6 +31,7 @@ export default function App() {
         <Stack.Screen name="SignUp4" component={SignUp4} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
         <Stack.Screen name="SignUp5" component={SignUp5} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
         <Stack.Screen name="ForumWithoutLogin" component={ForumWithoutLogin} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
+        <Stack.Screen name="SignUpUnder" component={SignUpUnder} options={{headerShown: false, transitionSpec: {open: transition,close: transition}}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

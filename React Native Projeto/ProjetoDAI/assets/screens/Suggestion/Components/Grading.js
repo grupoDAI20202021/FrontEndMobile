@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Text, View, StyleSheet, TouchableHighlight, SafeAreaView, TextInput, TouchableOpacity } from "react-native";
+import { Button, Text, View, StyleSheet, TouchableHighlight, SafeAreaView, TextInput, TouchableOpacity, Alert } from "react-native";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faChevronLeft, faFrown, faSmile, faMeh, faMicrophone } from '@fortawesome/free-solid-svg-icons';
 
@@ -62,28 +62,45 @@ export default function Grading() {
     //Fetch
     const submit = async () => {
         if(!faSmileEnabled && !faMehEnabled && !faFrownEnabled){
-            console.log("ERROR");
-            console.log(faSmileEnabled);
-            console.log(faMehEnabled);
-            console.log(faFrownEnabled);
+            Alert.alert(
+                "Erro",
+                "A sugestão não foi avaliada.",
+                [
+                { text: "OK" }
+                ]
+            );
         }else{
-            console.log(faSmileEnabled);
-            console.log(faMehEnabled);
-            console.log(faFrownEnabled);
-            const response = await fetch("http://192.168.1.74:8080/api/sugestions", {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    experience: experienceValue,
-                    content: suggestionText,
-                    idChild: 7 /////////////////////MUDAR PRO ID DO CHILD LOGADO////////////////////////////
-                })
-            });
-            const response_1 = await response.json();
-            return response_1;
+            if(suggestionText!=null){
+                const response = await fetch("http://192.168.1.74:8080/api/sugestions", {
+                    method: 'POST',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        experience: experienceValue,
+                        content: suggestionText,
+                        idChild: 7 /////////////////////MUDAR PRO ID DO CHILD LOGADO////////////////////////////
+                    })
+                });
+                const response_1 = await response.json();
+                Alert.alert(
+                    "Sucesso",
+                    "A sua sugestão foi enviada com sucesso.",
+                    [
+                    { text: "OK" }
+                    ]
+                );
+                return response_1;
+            }else{
+                Alert.alert(
+                    "Erro",
+                    "Preenche a caixa de texto de forma a enviar a sua sugestão.",
+                    [
+                    { text: "OK" }
+                    ]
+                );
+            }
         }
     }
 
@@ -101,9 +118,6 @@ export default function Grading() {
             <SafeAreaView style={styles.safeAreaViewOfText}>
                 <TextInput multiline={true} numberOfLines={15} maxLength={255} style={styles.suggestionBox} onChangeText={handleSuggestionText}></TextInput>
             </SafeAreaView>
-            <TouchableOpacity style={styles.microphoneView} activeOpacity={0.6}>
-                <FontAwesomeIcon icon={faMicrophone} style={styles.microphoneIcon} size={50}/>
-            </TouchableOpacity>
             <TouchableOpacity style={styles.sendButton} activeOpacity={0.6}>
                 <Text style={styles.sendButtonText} onPress={submit}>Enviar</Text>
             </TouchableOpacity>

@@ -209,9 +209,9 @@ export default function LiteratureScreen({navigation}) {
                                                     </View>
                                                 </View>
                                             </View>
-                                            <View style={styles.inscriptionButtonContainer} onPress={joinIn(item.idActivity)}>
+                                            <TouchableOpacity style={styles.inscriptionButtonContainer} onPress={joinIn(item.idActivity)}>
                                                 <LiteratureInscriptionButton/>
-                                            </View>
+                                            </TouchableOpacity>
                                         </View>
                                     </View>
                                 )

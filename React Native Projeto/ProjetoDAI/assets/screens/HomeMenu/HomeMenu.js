@@ -107,7 +107,7 @@ export default function HomeMenu({ navigation }){
                                                 <Text style={styles.sportActivitiesSearchText}>Procurar</Text>
                                             </TouchableHighlight>
                                             <Text style={styles.sportActivitiesSportText}>Desporto</Text>
-                                            <Text style={styles.sportActivitiesHowManyText}>8 atividades esta semana</Text>
+                                            <Text style={styles.sportActivitiesHowManyText}>1 atividades esta semana</Text>
                                             <Image source={require("../../sports.png")} style={styles.sportsPng}></Image>
                                         </View>
                                     </View>
@@ -125,7 +125,7 @@ export default function HomeMenu({ navigation }){
                                                 <Text style={styles.literatureActivitiesSearchText}>Procurar</Text>
                                             </TouchableHighlight>
                                             <Text style={styles.literatureActivitiesSportText}>Literatura</Text>
-                                            <Text style={styles.literatureActivitiesHowManyText}>7 atividades esta semana</Text>
+                                            <Text style={styles.literatureActivitiesHowManyText}>1 atividades esta semana</Text>
                                             <Image source={require("../../literature.png")} style={styles.literaturePng}></Image>
                                         </View>
                                     </View>

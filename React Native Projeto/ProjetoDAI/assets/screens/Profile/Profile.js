@@ -86,7 +86,7 @@ export default function Profile({navigation}) {
                                     <View style={styles.childProfileContainer}>
                                         <View style={styles.avatarContainer}>
                                             <Image source={avatarChosenState} style={styles.avatar}/>
-                                            <FontAwesomeIcon icon={faPen} onPress={() => navigation.navigate('HomeMenu')} style={styles.faPen} size={30}/>
+                                            {/*<FontAwesomeIcon icon={faPen} onPress={() => navigation.navigate('HomeMenu')} style={styles.faPen} size={30}/>*/}
                                         </View>
                                     </View>
                                     <View style={styles.dataProfileContainer}>
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     avatar:{
         width:100,
         height:100,
-        marginLeft:40,
+        /*marginLeft:40,*/
     },
 
     faPen:{
